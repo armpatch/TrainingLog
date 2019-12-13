@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0BCA89</color>
+    <color name="colorPrimaryDark">#056343</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="toolbar_background">#282828</color>
+
+    <color name="date_pager_background">#141414</color>
+    <color name="text1">#FFFFFF</color>
+
+    <color name="menu_item_light">#FFFFFF</color>
+
+</resources>
