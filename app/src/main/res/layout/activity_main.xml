@@ -76,7 +76,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
-            app:cardElevation="6dp"
             android:id="@+id/workout_plan_bar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
