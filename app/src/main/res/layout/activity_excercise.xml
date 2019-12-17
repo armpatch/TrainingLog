@@ -100,6 +100,7 @@
                     app:layout_constraintTop_toBottomOf="@id/set_info" />
 
             <include
+                    android:layout_marginTop="6dp"
                     layout="@layout/content_add_set_controls"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
