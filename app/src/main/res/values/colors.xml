@@ -12,4 +12,7 @@
 
     <color name="menu_item_light">#FFFFFF</color>
 
+    <color name="horizontal_separator_grey">#474747</color>
+
+
 </resources>
