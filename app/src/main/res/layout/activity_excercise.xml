@@ -26,106 +26,33 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/tab_layout_container"
+    <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/date_pager_background"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabTextColor="@color/text_light"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:background="@color/toolbar_background"
+            >
 
-        <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
+        <com.google.android.material.tabs.TabItem
+                android:id="@+id/tracker_tab"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                app:tabIndicatorColor="@color/colorPrimary"
-                app:tabTextColor="@color/text_light">
+                android:text="TRACK" />
 
-            <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tracker_tab"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="TRACK" />
+        <com.google.android.material.tabs.TabItem
+                android:id="@+id/history_tab"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="HISTORY"
+                />
 
-            <com.google.android.material.tabs.TabItem
-                    android:id="@+id/history_tab"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="HISTORY"
+    </com.google.android.material.tabs.TabLayout>
 
-                    />
-
-        </com.google.android.material.tabs.TabLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+    <include layout="@layout/content_add_set"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout_container" />
-
-    <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:cardElevation="4dp"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <ImageView
-                    android:id="@+id/hor_line_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:src="@drawable/horizontal_line_separator_grey"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                    android:id="@+id/set_info"
-                    style="@style/TextDark"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="4 sets of 3-5 reps"
-                    android:textAlignment="center"
-                    app:layout_constraintTop_toBottomOf="@id/hor_line_1" />
-
-            <ImageView
-                    android:id="@+id/hor_line_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:src="@drawable/horizontal_line_separator_grey"
-                    app:layout_constraintTop_toBottomOf="@id/set_info" />
-
-            <include
-                    android:layout_marginTop="6dp"
-                    layout="@layout/content_add_set_controls"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toTopOf="@id/add_set_button"
-                    app:layout_constraintTop_toBottomOf="@id/hor_line_2"
-
-                    />
-
-            <Button
-                    android:id="@+id/add_set_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="4dp"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:text="Add Set"
-                    android:textAppearance="@style/TextLightShadow"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </androidx.cardview.widget.CardView>
+            />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
