@@ -3,8 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -20,7 +19,7 @@
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:textColor="@android:color/white"
                 tools:text="Example Exercise" />
 
@@ -30,11 +29,10 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabTextColor="@color/text_light"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
             android:background="@color/toolbar_background"
-            >
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabTextColor="@color/text_light">
 
         <com.google.android.material.tabs.TabItem
                 android:id="@+id/tracker_tab"
@@ -46,13 +44,19 @@
                 android:id="@+id/history_tab"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:text="HISTORY"
-                />
+                android:text="HISTORY" />
 
     </com.google.android.material.tabs.TabLayout>
 
-    <include layout="@layout/content_add_set"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        <include
+                layout="@layout/content_add_set"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
