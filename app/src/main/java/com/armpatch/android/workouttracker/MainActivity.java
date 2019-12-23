@@ -5,6 +5,7 @@ import android.view.Menu;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        WorkoutListAdapter adapter = new WorkoutListAdapter(this);
+        viewPager.setAdapter(adapter);
 
     }
 
