@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.view_pager);
         WorkoutListAdapter adapter = new WorkoutListAdapter(this);
         viewPager.setAdapter(adapter);
-
+        viewPager.setCurrentItem(WorkoutListAdapter.STARTING_PAGE);
     }
 
 

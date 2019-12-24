@@ -10,6 +10,9 @@ import androidx.viewpager.widget.PagerAdapter;
 
 public class WorkoutListAdapter extends PagerAdapter {
 
+    static final int PAGE_COUNT = 10000;
+    static final int STARTING_PAGE = 5000;
+
     LayoutInflater inflater;
 
     WorkoutListAdapter(Context context) {
@@ -18,7 +21,7 @@ public class WorkoutListAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return PAGE_COUNT;
     }
 
     @Override
