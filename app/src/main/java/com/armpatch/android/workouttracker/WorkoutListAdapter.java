@@ -18,17 +18,24 @@ public class WorkoutListAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return 2;
     }
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return false;
+        return view == object;
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        return super.instantiateItem(container, position);
+        View view = inflater.inflate(R.layout.content_workout_exercises, null);
+        container.addView(view);
+        return view;
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        container.removeView((View) object);
     }
 }
