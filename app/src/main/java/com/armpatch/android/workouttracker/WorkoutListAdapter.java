@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -32,9 +33,13 @@ public class WorkoutListAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View view = inflater.inflate(R.layout.content_workout_exercises, null);
-        container.addView(view);
-        return view;
+        View itemView = inflater.inflate(R.layout.content_workout_exercises, null);
+
+        TextView text = itemView.findViewById(R.id.empty_workout_placeholder);
+        text.setText("The position is: " + position);
+
+        container.addView(itemView);
+        return itemView;
     }
 
     @Override
