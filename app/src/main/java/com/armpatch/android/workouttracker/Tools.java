@@ -7,17 +7,22 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 public class Tools {
 
-    public static String getRelativeDate(Context applicationContext, int days) {
+    public static String getRelativeDate(Context activityContext, int days) {
         LocalDate today = LocalDate.now().plusDays(days);
 
         if (days == 0)
-            return applicationContext.getString(R.string.today);
+            return activityContext.getString(R.string.today);
         if (days == 1)
-            return applicationContext.getString(R.string.tomorrow);
+            return activityContext.getString(R.string.tomorrow);
         if (days == -1)
-            return "Yesterday";
+            return activityContext.getString(R.string.yesterday);
 
-        return today.format(DateTimeFormatter.ofPattern("EEEE, MMMM d"));
+        return getFormattedDate(today);
     }
+
+    public static String getFormattedDate(LocalDate date) {
+        return date.format(DateTimeFormatter.ofPattern("EEEE, MMMM d"));
+    }
+
 
 }
