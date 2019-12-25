@@ -11,10 +11,10 @@ import androidx.viewpager.widget.PagerAdapter;
 
 public class WorkoutListAdapter extends PagerAdapter {
 
-    static final int PAGE_COUNT = 10000;
-    static final int STARTING_PAGE = 5000;
+    private static final int ITEM_COUNT = 10000;
+    static final int STARTING_ITEM = 5000;
 
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
 
     WorkoutListAdapter(Context context) {
         inflater = LayoutInflater.from(context);
@@ -22,7 +22,7 @@ public class WorkoutListAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGE_COUNT;
+        return ITEM_COUNT;
     }
 
     @Override
@@ -45,5 +45,9 @@ public class WorkoutListAdapter extends PagerAdapter {
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
+    }
+
+    static int relativePosition(int position) {
+        return position - STARTING_ITEM;
     }
 }

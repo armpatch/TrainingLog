@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.view_pager);
         WorkoutListAdapter adapter = new WorkoutListAdapter(this);
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(WorkoutListAdapter.STARTING_PAGE);
+        viewPager.setCurrentItem(WorkoutListAdapter.STARTING_ITEM);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateDateBarText(int position) {
-        dateBarText.setText(String.valueOf(position));
+        int relativePosition = WorkoutListAdapter.relativePosition(position);
+        String day = Tools.getRelativeDate(this, relativePosition);
+        dateBarText.setText(day);
     }
 }
