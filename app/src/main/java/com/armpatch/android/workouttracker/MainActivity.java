@@ -2,6 +2,7 @@ package com.armpatch.android.workouttracker;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -9,9 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import org.threeten.bp.LocalDate;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView dateBarText;
+    ViewPager viewPager;
+    LocalDate selectedDate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,18 +25,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        dateBarText = findViewById(R.id.date_bar_text);
+        viewPager = findViewById(R.id.view_pager);
+
         setSupportActionBar(toolbar);
 
-        dateBarText = findViewById(R.id.date_bar_text);
+        dateBarText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoToday();
+            }
+        });
 
-
-        if (getSupportActionBar() != null)
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
-        ViewPager viewPager = findViewById(R.id.view_pager);
         WorkoutListAdapter adapter = new WorkoutListAdapter(this);
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(WorkoutListAdapter.STARTING_ITEM);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -51,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        gotoToday();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,7 +76,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateDateBarText(int position) {
         int relativePosition = WorkoutListAdapter.relativePosition(position);
-        String day = Tools.getRelativeDate(this, relativePosition);
+        String day = Tools.relativeDateText(this, relativePosition);
         dateBarText.setText(day);
+    }
+
+    private void gotoToday() {
+        viewPager.setCurrentItem(WorkoutListAdapter.STARTING_ITEM, false);
     }
 }
