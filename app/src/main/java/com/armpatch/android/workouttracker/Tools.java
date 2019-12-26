@@ -20,8 +20,12 @@ public class Tools {
         return formattedDate(today);
     }
 
+    /**
+     * @param date
+     * @return a string in the format: Monday, August 1
+     */
     public static String formattedDate(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("EEEE, MMMM d"));
+        return date.format(DateTimeFormatter.ofPattern("EEEE, MMMM d")); //Ex: Monday, August 1
     }
 
 
