@@ -24,13 +24,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Kotlin
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //   implementation 'com.android.support:appcompat-v7:28.0.0'
+
+    // Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // UI Components
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
     implementation 'com.google.android.material:material:1.2.0-alpha02'
+
+    // ThreeTen
     implementation 'org.threeten:threetenbp:1.4.0'
 
     // Room components

@@ -8,15 +8,23 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import com.armpatch.android.workouttracker.model.WorkoutNote;
+import com.armpatch.android.workouttracker.model.WorkoutNoteViewModel;
+
 import org.threeten.bp.LocalDate;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView dateBarText;
     ViewPager viewPager;
     LocalDate selectedDate;
+    WorkoutNoteViewModel workoutNoteViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
 
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         dateBarText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,13 +48,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-
-        WorkoutListAdapter adapter = new WorkoutListAdapter(this);
+        final WorkoutListAdapter adapter = new WorkoutListAdapter(this);
         viewPager.setAdapter(adapter);
-
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -51,13 +57,16 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageSelected(int position) {
-
-            }
+            public void onPageSelected(int position) { }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
+            public void onPageScrollStateChanged(int state) { }
+        });
+        workoutNoteViewModel = new ViewModelProvider(this).get(WorkoutNoteViewModel.class);
+        workoutNoteViewModel.getAllWorkoutNotes().observe(this, new Observer<List<WorkoutNote>>() {
+            @Override
+            public void onChanged(List<WorkoutNote> workoutNotes) {
+                adapter.setWorkoutNotes(workoutNotes);
             }
         });
     }
@@ -75,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateDateBarText(int position) {
-        int relativePosition = WorkoutListAdapter.relativePosition(position);
+        int relativePosition = WorkoutListAdapter.relativeDay(position);
         String day = Tools.relativeDateText(this, relativePosition);
         dateBarText.setText(day);
     }

@@ -6,15 +6,17 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.List;
+
 @Dao
 public interface WorkoutNoteDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(WorkoutNote workoutNote);
 
-    @Query("SELECT * from workout_note_table ORDER BY date ASC")
-    LiveData<WorkoutNote> getWorkoutNotes();
+    @Query("SELECT * from workout_note_table")
+    LiveData<List<WorkoutNote>> getWorkoutNotes();
 
-    @Query("SELECT * from workout_note_table WHERE date = :whereClause")
-    WorkoutNote getWorkoutNote(String whereClause);
+//    @Query("SELECT * from workout_note_table WHERE date = :whereClause")
+//    WorkoutNote getWorkoutNote(String whereClause);
 }

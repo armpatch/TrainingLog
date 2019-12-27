@@ -14,9 +14,8 @@ public class WorkoutNote {
     @NonNull
     private String note;
 
-    public WorkoutNote(String date, String word) {
+    public WorkoutNote(String date, String note) {
         this.date = date;
-        this.note = word;
     }
 
     public String getDate() {
