@@ -12,4 +12,12 @@ public class ToolsTest {
         String expected = "Wednesday, January 1";
         assertEquals(expected, result);
     }
+
+    @Test
+    public void evaluatesDateFromString() {
+        String input = "2019-11-11";
+        LocalDate result = Tools.dateFromString(input);
+        LocalDate expectedDate = LocalDate.of(2019, 11, 11);
+        assertEquals(expectedDate,result);
+    }
 }
