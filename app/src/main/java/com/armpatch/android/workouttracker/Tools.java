@@ -28,5 +28,12 @@ public class Tools {
         return date.format(DateTimeFormatter.ofPattern("EEEE, MMMM d")); //Ex: Monday, August 1
     }
 
+    public static LocalDate dateFromString(String string) {
+        return LocalDate.parse(string, DateTimeFormatter.ISO_LOCAL_DATE);
+    }
+
+    public static String stringFromDate(LocalDate localDate) {
+        return localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
+    }
 
 }
