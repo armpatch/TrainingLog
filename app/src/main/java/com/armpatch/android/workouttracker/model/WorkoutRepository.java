@@ -2,15 +2,12 @@ package com.armpatch.android.workouttracker.model;
 
 import android.content.Context;
 
-import androidx.lifecycle.LiveData;
-
-import java.util.List;
+import com.armpatch.android.workouttracker.Tools;
+import org.threeten.bp.LocalDate;
 
 public class WorkoutRepository {
 
     private WorkoutNoteDao noteDao;
-    private LiveData<List<WorkoutNote>> allWorkoutNotes;
-
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -20,11 +17,11 @@ public class WorkoutRepository {
     public WorkoutRepository(Context application) {
         WorkoutRoomDatabase db = WorkoutRoomDatabase.getDatabase(application);
         noteDao = db.noteDao();
-        allWorkoutNotes = noteDao.getWorkoutNotes();
     }
 
-    LiveData<List<WorkoutNote>> getAllWorkoutNotes() {
-        return allWorkoutNotes;
+    public WorkoutNote getWorkoutNote(LocalDate localDate) {
+        String date = Tools.stringFromDate(localDate);
+        return noteDao.getWorkoutNote(date);
     }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures

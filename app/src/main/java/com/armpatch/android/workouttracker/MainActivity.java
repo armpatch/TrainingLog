@@ -10,13 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
-import org.threeten.bp.LocalDate;
-
 public class MainActivity extends AppCompatActivity {
 
     TextView dateBarText;
     ViewPager viewPager;
-    LocalDate selectedDate;
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -44,17 +41,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        dateBarText = findViewById(R.id.date_bar_text);
-        viewPager = findViewById(R.id.view_pager);
-
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        dateBarText = findViewById(R.id.date_bar_text);
         dateBarText.setOnClickListener(gotoToday);
 
-        final WorkoutListAdapter adapter = new WorkoutListAdapter(this);
+        viewPager = findViewById(R.id.view_pager);
+        WorkoutListAdapter adapter = new WorkoutListAdapter(this);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(pageChangeListener);
     }
@@ -72,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateDateBarText(int position) {
-        int relativePosition = WorkoutListAdapter.relativeDay(position);
+        int relativePosition = WorkoutListAdapter.getDaysFromToday(position);
         String day = Tools.relativeDateText(this, relativePosition);
         dateBarText.setText(day);
     }

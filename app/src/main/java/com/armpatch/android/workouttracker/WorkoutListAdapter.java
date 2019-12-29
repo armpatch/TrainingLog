@@ -1,6 +1,7 @@
 package com.armpatch.android.workouttracker;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.armpatch.android.workouttracker.model.WorkoutNote;
+import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
-
-import java.util.List;
 
 public class WorkoutListAdapter extends PagerAdapter {
 
@@ -21,10 +21,11 @@ public class WorkoutListAdapter extends PagerAdapter {
     static final int STARTING_ITEM = 5000; // Today
 
     private LayoutInflater inflater;
-    private List<WorkoutNote> workoutNotes;
+    private WorkoutRepository repository;
 
     WorkoutListAdapter(Context context) {
         inflater = LayoutInflater.from(context);
+        repository = new WorkoutRepository(context);
     }
 
     @Override
@@ -42,16 +43,14 @@ public class WorkoutListAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View itemView = inflater.inflate(R.layout.content_workout_exercises, null);
 
-        LocalDate localDate = LocalDate.now().plusDays(relativeDay(position));
-
-        // create placeholder for empty exercises
-        TextView exercisesPlaceholderText = itemView.findViewById(R.id.exercises_placeholder_text);
-        exercisesPlaceholderText.setText("The position is: " + position);
-
-        // set workout notes
-
+        // query and set workout notes
         TextView notesTextView = itemView.findViewById(R.id.workout_notes);
+        LocalDate itemDate = LocalDate.now().plusDays(getDaysFromToday(position));
+        QueryWorkoutNotesTask task = new QueryWorkoutNotesTask(notesTextView);
+        task.execute(itemDate);
 
+
+        // add item to container
         container.addView(itemView);
         return itemView;
     }
@@ -61,12 +60,30 @@ public class WorkoutListAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
-    public void setWorkoutNotes(List<WorkoutNote> workoutNotes) {
-        this.workoutNotes = workoutNotes;
-        notifyDataSetChanged();
+    static int getDaysFromToday(int position) {
+        return position - STARTING_ITEM;
     }
 
-    static int relativeDay(int position) {
-        return position - STARTING_ITEM;
+    class QueryWorkoutNotesTask extends AsyncTask<LocalDate,Integer,String> {
+
+        TextView textView;
+
+        QueryWorkoutNotesTask(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        protected String doInBackground(LocalDate... dates) {
+            WorkoutNote note = repository.getWorkoutNote(dates[0]);
+
+            return (note == null)?
+                    "" :
+                    note.getDate();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            textView.setText(s);
+        }
     }
 }
