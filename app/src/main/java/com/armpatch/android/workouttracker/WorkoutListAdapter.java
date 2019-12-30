@@ -46,7 +46,7 @@ public class WorkoutListAdapter extends PagerAdapter {
         // query and set workout notes
         TextView notesTextView = itemView.findViewById(R.id.workout_notes);
         LocalDate itemDate = LocalDate.now().plusDays(getDaysFromToday(position));
-        QueryWorkoutNotesTask task = new QueryWorkoutNotesTask(notesTextView);
+        QueryWorkoutTask task = new QueryWorkoutTask(notesTextView);
         task.execute(itemDate);
 
 
@@ -64,11 +64,11 @@ public class WorkoutListAdapter extends PagerAdapter {
         return position - STARTING_ITEM;
     }
 
-    class QueryWorkoutNotesTask extends AsyncTask<LocalDate,Integer,String> {
+    class QueryWorkoutTask extends AsyncTask<LocalDate,Integer,String> {
 
         TextView textView;
 
-        QueryWorkoutNotesTask(TextView textView) {
+        QueryWorkoutTask(TextView textView) {
             this.textView = textView;
         }
 
