@@ -35,55 +35,101 @@ public class WorkoutListAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == object;
+        return ((WorkoutViewHolder)object).getItemView() == view;
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View itemView = inflater.inflate(R.layout.content_workout_exercises, null);
+        LocalDate currentDate = LocalDate.now().plusDays(position - STARTING_ITEM);
+        WorkoutViewHolder workoutViewHolder = new WorkoutViewHolder(itemView,currentDate);
 
-        // query and set workout notes
-        TextView notesTextView = itemView.findViewById(R.id.workout_notes);
-        LocalDate itemDate = LocalDate.now().plusDays(getDaysFromToday(position));
-        QueryWorkoutTask task = new QueryWorkoutTask(notesTextView);
-        task.execute(itemDate);
-
+        // query data
+        workoutViewHolder.updateData();
 
         // add item to container
         container.addView(itemView);
-        return itemView;
+        return workoutViewHolder;
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View) object);
+        container.removeView(((WorkoutViewHolder) object).itemView);
     }
 
     static int getDaysFromToday(int position) {
         return position - STARTING_ITEM;
     }
 
-    class QueryWorkoutTask extends AsyncTask<LocalDate,Integer,String> {
+    class WorkoutViewHolder {
+        private LocalDate itemDate;
+        View itemView;
+        private TextView notesTextView;
 
-        TextView textView;
+        WorkoutViewHolder(@NonNull View itemView, LocalDate itemDate) {
+            if (itemView == null) {
+                throw new IllegalArgumentException("itemView may not be null");
+            }
+            this.itemView = itemView;
+            this.itemDate = itemDate;
 
-        QueryWorkoutTask(TextView textView) {
-            this.textView = textView;
+            notesTextView = itemView.findViewById(R.id.workout_notes);
+
+        }
+
+        void updateData() {
+            new QueryWorkoutTask().execute(this);
+        }
+
+        View getItemView() { return itemView; }
+
+        void setComment(String comment) {
+            if (comment == null) return;
+            notesTextView.setText(comment);
+        }
+
+        String getComment() {
+            return (String) notesTextView.getText();
+        }
+
+        LocalDate getItemDate() {
+            return itemDate;
+        }
+
+    }
+
+    class QueryWorkoutTask extends AsyncTask<WorkoutViewHolder,Integer, WorkoutQueryResult> {
+
+        WorkoutViewHolder viewHolder;
+
+        @Override
+        protected WorkoutQueryResult doInBackground(WorkoutViewHolder... workoutViewHolders) {
+            viewHolder = workoutViewHolders[0];
+            LocalDate currentDate = viewHolder.getItemDate();
+
+            // query repository
+            WorkoutNote note = repository.getWorkoutNote(currentDate);
+
+            // assign result of query to workoutQueryResult Object
+            String comment = (note == null)? "" : note.getDate();
+            return new WorkoutQueryResult(comment);
         }
 
         @Override
-        protected String doInBackground(LocalDate... dates) {
-            WorkoutNote note = repository.getWorkoutNote(dates[0]);
-
-            return (note == null)?
-                    "" :
-                    note.getDate();
+        protected void onPostExecute(WorkoutQueryResult workoutQueryResult) { // **Performed on the UI thread**
+            viewHolder.setComment(workoutQueryResult.comment);
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            textView.setText(s);
+    }
+
+    class WorkoutQueryResult {
+        String comment;
+        //List<WorkoutSet> TODO: add this data type
+
+        WorkoutQueryResult (String comment) {
+            this.comment = comment;
         }
     }
+
 }

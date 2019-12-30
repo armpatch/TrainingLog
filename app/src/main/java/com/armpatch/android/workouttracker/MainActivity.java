@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String comment = editText.toString();
+                String comment = editText.getText().toString();
                 // TODO save the note into workout notes
                 dialog.dismiss();
             }
