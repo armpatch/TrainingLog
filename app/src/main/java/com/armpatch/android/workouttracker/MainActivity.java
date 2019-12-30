@@ -1,8 +1,12 @@
 package com.armpatch.android.workouttracker;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -65,6 +69,45 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.edit_workout_note) {
+            showWorkoutNoteDialog();
+        }
+
+        return true;
+    }
+
+    private void showWorkoutNoteDialog() {
+        final Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_workout_note);
+
+        final EditText editText = dialog.findViewById(R.id.edit_text);
+
+        Button saveButton = dialog.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String comment = editText.toString();
+                // TODO save the note into workout notes
+                dialog.dismiss();
+            }
+        });
+
+        Button cancelButton = dialog.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+
     }
 
     private void updateDateBarText(int position) {

@@ -15,6 +15,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextDialogTitle" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/text_dark</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
     <style name="TextDark" parent="@style/TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/text_dark</item>
         <item name="android:textSize">16sp</item>
