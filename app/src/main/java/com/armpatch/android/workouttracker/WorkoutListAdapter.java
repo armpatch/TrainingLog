@@ -1,7 +1,6 @@
 package com.armpatch.android.workouttracker;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.armpatch.android.workouttracker.model.WorkoutNote;
-import com.armpatch.android.workouttracker.model.WorkoutRepository;
-
 import org.threeten.bp.LocalDate;
 
 public class WorkoutListAdapter extends PagerAdapter {
@@ -20,12 +16,12 @@ public class WorkoutListAdapter extends PagerAdapter {
     private static final int ITEM_COUNT = 10000;
     static final int STARTING_ITEM = 5000; // Today
 
+    private Context activityContext;
     private LayoutInflater inflater;
-    private WorkoutRepository repository;
 
     WorkoutListAdapter(Context context) {
         inflater = LayoutInflater.from(context);
-        repository = new WorkoutRepository(context);
+        activityContext = context;
     }
 
     @Override
@@ -41,21 +37,19 @@ public class WorkoutListAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View itemView = inflater.inflate(R.layout.content_workout_exercises, null);
         LocalDate currentDate = LocalDate.now().plusDays(position - STARTING_ITEM);
-        WorkoutViewHolder workoutViewHolder = new WorkoutViewHolder(itemView,currentDate);
 
-        // query data
+        WorkoutViewHolder workoutViewHolder = new WorkoutViewHolder(activityContext, currentDate);
         workoutViewHolder.updateData();
 
         // add item to container
-        container.addView(itemView);
+        container.addView(workoutViewHolder.getItemView());
         return workoutViewHolder;
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView(((WorkoutViewHolder) object).itemView);
+        container.removeView(((WorkoutViewHolder) object).getItemView());
     }
 
     static int getDaysFromToday(int position) {
@@ -63,73 +57,46 @@ public class WorkoutListAdapter extends PagerAdapter {
     }
 
     class WorkoutViewHolder {
-        private LocalDate itemDate;
-        View itemView;
-        private TextView notesTextView;
+        private Context activityContext;
+        private LocalDate date;
+        private View itemView;
+        private TextView comments;
 
-        WorkoutViewHolder(@NonNull View itemView, LocalDate itemDate) {
-            if (itemView == null) {
-                throw new IllegalArgumentException("itemView may not be null");
-            }
-            this.itemView = itemView;
-            this.itemDate = itemDate;
+        WorkoutViewHolder(Context activityContext, LocalDate date) {
+            this.activityContext = activityContext;
+            this.date = date;
 
-            notesTextView = itemView.findViewById(R.id.workout_notes);
+            setItemView(inflater.inflate(R.layout.content_workout_exercises, null));
+            comments = itemView.findViewById(R.id.workout_notes);
+        }
 
+        Context getContext() {
+            return activityContext;
         }
 
         void updateData() {
             new QueryWorkoutTask().execute(this);
         }
 
+        private void setItemView(View v) {
+            itemView = v;
+        }
+
         View getItemView() { return itemView; }
 
         void setComment(String comment) {
             if (comment == null) return;
-            notesTextView.setText(comment);
+            comments.setText(comment);
         }
 
         String getComment() {
-            return (String) notesTextView.getText();
+            return (String) comments.getText();
         }
 
-        LocalDate getItemDate() {
-            return itemDate;
+        LocalDate getDate() {
+            return date;
         }
 
-    }
-
-    class QueryWorkoutTask extends AsyncTask<WorkoutViewHolder,Integer, WorkoutQueryResult> {
-
-        WorkoutViewHolder viewHolder;
-
-        @Override
-        protected WorkoutQueryResult doInBackground(WorkoutViewHolder... workoutViewHolders) {
-            viewHolder = workoutViewHolders[0];
-            LocalDate currentDate = viewHolder.getItemDate();
-
-            // query repository
-            WorkoutNote note = repository.getWorkoutNote(currentDate);
-
-            // assign result of query to workoutQueryResult Object
-            String comment = (note == null)? "" : note.getDate();
-            return new WorkoutQueryResult(comment);
-        }
-
-        @Override
-        protected void onPostExecute(WorkoutQueryResult workoutQueryResult) { // **Performed on the UI thread**
-            viewHolder.setComment(workoutQueryResult.comment);
-        }
-
-    }
-
-    class WorkoutQueryResult {
-        String comment;
-        //List<WorkoutSet> TODO: add this data type
-
-        WorkoutQueryResult (String comment) {
-            this.comment = comment;
-        }
     }
 
 }
