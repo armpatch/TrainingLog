@@ -21,12 +21,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            updateDateBarText(position);
-        }
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
         @Override
-        public void onPageSelected(int position) { }
+        public void onPageSelected(int position) { updateDateBarText(position);}
 
         @Override
         public void onPageScrollStateChanged(int state) { }
