@@ -14,17 +14,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import org.threeten.bp.LocalDate;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView dateBarText;
     ViewPager viewPager;
+    LocalDate selectedDate;
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
         @Override
-        public void onPageSelected(int position) { updateDateBarText(position);}
+        public void onPageSelected(int position) {
+            selectedDate = (LocalDate.now().plusDays(WorkoutListAdapter.relativeDays(position)));
+            dateBarText.setText(Tools.relativeDateText(MainActivity.this, WorkoutListAdapter.relativeDays(position)));
+        }
 
         @Override
         public void onPageScrollStateChanged(int state) { }
@@ -73,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.edit_workout_note) {
-            showWorkoutNoteDialog();
+            editCommentsDialog();
         }
 
         return true;
     }
 
-    private void showWorkoutNoteDialog() {
+    private void editCommentsDialog() {
         final Dialog dialog = new Dialog(this);
 
         dialog.setContentView(R.layout.dialog_workout_note);
@@ -106,12 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.show();
 
-    }
-
-    private void updateDateBarText(int position) {
-        int relativePosition = WorkoutListAdapter.getDaysFromToday(position);
-        String day = Tools.relativeDateText(this, relativePosition);
-        dateBarText.setText(day);
     }
 
     private void gotoToday() {

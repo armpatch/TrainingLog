@@ -40,7 +40,7 @@ public class WorkoutListAdapter extends PagerAdapter {
         LocalDate currentDate = LocalDate.now().plusDays(position - STARTING_ITEM);
 
         WorkoutViewHolder workoutViewHolder = new WorkoutViewHolder(activityContext, currentDate);
-        workoutViewHolder.updateData();
+        workoutViewHolder.fetchWorkoutData();
 
         // add item to container
         container.addView(workoutViewHolder.getItemView());
@@ -52,7 +52,7 @@ public class WorkoutListAdapter extends PagerAdapter {
         container.removeView(((WorkoutViewHolder) object).getItemView());
     }
 
-    static int getDaysFromToday(int position) {
+    static int relativeDays(int position) {
         return position - STARTING_ITEM;
     }
 
@@ -74,7 +74,7 @@ public class WorkoutListAdapter extends PagerAdapter {
             return activityContext;
         }
 
-        void updateData() {
+        void fetchWorkoutData() {
             new QueryWorkoutTask().execute(this);
         }
 

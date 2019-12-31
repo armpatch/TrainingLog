@@ -7,12 +7,12 @@ import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
 
-class QueryWorkoutTask extends AsyncTask<WorkoutListAdapter.WorkoutViewHolder,Integer, WorkoutQueryResult> {
+class QueryWorkoutTask extends AsyncTask<WorkoutListAdapter.WorkoutViewHolder,Integer, WorkoutData> {
 
     private WorkoutListAdapter.WorkoutViewHolder viewHolder;
 
     @Override
-    protected WorkoutQueryResult doInBackground(WorkoutListAdapter.WorkoutViewHolder... workoutViewHolders) {
+    protected WorkoutData doInBackground(WorkoutListAdapter.WorkoutViewHolder... workoutViewHolders) {
         viewHolder = workoutViewHolders[0];
         LocalDate currentDate = viewHolder.getDate();
 
@@ -22,12 +22,12 @@ class QueryWorkoutTask extends AsyncTask<WorkoutListAdapter.WorkoutViewHolder,In
 
         // assign result of query to workoutQueryResult Object
         String comment = (note == null)? "" : note.getDate();
-        return new WorkoutQueryResult(comment);
+        return new WorkoutData(comment);
     }
 
     @Override
-    protected void onPostExecute(WorkoutQueryResult workoutQueryResult) { // **Performed on the UI thread**
-        viewHolder.setComment(workoutQueryResult.getComment());
+    protected void onPostExecute(WorkoutData workoutData) { // **Performed on the UI thread**
+        viewHolder.setComment(workoutData.getComment());
     }
 
 }
