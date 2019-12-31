@@ -26,7 +26,7 @@ public class WorkoutRepository {
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
-    void insert(final WorkoutNote note) {
+    public void insert(final WorkoutNote note) {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
                 new Runnable() {
                     @Override

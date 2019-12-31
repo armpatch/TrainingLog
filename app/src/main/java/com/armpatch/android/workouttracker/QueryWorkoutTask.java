@@ -21,7 +21,7 @@ class QueryWorkoutTask extends AsyncTask<WorkoutListAdapter.WorkoutViewHolder,In
         WorkoutNote note = repository.getWorkoutNote(currentDate);
 
         // assign result of query to workoutQueryResult Object
-        String comment = (note == null)? "" : note.getDate();
+        String comment = (note == null)? "" : note.getNote();
         return new WorkoutData(comment);
     }
 

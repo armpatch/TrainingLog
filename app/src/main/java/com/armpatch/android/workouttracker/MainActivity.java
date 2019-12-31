@@ -97,7 +97,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String comment = editText.getText().toString();
-                // TODO save the note into workout notes
+                WorkoutData workoutData = new WorkoutData(comment);
+                workoutData.setDate(selectedDate);// TODO access method to get date
+                UpdateWorkoutTask updateWorkoutTask = new UpdateWorkoutTask(MainActivity.this, viewPager);
+                updateWorkoutTask.execute(workoutData);
                 dialog.dismiss();
             }
         });

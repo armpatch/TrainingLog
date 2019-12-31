@@ -11,11 +11,11 @@ public class WorkoutNote {
     @NonNull
     private String date;
 
-    @NonNull
     private String note;
 
     public WorkoutNote(String date, String note) {
         this.date = date;
+        this.note = note;
     }
 
     public String getDate() {
