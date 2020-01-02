@@ -60,14 +60,14 @@ public class WorkoutListAdapter extends PagerAdapter {
         private Context activityContext;
         private LocalDate date;
         private View itemView;
-        private TextView comments;
+        private TextView comment;
 
         WorkoutViewHolder(Context activityContext, LocalDate date) {
             this.activityContext = activityContext;
             this.date = date;
 
             setItemView(inflater.inflate(R.layout.content_workout_exercises, null));
-            comments = itemView.findViewById(R.id.workout_notes);
+            comment = itemView.findViewById(R.id.workout_notes);
         }
 
         Context getContext() {
@@ -86,11 +86,7 @@ public class WorkoutListAdapter extends PagerAdapter {
 
         void setComment(String comment) {
             if (comment == null) return;
-            comments.setText(comment);
-        }
-
-        String getComment() {
-            return (String) comments.getText();
+            this.comment.setText(comment);
         }
 
         LocalDate getDate() {
@@ -98,5 +94,7 @@ public class WorkoutListAdapter extends PagerAdapter {
         }
 
     }
+
+
 
 }

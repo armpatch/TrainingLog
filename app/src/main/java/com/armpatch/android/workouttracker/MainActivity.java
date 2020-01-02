@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String comment = editText.getText().toString();
                 WorkoutData workoutData = new WorkoutData(comment);
-                workoutData.setDate(selectedDate);// TODO access method to get date
+                workoutData.setDate(selectedDate);
                 UpdateWorkoutTask updateWorkoutTask = new UpdateWorkoutTask(MainActivity.this, viewPager);
                 updateWorkoutTask.execute(workoutData);
                 dialog.dismiss();
