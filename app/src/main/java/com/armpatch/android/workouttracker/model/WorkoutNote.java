@@ -11,18 +11,18 @@ public class WorkoutNote {
     @NonNull
     private String date;
 
-    private String note;
+    private String comment;
 
-    public WorkoutNote(String date, String note) {
+    public WorkoutNote(String date, String comment) {
         this.date = date;
-        this.note = note;
+        this.comment = comment;
     }
 
     public String getDate() {
         return this.date;
     }
 
-    public String getNote(){
-        return this.note;
+    public String getComment(){
+        return this.comment;
     }
 }

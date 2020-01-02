@@ -1,6 +1,8 @@
 package com.armpatch.android.workouttracker;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.armpatch.android.workouttracker.model.WorkoutNote;
+import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
 
@@ -31,7 +36,7 @@ public class WorkoutListAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return ((WorkoutViewHolder)object).getItemView() == view;
+        return ((WorkoutHolder)object).itemView == view;
     }
 
     @NonNull
@@ -39,62 +44,97 @@ public class WorkoutListAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LocalDate currentDate = LocalDate.now().plusDays(position - STARTING_ITEM);
 
-        WorkoutViewHolder workoutViewHolder = new WorkoutViewHolder(activityContext, currentDate);
-        workoutViewHolder.fetchWorkoutData();
+        WorkoutHolder workoutHolder = new WorkoutHolder(activityContext, currentDate);
+        workoutHolder.updateFromDatabase();
 
         // add item to container
-        container.addView(workoutViewHolder.getItemView());
-        return workoutViewHolder;
+        container.addView(workoutHolder.itemView);
+        return workoutHolder;
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView(((WorkoutViewHolder) object).getItemView());
+        container.removeView(((WorkoutHolder) object).itemView);
     }
 
     static int relativeDays(int position) {
         return position - STARTING_ITEM;
     }
 
-    class WorkoutViewHolder {
+    class WorkoutHolder implements View.OnClickListener, EditCommentsDialog.Callbacks{
         private Context activityContext;
-        private LocalDate date;
+        private WorkoutRepository repository;
+
+        private WorkoutData workoutData;
         private View itemView;
-        private TextView comment;
+        private TextView commentTextView;
 
-        WorkoutViewHolder(Context activityContext, LocalDate date) {
+        WorkoutHolder(final Context activityContext, LocalDate date) {
             this.activityContext = activityContext;
-            this.date = date;
+            repository = new WorkoutRepository(getContext());
+            workoutData = new WorkoutData(date);
 
-            setItemView(inflater.inflate(R.layout.content_workout_exercises, null));
-            comment = itemView.findViewById(R.id.workout_notes);
+            itemView = inflater.inflate(R.layout.content_workout_exercises, null);
+            commentTextView = itemView.findViewById(R.id.workout_notes);
+            commentTextView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onCommentSaved(String comment) {
+            workoutData.setComment(comment);
+            new UpdateDatabaseTask().execute();
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.d("TAG", String.valueOf(v.getId()));
+
+            if (v == commentTextView) {
+                EditCommentsDialog dialog = new EditCommentsDialog(activityContext, WorkoutHolder.this);
+                dialog.setComment(commentTextView.getText().toString());
+                dialog.show();
+            }
         }
 
         Context getContext() {
             return activityContext;
         }
 
-        void fetchWorkoutData() {
-            new QueryWorkoutTask().execute(this);
-        }
-
-        private void setItemView(View v) {
-            itemView = v;
-        }
-
-        View getItemView() { return itemView; }
-
-        void setComment(String comment) {
-            if (comment == null) return;
-            this.comment.setText(comment);
+        void updateFromDatabase() {
+            new UpdateHolderFromDatabaseTask().execute();
         }
 
         LocalDate getDate() {
-            return date;
+            return workoutData.getDate();
         }
 
+        class UpdateHolderFromDatabaseTask extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                WorkoutNote note = repository.getWorkoutNote(WorkoutHolder.this.getDate());
+                if (note != null)
+                    workoutData.setComment(note.getComment());
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                commentTextView.setText(workoutData.getComment());
+            }
+        }
+
+        class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                repository.insert(new WorkoutNote(workoutData.getDateString(), workoutData.getComment()));
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                WorkoutHolder.this.updateFromDatabase();
+            }
+        }
     }
-
-
-
 }

@@ -7,19 +7,28 @@ public class WorkoutData {
     private LocalDate date;
 
     //List<WorkoutSet> TODO: add this data type
-    WorkoutData(String comment) {
+    WorkoutData(LocalDate date, String comment) {
+        this.date = date;
         this.comment = comment;
+    }
+
+    WorkoutData(LocalDate date) {
+        this(date, "");
     }
 
     public String getComment() {
         return comment;
     }
 
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public String getDateString() {
+        return Tools.stringFromDate(date);
     }
 }

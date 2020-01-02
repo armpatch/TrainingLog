@@ -77,44 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.edit_workout_note) {
-            editCommentsDialog();
-        }
-
         return true;
-    }
-
-    private void editCommentsDialog() {
-        final Dialog dialog = new Dialog(this);
-
-        dialog.setContentView(R.layout.dialog_workout_note);
-
-        final EditText editText = dialog.findViewById(R.id.edit_text);
-
-        Button saveButton = dialog.findViewById(R.id.save_button);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String comment = editText.getText().toString();
-                WorkoutData workoutData = new WorkoutData(comment);
-                workoutData.setDate(selectedDate);
-                UpdateWorkoutTask updateWorkoutTask = new UpdateWorkoutTask(MainActivity.this, viewPager);
-                updateWorkoutTask.execute(workoutData);
-                dialog.dismiss();
-            }
-        });
-
-        Button cancelButton = dialog.findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-
-        dialog.show();
-
     }
 
     private void gotoToday() {

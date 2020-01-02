@@ -6,17 +6,18 @@
         android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+            android:id="@+id/workout_comment_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_margin="8dp"
             app:cardElevation="4dp"
             >
 
         <TextView
                 android:id="@+id/workout_notes"
-                android:text="I did this today"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:text="Comment: empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 />
 
