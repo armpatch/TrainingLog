@@ -1,15 +1,21 @@
-package com.armpatch.android.workouttracker;
+package com.armpatch.android.workouttracker.model;
+
+import com.armpatch.android.workouttracker.Tools;
 
 import org.threeten.bp.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorkoutData {
     private String comment;
     private LocalDate date;
+    List<ExerciseSet> sets;
 
-    //List<WorkoutSet> TODO: add this data type
     WorkoutData(LocalDate date, String comment) {
         this.date = date;
         this.comment = comment;
+        sets = new ArrayList<>();
     }
 
     WorkoutData(LocalDate date) {

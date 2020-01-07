@@ -11,8 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.armpatch.android.workouttracker.room.WorkoutComment;
-import com.armpatch.android.workouttracker.room.WorkoutRepository;
+import com.armpatch.android.workouttracker.model.WorkoutComment;
+import com.armpatch.android.workouttracker.model.WorkoutData;
+import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
 

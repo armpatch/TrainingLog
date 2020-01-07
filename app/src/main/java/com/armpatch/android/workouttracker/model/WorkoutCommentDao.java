@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker.room;
+package com.armpatch.android.workouttracker.model;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
