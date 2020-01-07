@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker.model;
+package com.armpatch.android.workouttracker.room;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -11,6 +11,6 @@ public interface WorkoutCommentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(WorkoutComment workoutComment);
 
-    @Query("SELECT * from workout_comment_table WHERE date = :whereClause")
-    WorkoutComment getWorkoutComment(String whereClause);
+    @Query("SELECT * from workout_comment_table WHERE date = :date")
+    WorkoutComment getWorkoutComment(String date);
 }

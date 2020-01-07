@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker.model;
+package com.armpatch.android.workouttracker.room;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

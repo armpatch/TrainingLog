@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker.model;
+package com.armpatch.android.workouttracker.room;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -55,7 +55,6 @@ public class ExerciseSet {
     public void setMeasurement3(float measurement3) {
         this.measurement3 = measurement3;
     }
-
 
     // getters
 
