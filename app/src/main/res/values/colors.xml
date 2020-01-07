@@ -5,6 +5,9 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="toolbar_background">#282828</color>
+    <color name="category_background">#727272</color>
+    <color name="category_background_border">#222222</color>
+
 
     <color name="date_pager_background">#141414</color>
     <color name="text_light">#FFFFFF</color>
