@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.armpatch.android.workouttracker.model.WorkoutNote;
+import com.armpatch.android.workouttracker.model.WorkoutComment;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
@@ -75,7 +75,7 @@ public class WorkoutListAdapter extends PagerAdapter {
             workoutData = new WorkoutData(date);
 
             itemView = inflater.inflate(R.layout.content_workout_exercises, null);
-            commentTextView = itemView.findViewById(R.id.workout_notes);
+            commentTextView = itemView.findViewById(R.id.workout_comments);
             commentTextView.setOnClickListener(this);
         }
 
@@ -112,9 +112,9 @@ public class WorkoutListAdapter extends PagerAdapter {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                WorkoutNote note = repository.getWorkoutNote(WorkoutHolder.this.getDate());
-                if (note != null)
-                    workoutData.setComment(note.getComment());
+                WorkoutComment comment = repository.getWorkoutComment(WorkoutHolder.this.getDate());
+                if (comment != null)
+                    workoutData.setComment(comment.getText());
                 return null;
             }
 
@@ -127,7 +127,7 @@ public class WorkoutListAdapter extends PagerAdapter {
         class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
             @Override
             protected Void doInBackground(Void... voids) {
-                repository.insert(new WorkoutNote(workoutData.getDateString(), workoutData.getComment()));
+                repository.insert(new WorkoutComment(workoutData.getDateString(), workoutData.getComment()));
                 return null;
             }
 

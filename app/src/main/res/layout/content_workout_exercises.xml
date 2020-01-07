@@ -14,7 +14,7 @@
             >
 
         <TextView
-                android:id="@+id/workout_notes"
+                android:id="@+id/workout_comments"
                 android:text="Comment: empty"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

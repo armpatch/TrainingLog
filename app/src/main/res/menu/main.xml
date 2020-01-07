@@ -17,7 +17,7 @@
     </item>
 
     <item
-            android:id="@+id/edit_workout_note"
+            android:id="@+id/edit_workout_comment"
             android:icon="@drawable/ic_more_vert_24dp"
             app:showAsAction="never"
             android:title="Comment Workout">

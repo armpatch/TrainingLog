@@ -9,10 +9,10 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {WorkoutNote.class}, version = 1, exportSchema = false)
+@Database(entities = {WorkoutComment.class}, version = 1, exportSchema = false)
 public abstract class WorkoutRoomDatabase extends RoomDatabase {
 
-    public abstract WorkoutNoteDao noteDao();
+    public abstract WorkoutCommentDao commentDao();
 
     private static volatile WorkoutRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

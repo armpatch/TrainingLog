@@ -6,11 +6,11 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 @Dao
-public interface WorkoutNoteDao {
+public interface WorkoutCommentDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(WorkoutNote workoutNote);
+    void insert(WorkoutComment workoutComment);
 
-    @Query("SELECT * from workout_note_table WHERE date = :whereClause")
-    WorkoutNote getWorkoutNote(String whereClause);
+    @Query("SELECT * from workout_comment_table WHERE date = :whereClause")
+    WorkoutComment getWorkoutComment(String whereClause);
 }
