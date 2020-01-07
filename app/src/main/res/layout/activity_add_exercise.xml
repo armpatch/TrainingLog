@@ -3,6 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,8 +13,7 @@
             android:background="@color/toolbar_background"
             android:elevation="4dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/add_exercise"
-            >
+            app:menu="@menu/add_exercise">
 
         <ImageView
                 android:layout_width="wrap_content"
@@ -32,6 +32,15 @@
                 android:textColor="@android:color/white" />
 
     </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:listitem="@layout/content_exercise_catagory"
+            />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
