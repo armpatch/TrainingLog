@@ -1,5 +1,8 @@
 package com.armpatch.android.workouttracker.model;
 
+import android.os.BadParcelableException;
+import android.provider.Contacts;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -26,11 +29,11 @@ public class UnitCombo {
     }
 
     public UnitCombo(String name, String unit1, String unit2) {
-        this(name, unit1, unit2, null);
+        this(name, unit1, unit2, "");
     }
 
     public UnitCombo(String name, String unit1) {
-        this(name, unit1, null, null);
+        this(name, unit1, "", "");
     }
 
     public List<String> getUnits() {
@@ -46,5 +49,21 @@ public class UnitCombo {
     @NonNull
     public String getName() {
         return name;
+    }
+
+    public static String toParceableString(UnitCombo u) {
+        return u.name + ","
+                + u.unit1 + ","
+                + u.unit2 + ","
+                + u.unit3;
+    }
+
+    public static UnitCombo fromString(String data) {
+        String[] params = data.split(",");
+
+        if (params.length != 4)
+            throw new BadParcelableException("String has improper number of delimiters");
+
+        return new UnitCombo(params[0], params[1], params[2], params[3]);
     }
 }
