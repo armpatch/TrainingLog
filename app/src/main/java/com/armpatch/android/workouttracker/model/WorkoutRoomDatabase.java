@@ -13,6 +13,8 @@ import java.util.concurrent.Executors;
 public abstract class WorkoutRoomDatabase extends RoomDatabase {
 
     public abstract WorkoutCommentDao commentDao();
+    public abstract ExerciseDao exerciseDao();
+    public abstract ExerciseSetDao exerciseSetDao();
 
     private static volatile WorkoutRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -26,10 +28,25 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             WorkoutRoomDatabase.class, "workout_database")
                             .build();
+                    INSTANCE.populateInitialData();
                 }
             }
         }
         return INSTANCE;
+    }
+
+    private void populateInitialData() {
+        final Exercise overheadPress = new Exercise(
+                "Overhead Press",
+                new UnitCombo("Weight", new Unit("lbs")),
+                new ExerciseCategory("Shoulders"));
+
+        WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                exerciseDao().insert(overheadPress);
+            }
+        });
     }
 
 }
