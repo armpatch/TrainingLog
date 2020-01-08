@@ -5,6 +5,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.List;
+
 @Dao
 public interface ExerciseDao {
 
@@ -13,4 +15,7 @@ public interface ExerciseDao {
 
     @Query("SELECT * from exercise_table WHERE name = :name")
     Exercise getExercise(String name);
+
+    @Query("SELECT * from exercise_table")
+    List<Exercise> getAllExercises();
 }

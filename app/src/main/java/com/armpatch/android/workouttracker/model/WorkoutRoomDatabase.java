@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {WorkoutComment.class}, version = 1, exportSchema = false)
+@Database(entities = {WorkoutComment.class, Exercise.class, ExerciseCategory.class}, version = 1, exportSchema = false)
 public abstract class WorkoutRoomDatabase extends RoomDatabase {
 
     public abstract WorkoutCommentDao commentDao();

@@ -5,6 +5,8 @@ import android.content.Context;
 import com.armpatch.android.workouttracker.Tools;
 import org.threeten.bp.LocalDate;
 
+import java.util.List;
+
 public class WorkoutRepository {
 
     private WorkoutCommentDao commentDao;
@@ -28,6 +30,10 @@ public class WorkoutRepository {
     public WorkoutComment getWorkoutComment(LocalDate localDate) {
         String date = Tools.stringFromDate(localDate);
         return commentDao.getWorkoutComment(date);
+    }
+
+    public List<Exercise> getAllExercises() {
+        return exerciseDao.getAllExercises();
     }
 
     // Insert

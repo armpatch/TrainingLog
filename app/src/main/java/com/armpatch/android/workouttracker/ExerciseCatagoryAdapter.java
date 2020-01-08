@@ -1,35 +1,56 @@
 package com.armpatch.android.workouttracker;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ExerciseCatagoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import com.armpatch.android.workouttracker.model.Exercise;
 
+import java.util.List;
+
+public class ExerciseCatagoryAdapter extends RecyclerView.Adapter<ExerciseCatagoryAdapter.CategoryHolder> {
+
+    Context activityContext;
+    List<Exercise> exerciseList;
+
+    public ExerciseCatagoryAdapter(Context activityContext, List<Exercise> exerciseList) {
+        this.activityContext = activityContext;
+        this.exerciseList = exerciseList;
+    }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(activityContext)
+                .inflate(R.layout.content_exercise_category, null);
+
+        return new CategoryHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull CategoryHolder categoryHolder, int position) {
+        String categoryName = exerciseList.get(position).getName();
+        categoryHolder.categoryName.setText(categoryName);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return exerciseList.size();
     }
 
-    class CatagoryHolder extends RecyclerView.ViewHolder {
+    class CategoryHolder extends RecyclerView.ViewHolder {
 
-        public CatagoryHolder(@NonNull View itemView) {
+        TextView categoryName;
+
+        public CategoryHolder(@NonNull View itemView) {
             super(itemView);
 
+            categoryName = itemView.findViewById(R.id.category_name);
         }
     }
 }
