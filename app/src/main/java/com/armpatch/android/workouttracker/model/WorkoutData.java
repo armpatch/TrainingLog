@@ -12,13 +12,13 @@ public class WorkoutData {
     private LocalDate date;
     List<ExerciseSet> sets;
 
-    WorkoutData(LocalDate date, String comment) {
+    public WorkoutData(LocalDate date, String comment) {
         this.date = date;
         this.comment = comment;
         sets = new ArrayList<>();
     }
 
-    WorkoutData(LocalDate date) {
+    public WorkoutData(LocalDate date) {
         this(date, "");
     }
 

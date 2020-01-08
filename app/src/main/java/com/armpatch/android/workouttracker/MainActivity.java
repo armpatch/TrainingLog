@@ -1,5 +1,6 @@
 package com.armpatch.android.workouttracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,6 +75,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.add_exercise) {
+            Intent addExerciseIntent = new Intent(this, AddExerciseActivity.class);
+            startActivity(addExerciseIntent);
+        }
+
         return true;
     }
 

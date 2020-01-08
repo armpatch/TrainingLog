@@ -10,7 +10,7 @@
             android:title="Calendar">
     </item>
     <item
-            android:id="@+id/newItem"
+            android:id="@+id/add_exercise"
             android:icon="@drawable/ic_add_24dp"
             app:showAsAction="ifRoom|withText"
             android:title="Add Exercise">
