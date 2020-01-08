@@ -13,12 +13,12 @@ import com.armpatch.android.workouttracker.model.Exercise;
 
 import java.util.List;
 
-public class ExerciseCatagoryAdapter extends RecyclerView.Adapter<ExerciseCatagoryAdapter.CategoryHolder> {
+public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCategoryAdapter.CategoryHolder> {
 
     Context activityContext;
     List<Exercise> exerciseList;
 
-    public ExerciseCatagoryAdapter(Context activityContext, List<Exercise> exerciseList) {
+    public ExerciseCategoryAdapter(Context activityContext, List<Exercise> exerciseList) {
         this.activityContext = activityContext;
         this.exerciseList = exerciseList;
     }

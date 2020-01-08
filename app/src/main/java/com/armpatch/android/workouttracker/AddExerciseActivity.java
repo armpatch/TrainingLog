@@ -16,7 +16,7 @@ import java.util.List;
 public class AddExerciseActivity extends AppCompatActivity {
 
     RecyclerView recycler;
-    ExerciseCatagoryAdapter adapter;
+    ExerciseCategoryAdapter adapter;
     List<Exercise> exerciseList;
 
     @Override
@@ -47,7 +47,7 @@ public class AddExerciseActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            adapter = new ExerciseCatagoryAdapter(AddExerciseActivity.this, exerciseList);
+            adapter = new ExerciseCategoryAdapter(AddExerciseActivity.this, exerciseList);
             recycler.setAdapter(adapter);
         }
     }
