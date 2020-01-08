@@ -14,27 +14,27 @@ public class UnitCombo {
     @NonNull
     private String name;
 
-    private Unit unit1;
-    private Unit unit2;
-    private Unit unit3;
+    private String unit1;
+    private String unit2;
+    private String unit3;
 
-    public UnitCombo(String name, Unit unit1, Unit unit2, Unit unit3) {
+    public UnitCombo(String name, String unit1, String unit2, String unit3) {
         this.name = name;
         this.unit1 = unit1;
         this.unit2 = unit2;
         this.unit3 = unit3;
     }
 
-    public UnitCombo(String name, Unit unit1, Unit unit2) {
-        this(name,unit1,unit2,null);
+    public UnitCombo(String name, String unit1, String unit2) {
+        this(name, unit1, unit2, null);
     }
 
-    public UnitCombo(String name, Unit unit1) {
-        this(name,unit1,null,null);
+    public UnitCombo(String name, String unit1) {
+        this(name, unit1, null, null);
     }
 
-    public List<Unit> getUnits() {
-        List<Unit> units = new ArrayList<>();
+    public List<String> getUnits() {
+        List<String> units = new ArrayList<>();
 
         units.add(unit1);
         if (unit2 != null) units.add(unit2);

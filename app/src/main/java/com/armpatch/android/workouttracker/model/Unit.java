@@ -1,21 +1,18 @@
 package com.armpatch.android.workouttracker.model;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity(tableName = "unit_table")
 public class Unit {
 
-    @PrimaryKey
-    @NonNull
-    private String name;
+    // resistance
+    public static String POUNDS = "lbs";
+    public static String KILOGRAMS = "lbs";
 
-    public Unit(String name) {
-        this.name = name;
-    }
+    // Distance
+    public static String REPS = "reps";
+    public static String STEPS = "steps";
+    public static String MILES = "miles";
 
-    public String getName() {
-        return this.name;
-    }
+    // Time
+    public static String time = "time";
+
+
 }
