@@ -38,7 +38,7 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
     private void populateInitialData() {
         final Exercise overheadPress = new Exercise(
                 "Overhead Press",
-                new UnitCombo("Weight", new Unit("lbs")),
+                new UnitCombo("Weight and Reps", Units.POUNDS, Units.REPS),
                 new ExerciseCategory("Shoulders"));
 
         WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {

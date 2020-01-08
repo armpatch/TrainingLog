@@ -1,6 +1,6 @@
 package com.armpatch.android.workouttracker.model;
 
-public class Unit {
+public class Units {
 
     // resistance
     public static String POUNDS = "lbs";
