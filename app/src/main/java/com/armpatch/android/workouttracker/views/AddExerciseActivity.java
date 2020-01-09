@@ -36,15 +36,11 @@ public class AddExerciseActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        new SetCategoryAdapterTask().execute();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        new UpdateRecyclerTask().execute();
-    }
-
-    class UpdateRecyclerTask extends AsyncTask<Void, Void, Void> {
+    class SetCategoryAdapterTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -63,12 +59,7 @@ public class AddExerciseActivity extends AppCompatActivity {
                 adapter.setCategories(categories);
                 adapter.notifyDataSetChanged();
             }
-            toastThis("adapter length = " + adapter.getItemCount());
         }
-    }
-
-    private void toastThis(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 }
