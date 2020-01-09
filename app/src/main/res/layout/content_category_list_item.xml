@@ -22,19 +22,15 @@
         />
 
     <TextView
-            android:id="@+id/category_name"
+            android:id="@+id/text_view"
+            style="@style/TextDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="50dp"
-            tools:text="Shoulders"
-            style="@style/TextDark"
             android:textAllCaps="true"
-        />
-
-
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/expand_collapse_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="8dp"
+            tools:text="Shoulders" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

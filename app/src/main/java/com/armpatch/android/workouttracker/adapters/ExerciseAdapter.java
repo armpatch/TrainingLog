@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
     @Override
     public ExerciseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activityContext)
-                .inflate(R.layout.content_category, parent, false); // TODO create a separate layout file for exercises only
+                .inflate(R.layout.content_category_list_item, parent, false);
 
         return new ExerciseHolder(view);
     }
@@ -47,10 +48,13 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
         Exercise exercise;
         TextView nameTextView;
+        ImageView expandCollapseIcon;
 
         ExerciseHolder(@NonNull View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.category_name);
+            nameTextView = itemView.findViewById(R.id.text_view);
+            expandCollapseIcon = itemView.findViewById(R.id.expand_collapse_icon);
+            expandCollapseIcon.setVisibility(View.GONE);
         }
 
         void bind(Exercise exercise) {
