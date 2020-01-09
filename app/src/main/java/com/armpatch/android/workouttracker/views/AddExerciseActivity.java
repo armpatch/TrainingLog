@@ -93,4 +93,13 @@ public class AddExerciseActivity extends AppCompatActivity implements CategoryAd
             recyclerView.setAdapter(exerciseAdapter);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (recyclerView.getAdapter() == exerciseAdapter) {
+            recyclerView.setAdapter(categoryAdapter);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
