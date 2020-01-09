@@ -2,6 +2,7 @@ package com.armpatch.android.workouttracker;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class AddExerciseActivity extends AppCompatActivity {
 
-    RecyclerView recycler;
+    RecyclerView recyclerView;
     ExerciseCategoryAdapter adapter;
     List<Exercise> exerciseList;
 
@@ -30,12 +31,16 @@ public class AddExerciseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        recycler = findViewById(R.id.recycler);
-
-        new UpdateExercisesTask().execute();
+        recyclerView = findViewById(R.id.recycler_view);
     }
 
-    class UpdateExercisesTask extends AsyncTask<Void, Void, Void> {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new UpdateRecyclerTask().execute();
+    }
+
+    class UpdateRecyclerTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -47,10 +52,19 @@ public class AddExerciseActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            adapter = new ExerciseCategoryAdapter(AddExerciseActivity.this, exerciseList);
-            recycler.setAdapter(adapter);
+            if (adapter == null) {
+                adapter = new ExerciseCategoryAdapter(AddExerciseActivity.this, exerciseList);
+                recyclerView.setAdapter(adapter);
+            } else {
+                adapter.setExercises(exerciseList);
+                adapter.notifyDataSetChanged();
+            }
+            toastThis("adapter length = " + adapter.getItemCount());
         }
     }
 
+    private void toastThis(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
 }

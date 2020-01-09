@@ -21,7 +21,7 @@ public class Converters {
 
     @TypeConverter
     public static String dataFromUnitCombo(UnitCombo unitCombo) {
-        return UnitCombo.toParceableString(unitCombo);
+        return UnitCombo.toString(unitCombo);
     }
 
 }

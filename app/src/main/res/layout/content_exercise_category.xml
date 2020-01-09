@@ -4,7 +4,7 @@
         android:layout_height="50dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@drawable/exercise_catagory_container">
+        android:background="@drawable/exercise_category_container">
 
     <ImageView
             android:id="@+id/expand_collapse_icon"

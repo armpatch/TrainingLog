@@ -16,41 +16,49 @@ import java.util.List;
 public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCategoryAdapter.CategoryHolder> {
 
     Context activityContext;
-    List<Exercise> exerciseList;
+    List<Exercise> exercises;
 
-    public ExerciseCategoryAdapter(Context activityContext, List<Exercise> exerciseList) {
+    public ExerciseCategoryAdapter(Context activityContext, List<Exercise> exercises) {
         this.activityContext = activityContext;
-        this.exerciseList = exerciseList;
+        this.exercises = exercises;
+    }
+
+    void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
     }
 
     @NonNull
     @Override
     public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(activityContext)
-                .inflate(R.layout.content_exercise_category, null);
+        View view = LayoutInflater.from(activityContext)
+                .inflate(R.layout.content_exercise_category, parent, false);
 
-        return new CategoryHolder(itemView);
+        return new CategoryHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder categoryHolder, int position) {
-        String categoryName = exerciseList.get(position).getName();
-        categoryHolder.categoryName.setText(categoryName);
+        categoryHolder.bind(exercises.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return exerciseList.size();
+        return exercises.size();
     }
 
     class CategoryHolder extends RecyclerView.ViewHolder {
 
-        TextView categoryName;
+        String name;
+        TextView nameTextView;
 
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
+            nameTextView = itemView.findViewById(R.id.category_name);
+        }
 
-            categoryName = itemView.findViewById(R.id.category_name);
+        void bind(String name) {
+            this.name = name;
+            nameTextView.setText(name);
         }
     }
 }

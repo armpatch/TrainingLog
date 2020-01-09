@@ -43,10 +43,16 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
                 new UnitCombo("Weight and Reps", Units.POUNDS, Units.REPS),
                 new ExerciseCategory("Shoulders"));
 
+        final Exercise pullup = new Exercise(
+                "pullup",
+                new UnitCombo("Weight and Reps", Units.POUNDS, Units.REPS),
+                new ExerciseCategory("Back"));
+
         WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 exerciseDao().insert(overheadPress);
+                exerciseDao().insert(pullup);
             }
         });
     }
