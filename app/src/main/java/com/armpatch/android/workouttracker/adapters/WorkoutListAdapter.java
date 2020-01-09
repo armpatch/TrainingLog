@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker;
+package com.armpatch.android.workouttracker.adapters;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.armpatch.android.workouttracker.EditCommentsDialog;
+import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.WorkoutComment;
 import com.armpatch.android.workouttracker.model.WorkoutData;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
@@ -20,12 +22,12 @@ import org.threeten.bp.LocalDate;
 public class WorkoutListAdapter extends PagerAdapter {
 
     private static final int ITEM_COUNT = 10000;
-    static final int STARTING_ITEM = 5000; // Today
+    public static final int STARTING_ITEM = 5000; // Today
 
     private Context activityContext;
     private LayoutInflater inflater;
 
-    WorkoutListAdapter(Context context) {
+    public WorkoutListAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         activityContext = context;
     }
@@ -58,11 +60,11 @@ public class WorkoutListAdapter extends PagerAdapter {
         container.removeView(((WorkoutHolder) object).itemView);
     }
 
-    static int relativeDays(int position) {
+    public static int relativeDays(int position) {
         return position - STARTING_ITEM;
     }
 
-    class WorkoutHolder implements View.OnClickListener, EditCommentsDialog.Callbacks{
+    class WorkoutHolder implements View.OnClickListener, EditCommentsDialog.Callbacks {
         private Context activityContext;
         private WorkoutRepository repository;
 

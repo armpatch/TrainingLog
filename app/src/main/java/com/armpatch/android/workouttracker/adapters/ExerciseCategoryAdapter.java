@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker;
+package com.armpatch.android.workouttracker.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.Exercise;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCatego
         this.exercises = exercises;
     }
 
-    void setExercises(List<Exercise> exercises) {
+    public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
     }
 

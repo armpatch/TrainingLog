@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker;
+package com.armpatch.android.workouttracker.views;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
+
+import com.armpatch.android.workouttracker.R;
+import com.armpatch.android.workouttracker.Tools;
+import com.armpatch.android.workouttracker.adapters.WorkoutListAdapter;
 
 import org.threeten.bp.LocalDate;
 

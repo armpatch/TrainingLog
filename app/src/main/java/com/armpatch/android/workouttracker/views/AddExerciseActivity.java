@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker;
+package com.armpatch.android.workouttracker.views;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.armpatch.android.workouttracker.adapters.ExerciseCategoryAdapter;
+import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 

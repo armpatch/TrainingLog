@@ -13,7 +13,7 @@ public class EditCommentsDialog extends Dialog {
     Callbacks callbacks;
     EditText commentEditText;
 
-    interface Callbacks {
+    public interface Callbacks {
         void onCommentSaved(String comment);
     }
 
@@ -44,7 +44,7 @@ public class EditCommentsDialog extends Dialog {
 
     }
 
-    void setComment(String comment) {
+    public void setComment(String comment) {
         commentEditText.setText(comment);
     }
 }
