@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
-import com.armpatch.android.workouttracker.model.Exercise;
+import com.armpatch.android.workouttracker.model.ExerciseCategory;
 
 import java.util.List;
 
 public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCategoryAdapter.CategoryHolder> {
 
     Context activityContext;
-    List<Exercise> exercises;
+    List<ExerciseCategory> categories;
 
-    public ExerciseCategoryAdapter(Context activityContext, List<Exercise> exercises) {
+    public ExerciseCategoryAdapter(Context activityContext, List<ExerciseCategory> categories) {
         this.activityContext = activityContext;
-        this.exercises = exercises;
+        this.categories = categories;
     }
 
-    public void setExercises(List<Exercise> exercises) {
-        this.exercises = exercises;
+    public void setCategories(List<ExerciseCategory> categories) {
+        this.categories = categories;
     }
 
     @NonNull
@@ -39,12 +39,12 @@ public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCatego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder categoryHolder, int position) {
-        categoryHolder.bind(exercises.get(position).getName());
+        categoryHolder.bind(categories.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return exercises.size();
+        return categories.size();
     }
 
     class CategoryHolder extends RecyclerView.ViewHolder {

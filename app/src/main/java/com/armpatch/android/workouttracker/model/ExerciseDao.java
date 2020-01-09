@@ -13,9 +13,9 @@ public interface ExerciseDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Exercise exercise);
 
-    @Query("SELECT * from exercise_table WHERE name = :name")
+    @Query("SELECT * FROM exercise_table WHERE name = :name")
     Exercise getExercise(String name);
 
-    @Query("SELECT * from exercise_table")
+    @Query("SELECT * FROM exercise_table")
     List<Exercise> getAllExercises();
 }

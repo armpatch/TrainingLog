@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.armpatch.android.workouttracker.adapters.ExerciseCategoryAdapter;
 import com.armpatch.android.workouttracker.R;
-import com.armpatch.android.workouttracker.model.Exercise;
+import com.armpatch.android.workouttracker.adapters.ExerciseCategoryAdapter;
+import com.armpatch.android.workouttracker.model.ExerciseCategory;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class AddExerciseActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ExerciseCategoryAdapter adapter;
-    List<Exercise> exerciseList;
+    List<ExerciseCategory> categories;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class AddExerciseActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             WorkoutRepository repo = new WorkoutRepository(AddExerciseActivity.this);
-            exerciseList = repo.getAllExercises();
+            categories = repo.getCategories();
 
             return null;
         }
@@ -55,10 +55,10 @@ public class AddExerciseActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if (adapter == null) {
-                adapter = new ExerciseCategoryAdapter(AddExerciseActivity.this, exerciseList);
+                adapter = new ExerciseCategoryAdapter(AddExerciseActivity.this, categories);
                 recyclerView.setAdapter(adapter);
             } else {
-                adapter.setExercises(exerciseList);
+                adapter.setCategories(categories);
                 adapter.notifyDataSetChanged();
             }
             toastThis("adapter length = " + adapter.getItemCount());
