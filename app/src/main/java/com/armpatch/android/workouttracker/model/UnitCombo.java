@@ -1,7 +1,5 @@
 package com.armpatch.android.workouttracker.model;
 
-import android.os.BadParcelableException;
-
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
