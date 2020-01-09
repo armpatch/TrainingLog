@@ -2,6 +2,7 @@ package com.armpatch.android.workouttracker.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ public class UnitCombo {
     @NonNull
     private String name;
 
-    private String unit1;
-    private String unit2;
-    private String unit3;
+    String unit1;
+    String unit2;
+    String unit3;
 
     public UnitCombo(String name, String unit1, String unit2, String unit3) {
         this.name = name;
@@ -25,10 +26,12 @@ public class UnitCombo {
         this.unit3 = unit3;
     }
 
+    @Ignore
     public UnitCombo(String name, String unit1, String unit2) {
         this(name, unit1, unit2, "");
     }
 
+    @Ignore
     public UnitCombo(String name, String unit1) {
         this(name, unit1, "", "");
     }
