@@ -16,6 +16,9 @@ public interface ExerciseDao {
     @Query("SELECT * FROM exercise_table WHERE name = :name")
     Exercise getExercise(String name);
 
+    @Query("SELECT * FROM exercise_table WHERE category = :category")
+    List<Exercise> getExercises(ExerciseCategory category);
+
     @Query("SELECT * FROM exercise_table")
     List<Exercise> getAllExercises();
 }

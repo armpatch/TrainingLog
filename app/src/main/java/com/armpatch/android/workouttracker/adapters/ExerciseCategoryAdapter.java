@@ -18,10 +18,16 @@ public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCatego
 
     Context activityContext;
     List<ExerciseCategory> categories;
+    Callback callback;
+
+    public interface Callback {
+        void showExercisesFrom(ExerciseCategory category);
+    }
 
     public ExerciseCategoryAdapter(Context activityContext, List<ExerciseCategory> categories) {
         this.activityContext = activityContext;
         this.categories = categories;
+        callback = (Callback) activityContext;
     }
 
     public void setCategories(List<ExerciseCategory> categories) {
@@ -39,7 +45,7 @@ public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCatego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder categoryHolder, int position) {
-        categoryHolder.bind(categories.get(position).getName());
+        categoryHolder.bind(categories.get(position));
     }
 
     @Override
@@ -47,19 +53,25 @@ public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCatego
         return categories.size();
     }
 
-    class CategoryHolder extends RecyclerView.ViewHolder {
+    class CategoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        String name;
+        ExerciseCategory category;
         TextView nameTextView;
 
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.category_name);
+            itemView.setOnClickListener(this);
         }
 
-        void bind(String name) {
-            this.name = name;
-            nameTextView.setText(name);
+        void bind(ExerciseCategory category) {
+            this.category = category;
+            nameTextView.setText(category.getName());
+        }
+
+        @Override
+        public void onClick(View v) {
+            callback.showExercisesFrom(category);
         }
     }
 }

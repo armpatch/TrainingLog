@@ -42,10 +42,12 @@ public class WorkoutRepository {
         return exerciseCategoryDao.getExerciseCategories();
     }
 
+    public List<Exercise> getExercises(ExerciseCategory category) {
+        return exerciseDao.getExercises(category);
+    }
+
     // Insert
 
-    // You must call this on a non-UI thread or your app will throw an exception. Room ensures
-    // that you're not doing any long running operations on the main thread, blocking the UI.
     public void insert(final WorkoutComment comment) {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
                 new Runnable() {
