@@ -18,6 +18,7 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
     public abstract ExerciseDao exerciseDao();
     public abstract ExerciseSetDao exerciseSetDao();
     public abstract ExerciseCategoryDao exerciseCategoryDao();
+    public abstract UnitComboDao unitComboDao();
 
     private static volatile WorkoutRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -39,15 +40,22 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
     }
 
     private void populateInitialData() {
+        final UnitCombo weight_and_reps = new UnitCombo("Weight and Reps", Units.POUNDS, Units.REPS);
+
         final ExerciseCategory shoulders = new ExerciseCategory("shoulders");
         final ExerciseCategory arms = new ExerciseCategory("arms");
 
+        final Exercise pullup = new Exercise("pullup", weight_and_reps, arms);
 
         WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
+                unitComboDao().insert(weight_and_reps);
+
                 exerciseCategoryDao().insert(shoulders);
                 exerciseCategoryDao().insert(arms);
+
+                exerciseDao().insert(pullup);
             }
         });
     }
