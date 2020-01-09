@@ -14,7 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.Tools;
-import com.armpatch.android.workouttracker.adapters.WorkoutListAdapter;
+import com.armpatch.android.workouttracker.adapters.WorkoutAdapter;
 
 import org.threeten.bp.LocalDate;
 
@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            selectedDate = (LocalDate.now().plusDays(WorkoutListAdapter.relativeDays(position)));
-            dateBarText.setText(Tools.relativeDateText(MainActivity.this, WorkoutListAdapter.relativeDays(position)));
+            selectedDate = (LocalDate.now().plusDays(WorkoutAdapter.relativeDays(position)));
+            dateBarText.setText(Tools.relativeDateText(MainActivity.this, WorkoutAdapter.relativeDays(position)));
         }
 
         @Override
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         dateBarText.setOnClickListener(gotoToday);
 
         viewPager = findViewById(R.id.view_pager);
-        WorkoutListAdapter adapter = new WorkoutListAdapter(this);
+        WorkoutAdapter adapter = new WorkoutAdapter(this);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(pageChangeListener);
     }
@@ -90,6 +90,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void gotoToday() {
-        viewPager.setCurrentItem(WorkoutListAdapter.STARTING_ITEM, false);
+        viewPager.setCurrentItem(WorkoutAdapter.STARTING_ITEM, false);
     }
 }

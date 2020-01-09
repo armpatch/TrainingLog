@@ -15,11 +15,11 @@ public class Exercise {
     private UnitCombo unitCombo;
 
     @NonNull
-    private ExerciseCategory category;
+    private Category category;
 
     private String notes;
 
-    public Exercise(String name, UnitCombo unitCombo, ExerciseCategory category) {
+    public Exercise(String name, UnitCombo unitCombo, Category category) {
         this.name = name;
         this.unitCombo = unitCombo;
         this.category = category;
@@ -36,7 +36,7 @@ public class Exercise {
     }
 
     @NonNull
-    public ExerciseCategory getCategory() {
+    public Category getCategory() {
         return category;
     }
 

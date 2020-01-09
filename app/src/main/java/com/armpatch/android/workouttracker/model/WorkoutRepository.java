@@ -12,7 +12,7 @@ public class WorkoutRepository {
     private WorkoutCommentDao commentDao;
     private ExerciseDao exerciseDao;
     private ExerciseSetDao exerciseSetDao;
-    private ExerciseCategoryDao exerciseCategoryDao;
+    private CategoryDao categoryDao;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -24,7 +24,7 @@ public class WorkoutRepository {
         commentDao = db.commentDao();
         exerciseDao = db.exerciseDao();
         exerciseSetDao = db.exerciseSetDao();
-        exerciseCategoryDao = db.exerciseCategoryDao();
+        categoryDao = db.categoryDao();
     }
 
     // Retrieve
@@ -38,11 +38,11 @@ public class WorkoutRepository {
         return exerciseDao.getAllExercises();
     }
 
-    public List<ExerciseCategory> getCategories() {
-        return exerciseCategoryDao.getExerciseCategories();
+    public List<Category> getCategories() {
+        return categoryDao.getCategories();
     }
 
-    public List<Exercise> getExercises(ExerciseCategory category) {
+    public List<Exercise> getExercises(Category category) {
         return exerciseDao.getExercises(category);
     }
 

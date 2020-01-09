@@ -10,24 +10,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
-import com.armpatch.android.workouttracker.adapters.ExerciseCategoryAdapter;
+import com.armpatch.android.workouttracker.adapters.CategoryAdapter;
 import com.armpatch.android.workouttracker.adapters.ExerciseAdapter;
+import com.armpatch.android.workouttracker.model.Category;
 import com.armpatch.android.workouttracker.model.Exercise;
-import com.armpatch.android.workouttracker.model.ExerciseCategory;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import java.util.List;
 
-public class AddExerciseActivity extends AppCompatActivity implements ExerciseCategoryAdapter.Callback {
+public class AddExerciseActivity extends AppCompatActivity implements CategoryAdapter.Callback {
 
     RecyclerView recyclerView;
-    ExerciseCategoryAdapter categoryAdapter;
+    CategoryAdapter categoryAdapter;
     ExerciseAdapter exerciseAdapter;
-    List<ExerciseCategory> categories;
+    List<Category> categories;
     List<Exercise> exercises;
 
     @Override
-    public void showExercisesFrom(ExerciseCategory category) {
+    public void showExercisesFrom(Category category) {
         new SetExercisesAdapterTask(category).execute();
     }
 
@@ -61,7 +61,7 @@ public class AddExerciseActivity extends AppCompatActivity implements ExerciseCa
         @Override
         protected void onPostExecute(Void aVoid) {
             if (categoryAdapter == null) {
-                categoryAdapter = new ExerciseCategoryAdapter(AddExerciseActivity.this, categories);
+                categoryAdapter = new CategoryAdapter(AddExerciseActivity.this, categories);
                 recyclerView.setAdapter(categoryAdapter);
             } else {
                 categoryAdapter.setCategories(categories);
@@ -73,9 +73,9 @@ public class AddExerciseActivity extends AppCompatActivity implements ExerciseCa
 
     class SetExercisesAdapterTask extends AsyncTask<Void, Void, Void> {
 
-        ExerciseCategory category;
+        Category category;
 
-        SetExercisesAdapterTask(ExerciseCategory category) {
+        SetExercisesAdapterTask(Category category) {
             this.category = category;
         }
 

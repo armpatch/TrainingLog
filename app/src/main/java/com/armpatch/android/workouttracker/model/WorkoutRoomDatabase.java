@@ -10,14 +10,14 @@ import androidx.room.TypeConverters;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {WorkoutComment.class, Exercise.class, ExerciseCategory.class, ExerciseSet.class, UnitCombo.class}, version = 1, exportSchema = false)
+@Database(entities = {WorkoutComment.class, Exercise.class, Category.class, ExerciseSet.class, UnitCombo.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class WorkoutRoomDatabase extends RoomDatabase {
 
     public abstract WorkoutCommentDao commentDao();
     public abstract ExerciseDao exerciseDao();
     public abstract ExerciseSetDao exerciseSetDao();
-    public abstract ExerciseCategoryDao exerciseCategoryDao();
+    public abstract CategoryDao categoryDao();
     public abstract UnitComboDao unitComboDao();
 
     private static volatile WorkoutRoomDatabase INSTANCE;
@@ -42,8 +42,8 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
     private void populateInitialData() {
         final UnitCombo weight_and_reps = new UnitCombo("Weight and Reps", Units.POUNDS, Units.REPS);
 
-        final ExerciseCategory shoulders = new ExerciseCategory("shoulders");
-        final ExerciseCategory arms = new ExerciseCategory("arms");
+        final Category shoulders = new Category("shoulders");
+        final Category arms = new Category("arms");
 
         final Exercise pullup = new Exercise("pullup", weight_and_reps, arms);
 
@@ -52,8 +52,8 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
             public void run() {
                 unitComboDao().insert(weight_and_reps);
 
-                exerciseCategoryDao().insert(shoulders);
-                exerciseCategoryDao().insert(arms);
+                categoryDao().insert(shoulders);
+                categoryDao().insert(arms);
 
                 exerciseDao().insert(pullup);
             }

@@ -4,14 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "exercise_category_table")
-public class ExerciseCategory {
+@Entity(tableName = "category_table")
+public class Category {
 
     @NonNull
     @PrimaryKey
     private String name;
 
-    ExerciseCategory(String name) {
+    Category(String name) {
         this.name = name;
     }
 

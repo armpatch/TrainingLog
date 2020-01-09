@@ -10,27 +10,27 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
-import com.armpatch.android.workouttracker.model.ExerciseCategory;
+import com.armpatch.android.workouttracker.model.Category;
 
 import java.util.List;
 
-public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCategoryAdapter.CategoryHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
 
     Context activityContext;
-    List<ExerciseCategory> categories;
+    List<Category> categories;
     Callback callback;
 
     public interface Callback {
-        void showExercisesFrom(ExerciseCategory category);
+        void showExercisesFrom(Category category);
     }
 
-    public ExerciseCategoryAdapter(Context activityContext, List<ExerciseCategory> categories) {
+    public CategoryAdapter(Context activityContext, List<Category> categories) {
         this.activityContext = activityContext;
         this.categories = categories;
         callback = (Callback) activityContext;
     }
 
-    public void setCategories(List<ExerciseCategory> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
@@ -38,7 +38,7 @@ public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCatego
     @Override
     public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activityContext)
-                .inflate(R.layout.content_exercise_category, parent, false);
+                .inflate(R.layout.content_category, parent, false);
 
         return new CategoryHolder(view);
     }
@@ -55,7 +55,7 @@ public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCatego
 
     class CategoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        ExerciseCategory category;
+        Category category;
         TextView nameTextView;
 
         public CategoryHolder(@NonNull View itemView) {
@@ -64,7 +64,7 @@ public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCatego
             itemView.setOnClickListener(this);
         }
 
-        void bind(ExerciseCategory category) {
+        void bind(Category category) {
             this.category = category;
             nameTextView.setText(category.getName());
         }

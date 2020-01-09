@@ -19,7 +19,7 @@ import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
 
-public class WorkoutListAdapter extends PagerAdapter {
+public class WorkoutAdapter extends PagerAdapter {
 
     private static final int ITEM_COUNT = 10000;
     public static final int STARTING_ITEM = 5000; // Today
@@ -27,7 +27,7 @@ public class WorkoutListAdapter extends PagerAdapter {
     private Context activityContext;
     private LayoutInflater inflater;
 
-    public WorkoutListAdapter(Context context) {
+    public WorkoutAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         activityContext = context;
     }
