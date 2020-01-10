@@ -21,8 +21,9 @@ public class Tools {
     }
 
     /**
-     * @param date
-     * @return a string in the format: Monday, August 1
+     * Returns a formatted date. Ex: Monday, August 1
+     * @param date LocalDate
+     * @return a string
      */
     public static String formattedDate(LocalDate date) {
         return date.format(DateTimeFormatter.ofPattern("EEEE, MMMM d")); //Ex: Monday, August 1

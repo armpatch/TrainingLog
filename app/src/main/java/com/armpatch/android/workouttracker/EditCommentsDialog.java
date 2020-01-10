@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 
 public class EditCommentsDialog extends Dialog {
 
-    Callbacks callbacks;
-    EditText commentEditText;
+    private Callbacks callbacks;
+    private EditText commentEditText;
 
     public interface Callbacks {
         void onCommentSaved(String comment);

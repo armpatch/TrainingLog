@@ -29,8 +29,7 @@ public class Exercise {
         return name;
     }
 
-    @NonNull
-    public int getMeasurementType() {
+    int getMeasurementType() {
         return measurementType;
     }
 
@@ -39,11 +38,11 @@ public class Exercise {
         return category;
     }
 
-    public String getNotes() {
+    String getNotes() {
         return notes;
     }
 
-    public void setNotes(String notes) {
+    void setNotes(String notes) {
         this.notes = notes;
     }
 

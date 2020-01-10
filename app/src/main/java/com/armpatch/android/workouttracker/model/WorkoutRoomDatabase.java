@@ -1,7 +1,6 @@
 package com.armpatch.android.workouttracker.model;
 
 import android.content.Context;
-import android.icu.util.Measure;
 
 import androidx.room.Database;
 import androidx.room.Room;
