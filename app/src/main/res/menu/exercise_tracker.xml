@@ -5,14 +5,14 @@
     <item
             android:id="@+id/info"
             android:icon="@drawable/ic_info_outline_white_24dp"
-            app:showAsAction="ifRoom|withText"
+            app:showAsAction="ifRoom"
             android:title="Profile">
     </item>
 
     <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_more_vert_24dp"
-            app:showAsAction="ifRoom|withText"
+            app:showAsAction="ifRoom"
             android:title="Profile">
     </item>
 </menu>
