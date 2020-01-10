@@ -19,10 +19,16 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
     private Context activityContext;
     private List<Exercise> exercises;
+    private Callback activityCallback;
+
+    public interface Callback {
+        void onExerciseHolderSelected(String exerciseName);
+    }
 
     public ExerciseAdapter(Context activityContext, List<Exercise> exercises) {
         this.activityContext = activityContext;
         this.exercises = exercises;
+        activityCallback = (Callback) activityContext;
     }
 
     @NonNull
@@ -44,7 +50,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         return exercises.size();
     }
 
-    class ExerciseHolder extends RecyclerView.ViewHolder {
+    class ExerciseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         Exercise exercise;
         TextView nameTextView;
@@ -55,11 +61,17 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
             nameTextView = itemView.findViewById(R.id.text_view);
             expandCollapseIcon = itemView.findViewById(R.id.expand_collapse_icon);
             expandCollapseIcon.setVisibility(View.GONE);
+            itemView.setOnClickListener(this);
         }
 
         void bind(Exercise exercise) {
             this.exercise = exercise;
             nameTextView.setText(exercise.getName());
+        }
+
+        @Override
+        public void onClick(View v) {
+            activityCallback.onExerciseHolderSelected(exercise.getName());
         }
     }
 }

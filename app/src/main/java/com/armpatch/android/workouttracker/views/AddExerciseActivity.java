@@ -1,5 +1,6 @@
 package com.armpatch.android.workouttracker.views;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -18,7 +19,8 @@ import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import java.util.List;
 
-public class AddExerciseActivity extends AppCompatActivity implements CategoryAdapter.Callback {
+public class AddExerciseActivity extends AppCompatActivity
+        implements CategoryAdapter.Callback, ExerciseAdapter.Callback {
 
     RecyclerView recyclerView;
     CategoryAdapter categoryAdapter;
@@ -29,6 +31,12 @@ public class AddExerciseActivity extends AppCompatActivity implements CategoryAd
     @Override
     public void onCategoryHolderSelected(Category category) {
         new SetExercisesAdapterTask(category).execute();
+    }
+
+    @Override
+    public void onExerciseHolderSelected(String exerciseName) {
+        Intent intent = ExerciseTrackerActivity.getIntent(this, exerciseName);
+        startActivity(intent);
     }
 
     @Override

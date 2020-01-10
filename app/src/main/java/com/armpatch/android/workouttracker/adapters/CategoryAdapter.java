@@ -16,9 +16,9 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
 
-    Context activityContext;
-    List<Category> categories;
-    Callback callback;
+    private Context activityContext;
+    private List<Category> categories;
+    private Callback activityCallback;
 
     public interface Callback {
         void onCategoryHolderSelected(Category category);
@@ -27,7 +27,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public CategoryAdapter(Context activityContext, List<Category> categories) {
         this.activityContext = activityContext;
         this.categories = categories;
-        callback = (Callback) activityContext;
+        activityCallback = (Callback) activityContext;
     }
 
     public void setCategories(List<Category> categories) {
@@ -58,7 +58,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         Category category;
         TextView nameTextView;
 
-        public CategoryHolder(@NonNull View itemView) {
+        CategoryHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.text_view);
             itemView.setOnClickListener(this);
@@ -71,7 +71,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         @Override
         public void onClick(View v) {
-            callback.onCategoryHolderSelected(category);
+            activityCallback.onCategoryHolderSelected(category);
         }
     }
 }
