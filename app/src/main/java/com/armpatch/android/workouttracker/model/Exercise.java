@@ -11,17 +11,16 @@ public class Exercise {
     @NonNull
     private String name;
 
-    @NonNull
-    private UnitCombo unitCombo;
+    private int measurementType;
 
     @NonNull
     private Category category;
 
     private String notes;
 
-    public Exercise(String name, UnitCombo unitCombo, Category category) {
+    public Exercise(String name, int measurementType, Category category) {
         this.name = name;
-        this.unitCombo = unitCombo;
+        this.measurementType = measurementType;
         this.category = category;
     }
 
@@ -31,8 +30,8 @@ public class Exercise {
     }
 
     @NonNull
-    public UnitCombo getUnitCombo() {
-        return unitCombo;
+    public int getMeasurementType() {
+        return measurementType;
     }
 
     @NonNull

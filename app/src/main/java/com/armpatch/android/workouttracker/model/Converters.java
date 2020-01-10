@@ -14,14 +14,4 @@ public class Converters {
         return category.getName();
     }
 
-    @TypeConverter
-    public static UnitCombo unitCombofromString(String data) {
-        return UnitCombo.fromString(data);
-    }
-
-    @TypeConverter
-    public static String dataFromUnitCombo(UnitCombo unitCombo) {
-        return UnitCombo.toString(unitCombo);
-    }
-
 }

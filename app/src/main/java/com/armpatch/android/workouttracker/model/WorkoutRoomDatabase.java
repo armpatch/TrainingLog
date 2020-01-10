@@ -1,6 +1,7 @@
 package com.armpatch.android.workouttracker.model;
 
 import android.content.Context;
+import android.icu.util.Measure;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -10,7 +11,7 @@ import androidx.room.TypeConverters;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {WorkoutComment.class, Exercise.class, Category.class, ExerciseSet.class, UnitCombo.class}, version = 1, exportSchema = false)
+@Database(entities = {WorkoutComment.class, Exercise.class, Category.class, ExerciseSet.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class WorkoutRoomDatabase extends RoomDatabase {
 
@@ -18,7 +19,6 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
     public abstract ExerciseDao exerciseDao();
     public abstract ExerciseSetDao exerciseSetDao();
     public abstract CategoryDao categoryDao();
-    public abstract UnitComboDao unitComboDao();
 
     private static volatile WorkoutRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -40,22 +40,18 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
     }
 
     private void populateInitialData() {
-        final UnitCombo weight_and_reps = new UnitCombo("Weight and Reps", Units.POUNDS, Units.REPS);
-
         final Category shoulders = new Category("shoulders");
         final Category arms = new Category("arms");
 
-        final Exercise pullup = new Exercise("pullup", weight_and_reps, arms);
+        final Exercise pull_up = new Exercise("pull up", MeasurementType.WEIGHT_AND_REPS, arms);
 
         WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                unitComboDao().insert(weight_and_reps);
-
                 categoryDao().insert(shoulders);
                 categoryDao().insert(arms);
 
-                exerciseDao().insert(pullup);
+                exerciseDao().insert(pull_up);
             }
         });
     }
