@@ -35,7 +35,7 @@ public class AddExerciseActivity extends AppCompatActivity
 
     @Override
     public void onExerciseHolderSelected(String exerciseName) {
-        Intent intent = ExerciseTrackerActivity.getIntent(this, exerciseName);
+        Intent intent = ExerciseTrackerActivity.newExerciseIntent(this, exerciseName);
         startActivity(intent);
         finish();
     }

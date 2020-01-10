@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "exercise_set_table")
 public class ExerciseSet {
 
-    @NonNull
     @PrimaryKey
     public int id;
 
@@ -15,22 +14,18 @@ public class ExerciseSet {
     private String date;
 
     @NonNull
-    private int exerciseId;
+    private String exerciseId;
 
-    @NonNull
     private int exerciseOrder;
 
-    @NonNull
     private int order;
 
     private String comment;
 
-    @NonNull
     private float measurement1;
     private float measurement2;
-    private float measurement3;
 
-    public ExerciseSet(String date, int exerciseId) {
+    public ExerciseSet(String date, String exerciseId) {
         this.date = date;
         this.exerciseId = exerciseId;
     }
@@ -57,17 +52,13 @@ public class ExerciseSet {
         this.measurement2 = measurement2;
     }
 
-    public void setMeasurement3(float measurement3) {
-        this.measurement3 = measurement3;
-    }
-
     // getters
 
     public String getDate() {
         return this.date;
     }
 
-    public int getExerciseId() {
+    public String getExerciseId() {
         return this.exerciseId;
     }
 
@@ -91,7 +82,4 @@ public class ExerciseSet {
         return measurement2;
     }
 
-    public float getMeasurement3() {
-        return measurement3;
-    }
 }

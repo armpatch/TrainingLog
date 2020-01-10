@@ -17,23 +17,16 @@ public class UnitCombo {
 
     String unit1;
     String unit2;
-    String unit3;
 
-    public UnitCombo(String name, String unit1, String unit2, String unit3) {
+    public UnitCombo(String name, String unit1, String unit2) {
         this.name = name;
         this.unit1 = unit1;
         this.unit2 = unit2;
-        this.unit3 = unit3;
-    }
-
-    @Ignore
-    public UnitCombo(String name, String unit1, String unit2) {
-        this(name, unit1, unit2, "");
     }
 
     @Ignore
     public UnitCombo(String name, String unit1) {
-        this(name, unit1, "", "");
+        this(name, unit1, null);
     }
 
     public List<String> getUnits() {
@@ -41,7 +34,6 @@ public class UnitCombo {
 
         units.add(unit1);
         if (unit2 != null) units.add(unit2);
-        if (unit3 != null) units.add(unit3);
 
         return units;
     }
@@ -52,10 +44,12 @@ public class UnitCombo {
     }
 
     public static String toString(UnitCombo u) {
-        return u.name + ","
-                + u.unit1 + ","
-                + u.unit2 + ","
-                + u.unit3;
+        String output =  u.name + "," + u.unit1;
+
+        if (u.unit2 != null)
+            output = output + "," + u.unit2;
+
+        return output;
     }
 
     public static UnitCombo fromString(String data) {
@@ -67,12 +61,7 @@ public class UnitCombo {
             return unitCombo;
         }
 
-        if (params.length == 3) {
-            unitCombo = new UnitCombo(params[0], params[1], params[2]);
-            return unitCombo;
-        }
-
-        unitCombo = new UnitCombo(params[0], params[1], params[2], params[3]);
+        unitCombo = new UnitCombo(params[0], params[1], params[2]);
         return unitCombo;
     }
 }

@@ -13,14 +13,20 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.Exercise;
+import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
+
+import java.util.List;
 
 public class ExerciseTrackerActivity extends AppCompatActivity {
 
     public static String KEY_EXERCISE_NAME = "KEY_EXERCISE_NAME";
 
-    Exercise exercise;
     TextView toolbarTitle;
+
+    Exercise exercise;
+    List<ExerciseSet> sets;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +45,7 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         new GetExerciseTask(exerciseName).execute();
     }
 
-    public static Intent getIntent(Context activityContext, String exerciseName) {
+    public static Intent newExerciseIntent(Context activityContext, String exerciseName) {
         Intent intent = new Intent(activityContext, ExerciseTrackerActivity.class);
         intent.putExtra(KEY_EXERCISE_NAME, exerciseName);
         return intent;
