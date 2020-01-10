@@ -27,7 +27,7 @@ public class AddExerciseActivity extends AppCompatActivity implements CategoryAd
     List<Exercise> exercises;
 
     @Override
-    public void showExercisesFrom(Category category) {
+    public void onCategoryHolderSelected(Category category) {
         new SetExercisesAdapterTask(category).execute();
     }
 

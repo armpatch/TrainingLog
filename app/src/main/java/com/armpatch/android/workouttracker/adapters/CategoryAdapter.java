@@ -21,7 +21,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     Callback callback;
 
     public interface Callback {
-        void showExercisesFrom(Category category);
+        void onCategoryHolderSelected(Category category);
     }
 
     public CategoryAdapter(Context activityContext, List<Category> categories) {
@@ -71,7 +71,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         @Override
         public void onClick(View v) {
-            callback.showExercisesFrom(category);
+            callback.onCategoryHolderSelected(category);
         }
     }
 }
