@@ -34,16 +34,20 @@ public class WorkoutRepository {
         return commentDao.getWorkoutComment(date);
     }
 
-    public List<Exercise> getAllExercises() {
-        return exerciseDao.getAllExercises();
-    }
-
-    public List<Category> getCategories() {
-        return categoryDao.getCategories();
+    public Exercise getExercise(String name) {
+        return exerciseDao.getExercise(name);
     }
 
     public List<Exercise> getExercises(Category category) {
         return exerciseDao.getExercises(category);
+    }
+
+    public List<Exercise> getExercises() {
+        return exerciseDao.getExercises();
+    }
+
+    public List<Category> getCategories() {
+        return categoryDao.getCategories();
     }
 
     // Insert

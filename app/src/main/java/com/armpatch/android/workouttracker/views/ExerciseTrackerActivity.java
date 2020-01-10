@@ -2,6 +2,7 @@ package com.armpatch.android.workouttracker.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
@@ -12,10 +13,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.Exercise;
+import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 public class ExerciseTrackerActivity extends AppCompatActivity {
 
     public static String KEY_EXERCISE_NAME = "KEY_EXERCISE_NAME";
+
+    Exercise exercise;
+    TextView toolbarTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,6 +32,11 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+
+        toolbarTitle = findViewById(R.id.exercise_title);
+
+        String exerciseName = getIntent().getStringExtra(KEY_EXERCISE_NAME);
+        new GetExerciseTask(exerciseName).execute();
     }
 
     public static Intent getIntent(Context activityContext, String exerciseName) {
@@ -41,5 +51,24 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         return true;
     }
 
+    class GetExerciseTask extends AsyncTask<Void, Void, Void> {
 
+        String name;
+
+        private GetExerciseTask(String name) {
+            this.name = name;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            WorkoutRepository repository = new WorkoutRepository(ExerciseTrackerActivity.this);
+            exercise = repository.getExercise(name);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            toolbarTitle.setText(exercise.getName());
+        }
+    }
 }

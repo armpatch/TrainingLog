@@ -20,5 +20,5 @@ public interface ExerciseDao {
     List<Exercise> getExercises(Category category);
 
     @Query("SELECT * FROM exercise_table")
-    List<Exercise> getAllExercises();
+    List<Exercise> getExercises();
 }
