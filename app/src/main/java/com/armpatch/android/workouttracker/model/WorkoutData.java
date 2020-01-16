@@ -10,7 +10,7 @@ import java.util.List;
 public class WorkoutData {
     private String comment;
     private LocalDate date;
-    List<ExerciseSet> sets;
+    public List<ExerciseSet> sets;
 
     public WorkoutData(LocalDate date, String comment) {
         this.date = date;

@@ -85,7 +85,7 @@ public class WorkoutAdapter extends PagerAdapter {
         @Override
         public void onCommentSaved(String comment) {
             workoutData.setComment(comment);
-            new UpdateDatabaseTask().execute();
+            new SaveToDatabase().execute();
         }
 
         @Override
@@ -104,30 +104,34 @@ public class WorkoutAdapter extends PagerAdapter {
         }
 
         void updateFromDatabase() {
-            new UpdateHolderFromDatabaseTask().execute();
+            new UpdateFromDatabase().execute();
         }
 
         LocalDate getDate() {
             return workoutData.getDate();
         }
 
-        class UpdateHolderFromDatabaseTask extends AsyncTask<Void, Void, Void> {
+        class UpdateFromDatabase extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
                 WorkoutComment comment = repository.getWorkoutComment(WorkoutHolder.this.getDate());
                 if (comment != null)
                     workoutData.setComment(comment.getText());
+
+                workoutData.sets = repository.getExerciseSets(workoutData.getDate());
+
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
                 commentTextView.setText(workoutData.getComment());
+                // Todo transform list of sets into Views
             }
         }
 
-        class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
+        class SaveToDatabase extends AsyncTask<Void, Void, Void> {
             @Override
             protected Void doInBackground(Void... voids) {
                 repository.insert(new WorkoutComment(workoutData.getDateString(), workoutData.getComment()));

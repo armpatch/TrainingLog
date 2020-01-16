@@ -61,6 +61,11 @@ public class WorkoutRepository {
         return exerciseSetDao.getExerciseSets(date, exerciseOrder);
     }
 
+    public List<ExerciseSet> getExerciseSets(LocalDate localDate) {
+        String date = Tools.stringFromDate(localDate);
+        return exerciseSetDao.getExerciseSets(date);
+    }
+
     // Insert
 
     public void insert(final WorkoutComment comment) {
