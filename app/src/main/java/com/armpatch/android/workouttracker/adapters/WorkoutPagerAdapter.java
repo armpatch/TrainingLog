@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,6 +72,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         private WorkoutData workoutData;
         private View itemView;
         private TextView commentTextView;
+        private ListView exerciseListView;
 
         WorkoutHolder(final Context activityContext, LocalDate date) {
             this.activityContext = activityContext;
@@ -80,6 +82,8 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             itemView = inflater.inflate(R.layout.content_workout_holder, null);
             commentTextView = itemView.findViewById(R.id.workout_comments);
             commentTextView.setOnClickListener(this);
+            exerciseListView = itemView.findViewById(R.id.exercise_group_list);
+            exerciseListView.setAdapter(new ExerciseCardAdapter(workoutData.sets));
         }
 
         @Override
@@ -128,6 +132,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             protected void onPostExecute(Void aVoid) {
                 commentTextView.setText(workoutData.getComment());
                 // Todo transform list of sets into Views
+
             }
         }
 
