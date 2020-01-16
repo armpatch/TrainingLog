@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.Tools;
-import com.armpatch.android.workouttracker.adapters.CategoryAdapter;
-import com.armpatch.android.workouttracker.adapters.ExerciseAdapter;
+import com.armpatch.android.workouttracker.adapters.CategorySelectionAdapter;
+import com.armpatch.android.workouttracker.adapters.ExerciseSelectionAdapter;
 import com.armpatch.android.workouttracker.model.Category;
 import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
@@ -26,11 +26,11 @@ import java.util.List;
 import static com.armpatch.android.workouttracker.Tools.KEY_EXERCISE_DATE;
 
 public class AddExerciseActivity extends AppCompatActivity
-        implements CategoryAdapter.Callback, ExerciseAdapter.Callback {
+        implements CategorySelectionAdapter.Callback, ExerciseSelectionAdapter.Callback {
 
     RecyclerView recyclerView;
-    CategoryAdapter categoryAdapter;
-    ExerciseAdapter exerciseAdapter;
+    CategorySelectionAdapter categorySelectionAdapter;
+    ExerciseSelectionAdapter exerciseSelectionAdapter;
     List<Category> categories;
     List<Exercise> exercises;
 
@@ -90,12 +90,12 @@ public class AddExerciseActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            if (categoryAdapter == null) {
-                categoryAdapter = new CategoryAdapter(AddExerciseActivity.this, categories);
-                recyclerView.setAdapter(categoryAdapter);
+            if (categorySelectionAdapter == null) {
+                categorySelectionAdapter = new CategorySelectionAdapter(AddExerciseActivity.this, categories);
+                recyclerView.setAdapter(categorySelectionAdapter);
             } else {
-                categoryAdapter.setCategories(categories);
-                categoryAdapter.notifyDataSetChanged();
+                categorySelectionAdapter.setCategories(categories);
+                categorySelectionAdapter.notifyDataSetChanged();
             }
         }
 
@@ -119,15 +119,15 @@ public class AddExerciseActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            exerciseAdapter = new ExerciseAdapter(AddExerciseActivity.this, exercises);
-            recyclerView.setAdapter(exerciseAdapter);
+            exerciseSelectionAdapter = new ExerciseSelectionAdapter(AddExerciseActivity.this, exercises);
+            recyclerView.setAdapter(exerciseSelectionAdapter);
         }
     }
 
     @Override
     public void onBackPressed() {
-        if (recyclerView.getAdapter() == exerciseAdapter) {
-            recyclerView.setAdapter(categoryAdapter);
+        if (recyclerView.getAdapter() == exerciseSelectionAdapter) {
+            recyclerView.setAdapter(categorySelectionAdapter);
         } else {
             super.onBackPressed();
         }

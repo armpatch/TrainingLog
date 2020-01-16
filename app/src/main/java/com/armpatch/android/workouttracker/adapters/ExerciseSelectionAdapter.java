@@ -15,7 +15,7 @@ import com.armpatch.android.workouttracker.model.Exercise;
 
 import java.util.List;
 
-public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ExerciseListItemHolder> {
+public class ExerciseSelectionAdapter extends RecyclerView.Adapter<ExerciseSelectionAdapter.ExerciseListItemHolder> {
 
     private Context activityContext;
     private List<Exercise> exercises;
@@ -25,7 +25,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         void onExerciseHolderSelected(Exercise exercise);
     }
 
-    public ExerciseAdapter(Context activityContext, List<Exercise> exercises) {
+    public ExerciseSelectionAdapter(Context activityContext, List<Exercise> exercises) {
         this.activityContext = activityContext;
         this.exercises = exercises;
         activityCallback = (Callback) activityContext;

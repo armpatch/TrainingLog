@@ -14,7 +14,7 @@ import com.armpatch.android.workouttracker.model.Category;
 
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
+public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelectionAdapter.CategoryHolder> {
 
     private Context activityContext;
     private List<Category> categories;
@@ -24,7 +24,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         void onCategoryHolderSelected(Category category);
     }
 
-    public CategoryAdapter(Context activityContext, List<Category> categories) {
+    public CategorySelectionAdapter(Context activityContext, List<Category> categories) {
         this.activityContext = activityContext;
         this.categories = categories;
         activityCallback = (Callback) activityContext;
