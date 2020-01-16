@@ -22,7 +22,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
     private Callback activityCallback;
 
     public interface Callback {
-        void onExerciseHolderSelected(String exerciseName);
+        void onExerciseHolderSelected(Exercise exercise);
     }
 
     public ExerciseAdapter(Context activityContext, List<Exercise> exercises) {
@@ -71,7 +71,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
         @Override
         public void onClick(View v) {
-            activityCallback.onExerciseHolderSelected(exercise.getName());
+            activityCallback.onExerciseHolderSelected(exercise);
         }
     }
 }

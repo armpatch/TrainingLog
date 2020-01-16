@@ -7,6 +7,10 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 public class Tools {
 
+    public static String KEY_EXERCISE_NAME = "KEY_EXERCISE_NAME";
+    public static String KEY_ORDER_IN_WORKOUT = "KEY_ORDER_IN_WORKOUT";
+    public static String KEY_EXERCISE_DATE = "KEY_EXERCISE";
+
     public static String relativeDateText(Context activityContext, int days) {
         LocalDate today = LocalDate.now().plusDays(days);
 

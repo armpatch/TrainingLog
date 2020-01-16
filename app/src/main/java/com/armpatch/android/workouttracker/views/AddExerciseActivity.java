@@ -1,5 +1,6 @@
 package com.armpatch.android.workouttracker.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,13 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
+import com.armpatch.android.workouttracker.Tools;
 import com.armpatch.android.workouttracker.adapters.CategoryAdapter;
 import com.armpatch.android.workouttracker.adapters.ExerciseAdapter;
 import com.armpatch.android.workouttracker.model.Category;
 import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
+import org.threeten.bp.LocalDate;
+
 import java.util.List;
+
+import static com.armpatch.android.workouttracker.Tools.KEY_EXERCISE_DATE;
 
 public class AddExerciseActivity extends AppCompatActivity
         implements CategoryAdapter.Callback, ExerciseAdapter.Callback {
@@ -28,14 +34,22 @@ public class AddExerciseActivity extends AppCompatActivity
     List<Category> categories;
     List<Exercise> exercises;
 
+    LocalDate currentDate;
+
+    public static Intent getIntent(Context activityContext, LocalDate date) {
+        Intent intent = new Intent(activityContext, ExerciseTrackerActivity.class);
+        intent.putExtra(KEY_EXERCISE_DATE, Tools.stringFromDate(date));
+        return intent;
+    }
+
     @Override
     public void onCategoryHolderSelected(Category category) {
         new SetExercisesAdapterTask(category).execute();
     }
 
     @Override
-    public void onExerciseHolderSelected(String exerciseName) {
-        Intent intent = ExerciseTrackerActivity.newExerciseIntent(this, exerciseName);
+    public void onExerciseHolderSelected(Exercise exercise) {
+        Intent intent = ExerciseTrackerActivity.getIntent(this, currentDate, exercise, null);
         startActivity(intent);
         finish();
     }
@@ -43,6 +57,7 @@ public class AddExerciseActivity extends AppCompatActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getDataFromIntent();
 
         setContentView(R.layout.activity_add_exercise);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -55,6 +70,12 @@ public class AddExerciseActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         new SetCategoryAdapterTask().execute();
+    }
+
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+
+        currentDate = Tools.dateFromString(intent.getStringExtra(KEY_EXERCISE_DATE));
     }
 
     class SetCategoryAdapterTask extends AsyncTask<Void, Void, Void> {

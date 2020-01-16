@@ -12,19 +12,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.armpatch.android.workouttracker.R;
+import com.armpatch.android.workouttracker.Tools;
 import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
+import org.threeten.bp.LocalDate;
+
 import java.util.List;
+
+import static com.armpatch.android.workouttracker.Tools.KEY_EXERCISE_DATE;
+import static com.armpatch.android.workouttracker.Tools.KEY_EXERCISE_NAME;
+import static com.armpatch.android.workouttracker.Tools.KEY_ORDER_IN_WORKOUT;
 
 public class ExerciseTrackerActivity extends AppCompatActivity {
 
-    public static String KEY_EXERCISE_NAME = "KEY_EXERCISE_NAME";
-
     TextView toolbarTitle;
 
+    String exerciseName;
     Exercise exercise;
+    LocalDate currentDate;
+    Integer exerciseOrderInWorkout;
     List<ExerciseSet> sets;
 
 
@@ -41,13 +49,29 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
 
         toolbarTitle = findViewById(R.id.exercise_title);
 
-        String exerciseName = getIntent().getStringExtra(KEY_EXERCISE_NAME);
-        new GetExerciseTask(exerciseName).execute();
+        getDataFromIntent();
+        new GetExerciseFromNameTask(exerciseName).execute();
+
+        if (exerciseOrderInWorkout != null) {
+            new GetWorkoutSetsTask().execute();
+        } else {
+            new GetNextExerciseOrder().execute();
+        }
+
     }
 
-    public static Intent newExerciseIntent(Context activityContext, String exerciseName) {
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+
+        exerciseName = intent.getStringExtra(KEY_EXERCISE_NAME);
+        currentDate = Tools.dateFromString(intent.getStringExtra(KEY_EXERCISE_DATE));
+
+    }
+    public static Intent getIntent(Context activityContext, LocalDate date, Exercise exercise, Integer exerciseOrderInWorkout) {
         Intent intent = new Intent(activityContext, ExerciseTrackerActivity.class);
-        intent.putExtra(KEY_EXERCISE_NAME, exerciseName);
+        intent.putExtra(KEY_EXERCISE_NAME, exercise.getName());
+        intent.putExtra(KEY_EXERCISE_DATE, Tools.stringFromDate(date));
+        intent.putExtra(KEY_ORDER_IN_WORKOUT, exerciseOrderInWorkout);
         return intent;
     }
 
@@ -57,11 +81,11 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         return true;
     }
 
-    class GetExerciseTask extends AsyncTask<Void, Void, Void> {
+    class GetExerciseFromNameTask extends AsyncTask<Void, Void, Void> {
 
         String name;
 
-        private GetExerciseTask(String name) {
+        private GetExerciseFromNameTask(String name) {
             this.name = name;
         }
 
@@ -77,4 +101,35 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
             toolbarTitle.setText(exercise.getName());
         }
     }
+
+    class GetWorkoutSetsTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            WorkoutRepository repository = new WorkoutRepository(ExerciseTrackerActivity.this);
+            sets = repository.getExerciseSets(currentDate, exerciseOrderInWorkout);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // Todo update ui with existing sets and allow user to add sets
+        }
+    }
+
+    class GetNextExerciseOrder extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            WorkoutRepository repository = new WorkoutRepository(ExerciseTrackerActivity.this);
+            exerciseOrderInWorkout = repository.getExerciseCount(currentDate) + 1;
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // Todo allow user to add sets
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.armpatch.android.workouttracker.model;
 import android.content.Context;
 
 import com.armpatch.android.workouttracker.Tools;
+
 import org.threeten.bp.LocalDate;
 
 import java.util.List;
@@ -48,6 +49,16 @@ public class WorkoutRepository {
 
     public List<Category> getCategories() {
         return categoryDao.getCategories();
+    }
+
+    public Integer getExerciseCount(LocalDate localDate) {
+        String date = Tools.stringFromDate(localDate);
+        return exerciseSetDao.getExerciseCount(date);
+    }
+
+    public List<ExerciseSet> getExerciseSets(LocalDate localDate, int exerciseOrder) {
+        String date = Tools.stringFromDate(localDate);
+        return exerciseSetDao.getExerciseSets(date, exerciseOrder);
     }
 
     // Insert

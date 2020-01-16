@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView dateBarText;
     ViewPager viewPager;
-    LocalDate selectedDate;
+    LocalDate currentDate;
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            selectedDate = (LocalDate.now().plusDays(WorkoutAdapter.relativeDays(position)));
+            currentDate = (LocalDate.now().plusDays(WorkoutAdapter.relativeDays(position)));
             dateBarText.setText(Tools.relativeDateText(MainActivity.this, WorkoutAdapter.relativeDays(position)));
         }
 
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         int itemId = item.getItemId();
 
         if (itemId == R.id.add_exercise) {
-            Intent addExerciseIntent = new Intent(this, AddExerciseActivity.class);
+            Intent addExerciseIntent = AddExerciseActivity.getIntent(this, currentDate);
             startActivity(addExerciseIntent);
         }
 

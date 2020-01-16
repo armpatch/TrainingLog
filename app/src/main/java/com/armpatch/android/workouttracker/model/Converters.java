@@ -5,12 +5,12 @@ import androidx.room.TypeConverter;
 class Converters {
 
     @TypeConverter
-    static Category categoryFromString(String name) {
+    public static Category categoryFromString(String name) {
         return new Category(name);
     }
 
     @TypeConverter
-    static String nameFromExerciseCategory(Category category) {
+    public static String nameFromExerciseCategory(Category category) {
         return category.getName();
     }
 
