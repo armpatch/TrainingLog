@@ -15,7 +15,7 @@ import com.armpatch.android.workouttracker.model.Exercise;
 
 import java.util.List;
 
-public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ExerciseHolder> {
+public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ExerciseListItemHolder> {
 
     private Context activityContext;
     private List<Exercise> exercises;
@@ -33,15 +33,15 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
     @NonNull
     @Override
-    public ExerciseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ExerciseListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activityContext)
                 .inflate(R.layout.content_add_exercise_list_item, parent, false);
 
-        return new ExerciseHolder(view);
+        return new ExerciseListItemHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExerciseHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ExerciseListItemHolder holder, int position) {
         holder.bind(exercises.get(position));
     }
 
@@ -50,13 +50,13 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         return exercises.size();
     }
 
-    class ExerciseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ExerciseListItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         Exercise exercise;
         TextView nameTextView;
         ImageView expandCollapseIcon;
 
-        ExerciseHolder(@NonNull View itemView) {
+        ExerciseListItemHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.text_view);
             expandCollapseIcon = itemView.findViewById(R.id.expand_collapse_icon);
