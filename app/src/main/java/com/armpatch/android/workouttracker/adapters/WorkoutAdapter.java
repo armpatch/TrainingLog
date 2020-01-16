@@ -77,7 +77,7 @@ public class WorkoutAdapter extends PagerAdapter {
             repository = new WorkoutRepository(getContext());
             workoutData = new WorkoutData(date);
 
-            itemView = inflater.inflate(R.layout.content_workout_exercises, null);
+            itemView = inflater.inflate(R.layout.content_workout_holder, null);
             commentTextView = itemView.findViewById(R.id.workout_comments);
             commentTextView.setOnClickListener(this);
         }

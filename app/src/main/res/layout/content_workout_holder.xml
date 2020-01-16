@@ -25,13 +25,4 @@
 
 
 
-    <TextView
-            android:id="@+id/exercises_placeholder_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Nothing Here"
-            android:gravity="center"
-            style="@style/TextDark"
-            />
-
 </LinearLayout>

@@ -21,7 +21,7 @@ public class EditCommentsDialog extends Dialog {
         super(context);
         this.callbacks = callbacks;
 
-        setContentView(R.layout.dialog_workout_comment);
+        setContentView(R.layout.dialog_comment_editor);
 
         commentEditText = findViewById(R.id.edit_text);
 

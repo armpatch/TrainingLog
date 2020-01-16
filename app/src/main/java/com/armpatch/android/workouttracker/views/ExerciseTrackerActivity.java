@@ -39,7 +39,7 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_excercise_tracker);
+        setContentView(R.layout.activity_exercise_tracker);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
