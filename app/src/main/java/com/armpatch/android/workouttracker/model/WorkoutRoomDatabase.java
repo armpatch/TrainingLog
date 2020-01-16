@@ -7,6 +7,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.armpatch.android.workouttracker.Tools;
+
+import org.threeten.bp.LocalDate;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -44,6 +48,10 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
 
         final Exercise pull_up = new Exercise("pull up", MeasurementType.WEIGHT_AND_REPS, arms);
 
+        String date = Tools.stringFromDate(LocalDate.now());
+
+        final ExerciseSet set1 = new ExerciseSet(date, pull_up.getName(), 150, 10);
+
         WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -51,6 +59,7 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
                 categoryDao().insert(arms);
 
                 exerciseDao().insert(pull_up);
+                exerciseSetDao().insert(set1);
             }
         });
     }

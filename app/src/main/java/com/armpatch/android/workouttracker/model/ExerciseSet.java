@@ -4,17 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.UUID;
+
 @Entity(tableName = "exercise_set_table")
 public class ExerciseSet {
 
     @PrimaryKey
-    public int id;
+    public String id;
 
     @NonNull
     private String date;
 
     @NonNull
-    private String exerciseId;
+    private String exerciseName;
 
     private int exerciseOrder;
 
@@ -25,9 +27,18 @@ public class ExerciseSet {
     private float measurement1;
     private float measurement2;
 
+    ExerciseSet(String date, String exerciseId, float measurement1, float measurement2) {
+        this.date = date;
+        this.exerciseName = exerciseId;
+        this.measurement1 = measurement1;
+        this.measurement2 = measurement2;
+        id = UUID.randomUUID().toString();
+    }
+
     ExerciseSet(String date, String exerciseId) {
         this.date = date;
-        this.exerciseId = exerciseId;
+        this.exerciseName = exerciseId;
+        id = UUID.randomUUID().toString();
     }
 
     // setters
@@ -58,8 +69,8 @@ public class ExerciseSet {
         return this.date;
     }
 
-    String getExerciseId() {
-        return this.exerciseId;
+    String getExerciseName() {
+        return this.exerciseName;
     }
 
     int getExerciseOrder() {
