@@ -9,15 +9,15 @@
                  android:theme="@style/AppTheme"
                  tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".views.MainActivity" >
+        <activity android:name=".activity.MainActivity" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".views.AddExerciseActivity" />
-        <activity android:name=".views.ExerciseTrackerActivity" />
+        <activity android:name=".activity.AddExerciseActivity" />
+        <activity android:name=".activity.ExerciseTrackerActivity" />
 
     </application>
 </manifest>

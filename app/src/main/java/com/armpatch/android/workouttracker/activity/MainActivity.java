@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker.views;
+package com.armpatch.android.workouttracker.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
