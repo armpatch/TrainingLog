@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
@@ -28,12 +27,12 @@ public class ExerciseCardAdapter implements ListAdapter {
 
     @Override
     public boolean areAllItemsEnabled() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled(int position) {
-        return false;
+        return true;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class ExerciseCardAdapter implements ListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = LayoutInflater.from(activityContext).inflate(R.layout.content_tracker_set, null);
+        View view = LayoutInflater.from(activityContext).inflate(R.layout.content_tracker_set, parent, false);
 
         return view;
     }
