@@ -28,7 +28,7 @@ public class ExerciseSet {
     private float measurement1;
     private float measurement2;
 
-    ExerciseSet(String date,
+    public ExerciseSet(String date,
                 String exerciseName,
                 float measurement1,
                 float measurement2,
