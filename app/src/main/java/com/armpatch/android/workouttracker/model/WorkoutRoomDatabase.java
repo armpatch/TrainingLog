@@ -50,7 +50,7 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
 
         String date = Tools.stringFromDate(LocalDate.now());
 
-        final ExerciseSet set1 = new ExerciseSet(date, pull_up.getName(), 150, 10);
+        final ExerciseSet set1 = new ExerciseSet(date, pull_up.getName(), 150, 10, 0,1);
 
         WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
