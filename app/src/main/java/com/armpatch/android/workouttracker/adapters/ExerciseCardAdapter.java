@@ -13,19 +13,18 @@ import com.armpatch.android.workouttracker.SetComparator;
 import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExerciseCardAdapter implements ListAdapter {
 
     Context activityContext;
-    List<ExerciseSet> sets;
+    List<GroupData> groupDataList;
 
     public ExerciseCardAdapter(Context activityContext, List<ExerciseSet> sets) {
-        this.sets = sets;
         this.activityContext = activityContext;
 
-        // TODO separate sets into groups
-
+        groupDataList = createGroupsDataListFrom(sets);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class ExerciseCardAdapter implements ListAdapter {
 
     @Override
     public int getCount() {
-        return sets.size();
+        return groupDataList.size();
     }
 
     @Override
@@ -90,10 +89,25 @@ public class ExerciseCardAdapter implements ListAdapter {
         return false;
     }
 
-    void sortSets(List<ExerciseSet> sets) {
+    private List<GroupData> createGroupsDataListFrom(List<ExerciseSet> sets) {
         sets.sort(SetComparator.get());
+        List<GroupData> groupDataList = new ArrayList<>();
 
+        int prevSetsGroupNumber = 1;
+        GroupData currentGroupData = null;
 
+        for (ExerciseSet set : sets) {
+            if (currentGroupData == null || set.getExerciseOrder() != prevSetsGroupNumber){
+                groupDataList.add(currentGroupData);
+                currentGroupData = new GroupData(set.getExerciseName(), set.getExerciseOrder());
+            }
+
+            currentGroupData.sets.add(set);
+            prevSetsGroupNumber = set.getExerciseOrder();
+        }
+        groupDataList.add(currentGroupData);
+
+        return groupDataList;
     }
 
     class ExerciseCardHolder {
@@ -104,8 +118,13 @@ public class ExerciseCardAdapter implements ListAdapter {
     }
 
     class GroupData {
-        Exercise exercise;
-        int orderInWorkout;
+        private String exercise;
+        private int groupNumber;
         List<ExerciseSet> sets;
+
+        GroupData(String exercise, int groupNumber) {
+            this.exercise = exercise;
+            this.groupNumber = groupNumber;
+        }
     }
 }
