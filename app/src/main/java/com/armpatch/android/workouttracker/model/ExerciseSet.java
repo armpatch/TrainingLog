@@ -79,15 +79,15 @@ public class ExerciseSet {
         return this.date;
     }
 
-    String getExerciseName() {
+    public String getExerciseName() {
         return this.exerciseName;
     }
 
-    int getExerciseOrder() {
+    public int getExerciseOrder() {
         return this.exerciseOrder;
     }
 
-    int getOrder() {
+    public int getOrder() {
         return order;
     }
 

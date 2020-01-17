@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
 import com.armpatch.android.workouttracker.R;
+import com.armpatch.android.workouttracker.SetComparator;
+import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class ExerciseCardAdapter implements ListAdapter {
         this.activityContext = activityContext;
 
         // TODO separate sets into groups
+
     }
 
     @Override
@@ -87,5 +90,22 @@ public class ExerciseCardAdapter implements ListAdapter {
         return false;
     }
 
+    void sortSets(List<ExerciseSet> sets) {
+        sets.sort(SetComparator.get());
 
+
+    }
+
+    class ExerciseCardHolder {
+        View itemView;
+        Exercise exercise;
+        int orderInWorkout;
+        List<ExerciseSet> sets;
+    }
+
+    class GroupData {
+        Exercise exercise;
+        int orderInWorkout;
+        List<ExerciseSet> sets;
+    }
 }
