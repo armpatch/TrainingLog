@@ -82,8 +82,8 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             itemView = inflater.inflate(R.layout.content_workout_holder, null);
             commentTextView = itemView.findViewById(R.id.workout_comments);
             commentTextView.setOnClickListener(this);
+
             exerciseListView = itemView.findViewById(R.id.exercise_group_list);
-            exerciseListView.setAdapter(new ExerciseCardAdapter(workoutData.sets));
         }
 
         @Override
@@ -132,7 +132,8 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             protected void onPostExecute(Void aVoid) {
                 commentTextView.setText(workoutData.getComment());
                 // Todo transform list of sets into Views
-
+                ExerciseCardAdapter adapter = new ExerciseCardAdapter(activityContext, workoutData.sets);
+                exerciseListView.setAdapter(adapter);
             }
         }
 

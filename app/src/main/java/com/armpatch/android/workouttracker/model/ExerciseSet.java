@@ -9,6 +9,7 @@ import java.util.UUID;
 @Entity(tableName = "exercise_set_table")
 public class ExerciseSet {
 
+    @NonNull
     @PrimaryKey
     public String id;
 
@@ -16,7 +17,7 @@ public class ExerciseSet {
     private String date;
 
     @NonNull
-    private String exerciseName;
+    String exerciseName;
 
     private int exerciseOrder;
 
@@ -27,9 +28,9 @@ public class ExerciseSet {
     private float measurement1;
     private float measurement2;
 
-    ExerciseSet(String date, String exerciseId, float measurement1, float measurement2) {
+    ExerciseSet(String date, String exerciseName, float measurement1, float measurement2) {
         this.date = date;
-        this.exerciseName = exerciseId;
+        this.exerciseName = exerciseName;
         this.measurement1 = measurement1;
         this.measurement2 = measurement2;
         id = UUID.randomUUID().toString();
@@ -42,6 +43,15 @@ public class ExerciseSet {
     }
 
     // setters
+
+
+    public void setDate(@NonNull String date) {
+        this.date = date;
+    }
+
+    public void setExerciseName(@NonNull String exerciseName) {
+        this.exerciseName = exerciseName;
+    }
 
     void setExerciseOrder(int exerciseOrder) {
         this.exerciseOrder = exerciseOrder;
@@ -85,11 +95,11 @@ public class ExerciseSet {
         return comment;
     }
 
-    float getMeasurement1() {
+    public float getMeasurement1() {
         return measurement1;
     }
 
-    float getMeasurement2() {
+    public float getMeasurement2() {
         return measurement2;
     }
 

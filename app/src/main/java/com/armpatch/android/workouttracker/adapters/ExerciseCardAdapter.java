@@ -1,21 +1,29 @@
 package com.armpatch.android.workouttracker.adapters;
 
 
+import android.content.Context;
 import android.database.DataSetObserver;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
+import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 
 import java.util.List;
 
 public class ExerciseCardAdapter implements ListAdapter {
 
+    Context activityContext;
     List<ExerciseSet> sets;
 
-    public ExerciseCardAdapter(List<ExerciseSet> sets) {
+    public ExerciseCardAdapter(Context activityContext, List<ExerciseSet> sets) {
         this.sets = sets;
+        this.activityContext = activityContext;
+
+        // TODO separate sets into groups
     }
 
     @Override
@@ -40,7 +48,7 @@ public class ExerciseCardAdapter implements ListAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return sets.size();
     }
 
     @Override
@@ -60,7 +68,9 @@ public class ExerciseCardAdapter implements ListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        View view = LayoutInflater.from(activityContext).inflate(R.layout.content_tracker_set, null);
+
+        return view;
     }
 
     @Override
@@ -70,7 +80,7 @@ public class ExerciseCardAdapter implements ListAdapter {
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override
