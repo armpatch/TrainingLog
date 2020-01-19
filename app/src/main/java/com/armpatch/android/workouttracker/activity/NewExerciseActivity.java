@@ -25,7 +25,7 @@ import java.util.List;
 
 import static com.armpatch.android.workouttracker.Tools.KEY_EXERCISE_DATE;
 
-public class AddExerciseActivity extends AppCompatActivity
+public class NewExerciseActivity extends AppCompatActivity
         implements CategorySelectionAdapter.Callback, ExerciseSelectionAdapter.Callback {
 
     RecyclerView recyclerView;
@@ -82,7 +82,7 @@ public class AddExerciseActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... voids) {
-            WorkoutRepository repo = new WorkoutRepository(AddExerciseActivity.this);
+            WorkoutRepository repo = new WorkoutRepository(NewExerciseActivity.this);
             categories = repo.getCategories();
 
             return null;
@@ -91,7 +91,7 @@ public class AddExerciseActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void aVoid) {
             if (categorySelectionAdapter == null) {
-                categorySelectionAdapter = new CategorySelectionAdapter(AddExerciseActivity.this, categories);
+                categorySelectionAdapter = new CategorySelectionAdapter(NewExerciseActivity.this, categories);
                 recyclerView.setAdapter(categorySelectionAdapter);
             } else {
                 categorySelectionAdapter.setCategories(categories);
@@ -111,7 +111,7 @@ public class AddExerciseActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... voids) {
-            WorkoutRepository repo = new WorkoutRepository(AddExerciseActivity.this);
+            WorkoutRepository repo = new WorkoutRepository(NewExerciseActivity.this);
             exercises = repo.getExercises(category);
 
             return null;
@@ -119,7 +119,7 @@ public class AddExerciseActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            exerciseSelectionAdapter = new ExerciseSelectionAdapter(AddExerciseActivity.this, exercises);
+            exerciseSelectionAdapter = new ExerciseSelectionAdapter(NewExerciseActivity.this, exercises);
             recyclerView.setAdapter(exerciseSelectionAdapter);
         }
     }

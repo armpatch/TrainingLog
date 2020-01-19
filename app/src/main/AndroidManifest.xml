@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.AddExerciseActivity" />
+        <activity android:name=".activity.NewExerciseActivity" />
         <activity android:name=".activity.ExerciseTrackerActivity" />
 
     </application>

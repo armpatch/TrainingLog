@@ -82,7 +82,7 @@ public class WorkoutPagerActivity extends AppCompatActivity {
         int itemId = item.getItemId();
 
         if (itemId == R.id.add_exercise) {
-            Intent addExerciseIntent = AddExerciseActivity.getIntent(this, currentDate);
+            Intent addExerciseIntent = NewExerciseActivity.getIntent(this, currentDate);
             startActivity(addExerciseIntent);
         }
 
