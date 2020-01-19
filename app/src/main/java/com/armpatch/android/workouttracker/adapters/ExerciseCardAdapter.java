@@ -90,7 +90,7 @@ public class ExerciseCardAdapter implements ListAdapter {
     }
 
     private List<GroupData> createGroupsDataListFrom(List<ExerciseSet> sets) {
-        sets.sort(SetComparator.get());
+        sets.sort(new SetComparator());
         List<GroupData> groupDataList = new ArrayList<>();
 
         int prevSetsGroupNumber = 1;
