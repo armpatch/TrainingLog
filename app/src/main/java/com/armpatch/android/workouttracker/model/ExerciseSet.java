@@ -20,11 +20,8 @@ public class ExerciseSet {
     private String exerciseName;
 
     private int exerciseOrder;
-
     private int order;
-
     private String comment;
-
     private float measurement1;
     private float measurement2;
 

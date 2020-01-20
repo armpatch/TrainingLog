@@ -7,6 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.armpatch.android.workouttracker.MeasurementType;
 import com.armpatch.android.workouttracker.Tools;
 
 import org.threeten.bp.LocalDate;

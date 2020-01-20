@@ -1,6 +1,7 @@
-package com.armpatch.android.workouttracker.model;
+package com.armpatch.android.workouttracker;
 
 import com.armpatch.android.workouttracker.Tools;
+import com.armpatch.android.workouttracker.model.ExerciseSet;
 
 import org.threeten.bp.LocalDate;
 

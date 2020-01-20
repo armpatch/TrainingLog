@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker.model;
+package com.armpatch.android.workouttracker;
 
 public class MeasurementType {
     public static int WEIGHT = 1;

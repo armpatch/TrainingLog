@@ -15,7 +15,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.armpatch.android.workouttracker.EditCommentsDialog;
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.WorkoutComment;
-import com.armpatch.android.workouttracker.model.WorkoutData;
+import com.armpatch.android.workouttracker.WorkoutData;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
