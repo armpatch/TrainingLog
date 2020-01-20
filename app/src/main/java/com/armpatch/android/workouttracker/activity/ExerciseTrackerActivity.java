@@ -29,12 +29,10 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
 
     TextView toolbarTitle;
 
-    String exerciseName;
     Exercise exercise;
     LocalDate currentDate;
     Integer exerciseOrderInWorkout;
     List<ExerciseSet> sets;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,11 +44,11 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-
         toolbarTitle = findViewById(R.id.exercise_title);
 
-        getDataFromIntent();
-        new GetExerciseFromNameTask(exerciseName).execute();
+        currentDate = Tools.dateFromString(getIntent().getStringExtra(KEY_EXERCISE_DATE));
+
+        new GetExerciseFromNameTask(getIntent().getStringExtra(KEY_EXERCISE_NAME)).execute();
 
         if (exerciseOrderInWorkout != null) {
             new GetWorkoutSetsTask().execute();
@@ -60,13 +58,6 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
 
     }
 
-    private void getDataFromIntent() {
-        Intent intent = getIntent();
-
-        exerciseName = intent.getStringExtra(KEY_EXERCISE_NAME);
-        currentDate = Tools.dateFromString(intent.getStringExtra(KEY_EXERCISE_DATE));
-
-    }
     public static Intent getIntent(Context activityContext, LocalDate date, Exercise exercise, Integer exerciseOrderInWorkout) {
         Intent intent = new Intent(activityContext, ExerciseTrackerActivity.class);
         intent.putExtra(KEY_EXERCISE_NAME, exercise.getName());

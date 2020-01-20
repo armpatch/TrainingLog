@@ -120,7 +120,7 @@ public class ExerciseCardAdapter implements ListAdapter {
     class GroupData {
         private String exercise;
         private int groupNumber;
-        List<ExerciseSet> sets;
+        List<ExerciseSet> sets = new ArrayList<>();
 
         GroupData(String exercise, int groupNumber) {
             this.exercise = exercise;
