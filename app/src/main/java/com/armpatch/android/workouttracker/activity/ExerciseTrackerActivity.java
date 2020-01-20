@@ -29,7 +29,7 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
 
     TextView toolbarTitle;
 
-    Exercise exercise;
+    String exerciseName;
     LocalDate currentDate;
     Integer exerciseOrderInWorkout;
     List<ExerciseSet> sets;
@@ -47,13 +47,13 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         toolbarTitle = findViewById(R.id.exercise_title);
 
         currentDate = Tools.dateFromString(getIntent().getStringExtra(KEY_EXERCISE_DATE));
-
-        new GetExerciseFromNameTask(getIntent().getStringExtra(KEY_EXERCISE_NAME)).execute();
+        exerciseName = getIntent().getStringExtra(KEY_EXERCISE_NAME);
+        toolbarTitle.setText(exerciseName);
 
         if (exerciseOrderInWorkout != null) {
-            new GetWorkoutSetsTask().execute();
+            new GetSetsTask().execute();
         } else {
-            new GetNextExerciseOrder().execute();
+            new GetExerciseCountTask().execute();
         }
 
     }
@@ -72,33 +72,12 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         return true;
     }
 
-    class GetExerciseFromNameTask extends AsyncTask<Void, Void, Void> {
-
-        String name;
-
-        private GetExerciseFromNameTask(String name) {
-            this.name = name;
-        }
+    class GetSetsTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
             WorkoutRepository repository = new WorkoutRepository(ExerciseTrackerActivity.this);
-            exercise = repository.getExercise(name);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            toolbarTitle.setText(exercise.getName());
-        }
-    }
-
-    class GetWorkoutSetsTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            WorkoutRepository repository = new WorkoutRepository(ExerciseTrackerActivity.this);
-            sets = repository.getExerciseSets(currentDate, exerciseOrderInWorkout);
+            sets = repository.getExerciseSets(currentDate, exerciseName);
 
             return null;
         }
@@ -109,11 +88,11 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         }
     }
 
-    class GetNextExerciseOrder extends AsyncTask<Void, Void, Void> {
+    class GetExerciseCountTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             WorkoutRepository repository = new WorkoutRepository(ExerciseTrackerActivity.this);
-            exerciseOrderInWorkout = repository.getExerciseCount(currentDate) + 1;
+            exerciseOrderInWorkout = repository.getDistinctExerciseCount(currentDate) + 1;
             return null;
         }
 

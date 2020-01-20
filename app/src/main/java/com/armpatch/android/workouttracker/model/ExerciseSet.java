@@ -19,7 +19,6 @@ public class ExerciseSet {
     @NonNull
     private String exerciseName;
 
-    private int exerciseOrder;
     private int order;
     private String comment;
     private float measurement1;
@@ -35,7 +34,6 @@ public class ExerciseSet {
         id = UUID.randomUUID().toString();
         this.date = date;
         this.exerciseName = exerciseName;
-        this.exerciseOrder = exerciseOrder;
         this.order = order;
         this.measurement1 = measurement1;
         this.measurement2 = measurement2;
@@ -45,10 +43,6 @@ public class ExerciseSet {
 
     public void setDate(@NonNull String date) {
         this.date = date;
-    }
-
-    void setExerciseOrder(int exerciseOrder) {
-        this.exerciseOrder = exerciseOrder;
     }
 
     void setOrder(int order) {
@@ -75,10 +69,6 @@ public class ExerciseSet {
 
     public String getExerciseName() {
         return this.exerciseName;
-    }
-
-    public int getExerciseOrder() {
-        return this.exerciseOrder;
     }
 
     public int getOrder() {

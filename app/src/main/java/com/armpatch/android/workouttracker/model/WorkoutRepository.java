@@ -57,14 +57,14 @@ public class WorkoutRepository {
         return categoryDao.getCategories();
     }
 
-    public Integer getExerciseCount(LocalDate localDate) {
+    public Integer getDistinctExerciseCount(LocalDate localDate) {
         String date = Tools.stringFromDate(localDate);
-        return exerciseSetDao.getExerciseCount(date);
+        return exerciseSetDao.getDistinctExerciseCount(date);
     }
 
-    public List<ExerciseSet> getExerciseSets(LocalDate localDate, int exerciseOrder) {
+    public List<ExerciseSet> getExerciseSets(LocalDate localDate, String exerciseName) {
         String date = Tools.stringFromDate(localDate);
-        return exerciseSetDao.getExerciseSets(date, exerciseOrder);
+        return exerciseSetDao.getExerciseSets(date, exerciseName);
     }
 
     public List<ExerciseSet> getExerciseSets(String date) {
