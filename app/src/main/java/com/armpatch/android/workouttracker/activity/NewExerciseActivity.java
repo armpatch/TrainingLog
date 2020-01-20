@@ -49,7 +49,7 @@ public class NewExerciseActivity extends AppCompatActivity
 
     @Override
     public void onExerciseHolderSelected(Exercise exercise) {
-        Intent intent = ExerciseTrackerActivity.getIntent(this, currentDate, exercise, null);
+        Intent intent = ExerciseTrackerActivity.getIntent(this, currentDate, exercise);
         startActivity(intent);
         finish();
     }
