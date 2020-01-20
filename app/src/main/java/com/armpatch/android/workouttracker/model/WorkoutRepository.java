@@ -10,7 +10,7 @@ import java.util.List;
 
 public class WorkoutRepository {
 
-    private WorkoutCommentDao commentDao;
+    private WorkoutDao workoutDao;
     private ExerciseDao exerciseDao;
     private ExerciseSetDao exerciseSetDao;
     private CategoryDao categoryDao;
@@ -22,7 +22,7 @@ public class WorkoutRepository {
 
     public WorkoutRepository(Context application) {
         WorkoutRoomDatabase db = WorkoutRoomDatabase.getDatabase(application);
-        commentDao = db.commentDao();
+        workoutDao = db.workoutDao();
         exerciseDao = db.exerciseDao();
         exerciseSetDao = db.exerciseSetDao();
         categoryDao = db.categoryDao();
@@ -30,9 +30,15 @@ public class WorkoutRepository {
 
     // Retrieve
 
-    public WorkoutComment getWorkoutComment(LocalDate localDate) {
-        String date = Tools.stringFromDate(localDate);
-        return commentDao.getWorkoutComment(date);
+    public Workout getWorkout(String date) {
+        Workout workout = workoutDao.getWorkout(date);
+
+        if (workout == null) {
+            workout = new Workout(date);
+            insert(workout);
+        }
+
+        return workout;
     }
 
     public Exercise getExercise(String name) {
@@ -61,19 +67,18 @@ public class WorkoutRepository {
         return exerciseSetDao.getExerciseSets(date, exerciseOrder);
     }
 
-    public List<ExerciseSet> getExerciseSets(LocalDate localDate) {
-        String date = Tools.stringFromDate(localDate);
+    public List<ExerciseSet> getExerciseSets(String date) {
         return exerciseSetDao.getExerciseSets(date);
     }
 
     // Insert
 
-    public void insert(final WorkoutComment comment) {
+    public void insert(final Workout workout) {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
                 new Runnable() {
                     @Override
                     public void run() {
-                        commentDao.insert(comment);
+                        workoutDao.insert(workout);
                     }
                 });
     }
@@ -84,6 +89,18 @@ public class WorkoutRepository {
                     @Override
                     public void run() {
                         exerciseDao.insert(exercise);
+                    }
+                });
+    }
+
+    // Update
+
+    public void update(final Workout workout) {
+        WorkoutRoomDatabase.databaseWriteExecutor.execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        workoutDao.update(workout);
                     }
                 });
     }

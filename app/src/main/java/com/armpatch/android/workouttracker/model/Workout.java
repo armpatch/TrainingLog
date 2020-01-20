@@ -17,6 +17,7 @@ public class Workout {
 
     public Workout(String date) {
         this.date = date;
+        comments = "";
     }
 
     @NonNull

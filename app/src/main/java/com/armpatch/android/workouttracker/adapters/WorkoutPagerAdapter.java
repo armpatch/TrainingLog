@@ -14,11 +14,14 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.armpatch.android.workouttracker.EditCommentsDialog;
 import com.armpatch.android.workouttracker.R;
-import com.armpatch.android.workouttracker.model.WorkoutComment;
-import com.armpatch.android.workouttracker.WorkoutData;
+import com.armpatch.android.workouttracker.Tools;
+import com.armpatch.android.workouttracker.model.ExerciseSet;
+import com.armpatch.android.workouttracker.model.Workout;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
+
+import java.util.List;
 
 public class WorkoutPagerAdapter extends PagerAdapter {
 
@@ -69,7 +72,10 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         private Context activityContext;
         private WorkoutRepository repository;
 
-        private WorkoutData workoutData;
+        private LocalDate date;
+        private Workout workout;
+        List<ExerciseSet> sets;
+
         private View itemView;
         private TextView commentTextView;
         private ListView exerciseListView;
@@ -77,7 +83,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         WorkoutHolder(final Context activityContext, LocalDate date) {
             this.activityContext = activityContext;
             repository = new WorkoutRepository(getContext());
-            workoutData = new WorkoutData(date);
+            this.date = date;
 
             itemView = inflater.inflate(R.layout.content_workout_holder, null);
             commentTextView = itemView.findViewById(R.id.workout_comments);
@@ -87,8 +93,8 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         }
 
         @Override
-        public void onCommentSaved(String comment) {
-            workoutData.setComment(comment);
+        public void onCommentSaved(String comments) {
+            workout.setComments(comments);
             new SaveToDatabase().execute();
         }
 
@@ -112,27 +118,24 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         }
 
         LocalDate getDate() {
-            return workoutData.getDate();
+            return date;
         }
 
         class UpdateFromDatabase extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                WorkoutComment comment = repository.getWorkoutComment(WorkoutHolder.this.getDate());
-                if (comment != null)
-                    workoutData.setComment(comment.getText());
-
-                workoutData.sets = repository.getExerciseSets(workoutData.getDate());
-
+                String date = Tools.stringFromDate(WorkoutHolder.this.getDate());
+                workout = repository.getWorkout(date);
+                sets = repository.getExerciseSets(workout.getDate());
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                commentTextView.setText(workoutData.getComment());
-                // Todo transform list of sets into Views
-                ExerciseCardAdapter adapter = new ExerciseCardAdapter(activityContext, workoutData.sets);
+                commentTextView.setText(workout.getComments());
+                // Todo create views from sets
+                ExerciseCardAdapter adapter = new ExerciseCardAdapter(activityContext, sets);
                 exerciseListView.setAdapter(adapter);
             }
         }
@@ -140,7 +143,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         class SaveToDatabase extends AsyncTask<Void, Void, Void> {
             @Override
             protected Void doInBackground(Void... voids) {
-                repository.insert(new WorkoutComment(workoutData.getDateString(), workoutData.getComment()));
+                repository.update(workout);
                 return null;
             }
 
