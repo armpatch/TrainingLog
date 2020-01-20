@@ -26,7 +26,7 @@ import java.util.List;
 public class WorkoutPagerAdapter extends PagerAdapter {
 
     private static final int ITEM_COUNT = 10000;
-    public static final int STARTING_ITEM = 5000; // Today
+    public static final int POSITION_TODAY = 5000;
 
     private Context activityContext;
     private LayoutInflater inflater;
@@ -49,7 +49,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        LocalDate currentDate = LocalDate.now().plusDays(position - STARTING_ITEM);
+        LocalDate currentDate = LocalDate.now().plusDays(position - POSITION_TODAY);
 
         WorkoutHolder workoutHolder = new WorkoutHolder(activityContext, currentDate);
         workoutHolder.updateFromDatabase();
@@ -64,8 +64,8 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         container.removeView(((WorkoutHolder) object).itemView);
     }
 
-    public static int relativeDays(int position) {
-        return position - STARTING_ITEM;
+    public LocalDate getSelectedItemDate(int currentPosition) {
+        return (LocalDate.now().plusDays(currentPosition - POSITION_TODAY));
     }
 
     class WorkoutHolder implements View.OnClickListener, EditCommentsDialog.Callbacks {
@@ -82,7 +82,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
 
         WorkoutHolder(final Context activityContext, LocalDate date) {
             this.activityContext = activityContext;
-            repository = new WorkoutRepository(getContext());
+            repository = new WorkoutRepository(activityContext);
             this.date = date;
 
             itemView = inflater.inflate(R.layout.content_workout_holder, null);

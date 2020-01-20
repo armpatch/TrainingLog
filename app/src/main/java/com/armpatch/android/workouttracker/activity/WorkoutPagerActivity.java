@@ -22,6 +22,7 @@ public class WorkoutPagerActivity extends AppCompatActivity {
 
     TextView dateBarText;
     ViewPager viewPager;
+    WorkoutPagerAdapter adapter;
     LocalDate currentDate;
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -30,8 +31,8 @@ public class WorkoutPagerActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            currentDate = (LocalDate.now().plusDays(WorkoutPagerAdapter.relativeDays(position)));
-            dateBarText.setText(Tools.relativeDateText(WorkoutPagerActivity.this, WorkoutPagerAdapter.relativeDays(position)));
+            currentDate = adapter.getSelectedItemDate(position);
+            dateBarText.setText(Tools.getRelativeDateText(WorkoutPagerActivity.this, currentDate));
         }
 
         @Override
@@ -60,7 +61,7 @@ public class WorkoutPagerActivity extends AppCompatActivity {
         dateBarText.setOnClickListener(gotoToday);
 
         viewPager = findViewById(R.id.view_pager);
-        WorkoutPagerAdapter adapter = new WorkoutPagerAdapter(this);
+        adapter = new WorkoutPagerAdapter(this);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(pageChangeListener);
     }
@@ -90,6 +91,6 @@ public class WorkoutPagerActivity extends AppCompatActivity {
     }
 
     private void gotoToday() {
-        viewPager.setCurrentItem(WorkoutPagerAdapter.STARTING_ITEM, false);
+        viewPager.setCurrentItem(WorkoutPagerAdapter.POSITION_TODAY, false);
     }
 }

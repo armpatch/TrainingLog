@@ -2,6 +2,7 @@ package com.armpatch.android.workouttracker;
 
 import android.content.Context;
 
+import org.threeten.bp.Duration;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
@@ -10,8 +11,8 @@ public class Tools {
     public static String KEY_EXERCISE_NAME = "KEY_EXERCISE_NAME";
     public static String KEY_EXERCISE_DATE = "KEY_EXERCISE";
 
-    public static String relativeDateText(Context activityContext, int days) {
-        LocalDate today = LocalDate.now().plusDays(days);
+    public static String getRelativeDateText(Context activityContext, LocalDate selectedDate) {
+        long days = Duration.between(LocalDate.now(), selectedDate).toDays();
 
         if (days == 0)
             return activityContext.getString(R.string.today);
@@ -20,7 +21,7 @@ public class Tools {
         if (days == -1)
             return activityContext.getString(R.string.yesterday);
 
-        return formattedDate(today);
+        return formattedDate(selectedDate);
     }
 
     /**
