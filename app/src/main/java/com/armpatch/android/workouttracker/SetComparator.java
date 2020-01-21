@@ -11,16 +11,6 @@ public class SetComparator implements Comparator<ExerciseSet>{
 
     @Override
     public int compare(ExerciseSet set1, ExerciseSet set2) {
-        // sort by group
-        if (set1.getExerciseOrder() < set2.getExerciseOrder()) {
-            return -1;
-        }
-
-        if (set1.getExerciseOrder() > set2.getExerciseOrder()) {
-            return 1;
-        }
-
-        // then sort within group
         return Integer.compare(set1.getOrder(), set2.getOrder());
     }
 }

@@ -26,8 +26,7 @@ public class SetComparatorTest {
                     "pullup",
                     150,
                     150,
-                    0,
-                    currentSetOrder));
+                    0));
         }
 
         sets.sort(SetComparator.get());

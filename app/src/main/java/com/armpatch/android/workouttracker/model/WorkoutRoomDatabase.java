@@ -50,8 +50,10 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
         final Exercise pull_up = new Exercise("pull up", MeasurementType.WEIGHT_AND_REPS, arms);
 
         String date = Tools.stringFromDate(LocalDate.now());
+        final ExerciseSet set1 = new ExerciseSet(date, pull_up.getName(), 150, 10, 0);
 
-        final ExerciseSet set1 = new ExerciseSet(date, pull_up.getName(), 150, 10, 0,1);
+        final Workout workout = new Workout(date);
+        workout.setExerciseOrder(pull_up.getName());
 
         WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
@@ -61,6 +63,9 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
 
                 exerciseDao().insert(pull_up);
                 exerciseSetDao().insert(set1);
+
+                workoutDao().insert(workout);
+
             }
         });
     }

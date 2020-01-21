@@ -9,22 +9,27 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
 import com.armpatch.android.workouttracker.R;
-import com.armpatch.android.workouttracker.SetComparator;
 import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
+import com.armpatch.android.workouttracker.model.Workout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ExerciseCardAdapter implements ListAdapter {
 
-    Context activityContext;
-    List<GroupData> groupDataList;
+    private Context activityContext;
+    String[] orderedExercises;
 
-    public ExerciseCardAdapter(Context activityContext, List<ExerciseSet> sets) {
+    public ExerciseCardAdapter(Context activityContext, Workout workout, List<ExerciseSet> sets) {
         this.activityContext = activityContext;
 
-        groupDataList = createGroupsDataListFrom(sets);
+        orderedExercises = workout.getExerciseOrderArray();
+
+        // query sets using orderedExercises in for loop
+        // turn these groups into holders
+        //
+
+
     }
 
     @Override
@@ -49,7 +54,7 @@ public class ExerciseCardAdapter implements ListAdapter {
 
     @Override
     public int getCount() {
-        return groupDataList.size();
+        return orderedExercises.length;
     }
 
     @Override
@@ -69,7 +74,7 @@ public class ExerciseCardAdapter implements ListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = LayoutInflater.from(activityContext).inflate(R.layout.content_tracker_set, parent, false);
+        View view = LayoutInflater.from(activityContext).inflate(R.layout.content_exercise_group, parent, false);
 
         return view;
     }
@@ -89,42 +94,11 @@ public class ExerciseCardAdapter implements ListAdapter {
         return false;
     }
 
-    private List<GroupData> createGroupsDataListFrom(List<ExerciseSet> sets) {
-        sets.sort(new SetComparator());
-        List<GroupData> groupDataList = new ArrayList<>();
 
-        int prevSetsGroupNumber = 1;
-        GroupData currentGroupData = null;
-
-        for (ExerciseSet set : sets) {
-            if (currentGroupData == null || set.getExerciseOrder() != prevSetsGroupNumber){
-                groupDataList.add(currentGroupData);
-                currentGroupData = new GroupData(set.getExerciseName(), set.getExerciseOrder());
-            }
-
-            currentGroupData.sets.add(set);
-            prevSetsGroupNumber = set.getExerciseOrder();
-        }
-        groupDataList.add(currentGroupData);
-
-        return groupDataList;
-    }
 
     class ExerciseCardHolder {
         View itemView;
         Exercise exercise;
-        int orderInWorkout;
         List<ExerciseSet> sets;
-    }
-
-    class GroupData {
-        private String exercise;
-        private int groupNumber;
-        List<ExerciseSet> sets = new ArrayList<>();
-
-        GroupData(String exercise, int groupNumber) {
-            this.exercise = exercise;
-            this.groupNumber = groupNumber;
-        }
     }
 }

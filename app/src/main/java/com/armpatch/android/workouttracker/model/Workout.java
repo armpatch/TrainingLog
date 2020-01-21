@@ -37,6 +37,10 @@ public class Workout {
         return exerciseOrder;
     }
 
+    public String[] getExerciseOrderArray() {
+        return exerciseOrder.split(",");
+    }
+
     public void setExerciseOrder(String exerciseOrder) {
         this.exerciseOrder = exerciseOrder;
     }

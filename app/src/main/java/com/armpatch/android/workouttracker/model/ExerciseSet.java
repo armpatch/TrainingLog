@@ -28,7 +28,6 @@ public class ExerciseSet {
                 String exerciseName,
                 float measurement1,
                 float measurement2,
-                int exerciseOrder,
                 int order) {
 
         id = UUID.randomUUID().toString();

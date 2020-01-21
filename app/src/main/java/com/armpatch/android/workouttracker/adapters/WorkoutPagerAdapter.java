@@ -135,7 +135,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             protected void onPostExecute(Void aVoid) {
                 commentTextView.setText(workout.getComments());
                 // Todo create views from sets
-                ExerciseCardAdapter adapter = new ExerciseCardAdapter(activityContext, sets);
+                ExerciseCardAdapter adapter = new ExerciseCardAdapter(activityContext, workout, sets);
                 exerciseListView.setAdapter(adapter);
             }
         }

@@ -17,6 +17,6 @@ public interface ExerciseSetDao {
     @Query("SELECT * FROM exercise_set_table WHERE date = :date AND exerciseName = :exerciseName")
     List<ExerciseSet> getExerciseSets (String date, String exerciseName);
 
-    @Query("SELECT COUNT(DISTINCT exerciseName) FROM exercise_set_table")
+    @Query("SELECT COUNT(DISTINCT exerciseName) FROM exercise_set_table WHERE date = :date")
     int getDistinctExerciseCount(String date);
 }
