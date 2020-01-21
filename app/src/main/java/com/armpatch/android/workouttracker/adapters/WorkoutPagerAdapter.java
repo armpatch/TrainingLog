@@ -52,7 +52,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         LocalDate currentDate = LocalDate.now().plusDays(position - POSITION_TODAY);
 
         WorkoutHolder workoutHolder = new WorkoutHolder(activityContext, currentDate);
-        workoutHolder.updateFromDatabase();
+        workoutHolder.update();
 
         // add item to container
         container.addView(workoutHolder.itemView);
@@ -95,7 +95,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         @Override
         public void onCommentSaved(String comments) {
             workout.setComments(comments);
-            new SaveToDatabase().execute();
+            new SaveToDatabaseTask().execute();
         }
 
         @Override
@@ -113,34 +113,41 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             return activityContext;
         }
 
-        void updateFromDatabase() {
-            new UpdateFromDatabase().execute();
+
+        /**
+         * Update workout holder from database asynchronously
+         */
+        void update() {
+            new UpdateWorkoutHolderTask().execute();
         }
 
-        LocalDate getDate() {
-            return date;
-        }
-
-        class UpdateFromDatabase extends AsyncTask<Void, Void, Void> {
+        class UpdateWorkoutHolderTask extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                String date = Tools.stringFromDate(WorkoutHolder.this.getDate());
+                String date = Tools.stringFromDate(WorkoutHolder.this.date);
+
                 workout = repository.getWorkout(date);
-                sets = repository.getExerciseSets(workout.getDate());
+                if (workout == null) {
+                    workout = new Workout(date);
+                }
+                sets = repository.getExerciseSets(date);
+
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
                 commentTextView.setText(workout.getComments());
+
                 // Todo create views from sets
+
                 ExerciseCardAdapter adapter = new ExerciseCardAdapter(activityContext, workout, sets);
                 exerciseListView.setAdapter(adapter);
             }
         }
 
-        class SaveToDatabase extends AsyncTask<Void, Void, Void> {
+        class SaveToDatabaseTask extends AsyncTask<Void, Void, Void> {
             @Override
             protected Void doInBackground(Void... voids) {
                 repository.update(workout);
@@ -149,7 +156,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                WorkoutHolder.this.updateFromDatabase();
+                WorkoutHolder.this.update();
             }
         }
     }

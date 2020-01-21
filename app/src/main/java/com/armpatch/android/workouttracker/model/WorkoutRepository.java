@@ -28,38 +28,20 @@ public class WorkoutRepository {
         categoryDao = db.categoryDao();
     }
 
-    // Retrieve
+    // Access methods
 
     public Workout getWorkout(String date) {
         Workout workout = workoutDao.getWorkout(date);
 
-        if (workout == null) {
-            workout = new Workout(date);
-            insert(workout);
-        }
-
         return workout;
-    }
-
-    public Exercise getExercise(String name) {
-        return exerciseDao.getExercise(name);
     }
 
     public List<Exercise> getExercises(Category category) {
         return exerciseDao.getExercises(category);
     }
 
-    public List<Exercise> getExercises() {
-        return exerciseDao.getExercises();
-    }
-
     public List<Category> getCategories() {
         return categoryDao.getCategories();
-    }
-
-    public Integer getDistinctExerciseCount(LocalDate localDate) {
-        String date = Tools.stringFromDate(localDate);
-        return exerciseSetDao.getDistinctExerciseCount(date);
     }
 
     public List<ExerciseSet> getExerciseSets(LocalDate localDate, String exerciseName) {
@@ -71,7 +53,7 @@ public class WorkoutRepository {
         return exerciseSetDao.getExerciseSets(date);
     }
 
-    // Insert
+    // Insert methods
 
     public void insert(final Workout workout) {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
@@ -93,9 +75,12 @@ public class WorkoutRepository {
                 });
     }
 
-    // Update
+    // Update methods
 
     public void update(final Workout workout) {
+        if (workout.isEmpty())
+            return;
+
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
                 new Runnable() {
                     @Override
