@@ -91,7 +91,7 @@ public class ExerciseCardAdapter implements ListAdapter {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return getCount() == 0;
     }
 
 
