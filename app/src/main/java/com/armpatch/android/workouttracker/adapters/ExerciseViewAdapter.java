@@ -27,9 +27,10 @@ public class ExerciseViewAdapter implements ListAdapter {
     public ExerciseViewAdapter(Context activityContext, Workout workout, List<ExerciseSet> sets) {
         this.activityContext = activityContext;
 
-        orderedExercises = workout.getExerciseOrderArray();
-
-        setMap = WorkoutSetSorter.getSortedTable(orderedExercises, sets);
+        if (!workout.isEmpty()) {
+            orderedExercises = workout.getExerciseOrderArray();
+            setMap = WorkoutSetSorter.getSortedTable(orderedExercises, sets);
+        }
 
     }
 
@@ -55,6 +56,9 @@ public class ExerciseViewAdapter implements ListAdapter {
 
     @Override
     public int getCount() {
+        if (orderedExercises == null)
+            return 0;
+
         return orderedExercises.length;
     }
 
@@ -77,10 +81,10 @@ public class ExerciseViewAdapter implements ListAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = LayoutInflater.from(activityContext).inflate(R.layout.content_exercise_group, parent, false);
 
-        ExerciseGroupHolder viewHolder = new ExerciseGroupHolder(v);
-        viewHolder.addSets(setMap.get(orderedExercises[position]));
+        ExerciseGroupHolder exerciseGroupHolder = new ExerciseGroupHolder(v);
+        exerciseGroupHolder.addSets(setMap.get(orderedExercises[position]));
 
-        return viewHolder.itemView;
+        return exerciseGroupHolder.itemView;
     }
 
     @Override
