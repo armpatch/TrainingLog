@@ -6,6 +6,7 @@ import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 
 import com.armpatch.android.workouttracker.R;
@@ -13,22 +14,22 @@ import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.Workout;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
-public class ExerciseCardAdapter implements ListAdapter {
+public class ExerciseViewAdapter implements ListAdapter {
 
     private Context activityContext;
     String[] orderedExercises;
+    Hashtable<String, ArrayList<ExerciseSet>> setMap;
 
-    public ExerciseCardAdapter(Context activityContext, Workout workout, List<ExerciseSet> sets) {
+    public ExerciseViewAdapter(Context activityContext, Workout workout, List<ExerciseSet> sets) {
         this.activityContext = activityContext;
 
         orderedExercises = workout.getExerciseOrderArray();
 
-        // query sets using orderedExercises in for loop
-        // turn these groups into holders
-        //
-
+        setMap = WorkoutSetSorter.getSortedTable(orderedExercises, sets);
 
     }
 
@@ -74,9 +75,12 @@ public class ExerciseCardAdapter implements ListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = LayoutInflater.from(activityContext).inflate(R.layout.content_exercise_group, parent, false);
+        View v = LayoutInflater.from(activityContext).inflate(R.layout.content_exercise_group, parent, false);
 
-        return view;
+        ExerciseGroupHolder viewHolder = new ExerciseGroupHolder(v);
+        viewHolder.addSets(setMap.get(orderedExercises[position]));
+
+        return viewHolder.itemView;
     }
 
     @Override
@@ -96,9 +100,28 @@ public class ExerciseCardAdapter implements ListAdapter {
 
 
 
-    class ExerciseCardHolder {
-        View itemView;
+    class ExerciseGroupHolder {
+        final private View itemView;
         Exercise exercise;
         List<ExerciseSet> sets;
+        LinearLayout setsLayout;
+
+        ExerciseGroupHolder(View itemView) {
+            this.itemView = itemView;
+            setsLayout = itemView.findViewById(R.id.sets_layout);
+        }
+
+        void addSets(List<ExerciseSet> sets){
+            this.sets = sets;
+
+            for (ExerciseSet set : sets) {
+                View setView = LayoutInflater.from(activityContext).inflate(R.layout.content_tracker_set, null);
+
+                setsLayout.addView(setView);
+            }
+
+        }
+
+
     }
 }

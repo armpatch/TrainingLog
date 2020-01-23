@@ -5,7 +5,7 @@ import com.armpatch.android.workouttracker.model.ExerciseSet;
 import java.util.Comparator;
 
 /**
- * Sorts Sets first by the order of their groups, then by the order within their group
+ * Sorts by their order within their exercise
  */
 public class SetComparator implements Comparator<ExerciseSet>{
 

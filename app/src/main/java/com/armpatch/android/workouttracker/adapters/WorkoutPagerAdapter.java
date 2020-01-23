@@ -140,7 +140,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             protected void onPostExecute(Void aVoid) {
                 commentTextView.setText(workout.getComments());
 
-                ExerciseCardAdapter adapter = new ExerciseCardAdapter(activityContext, workout, sets);
+                ExerciseViewAdapter adapter = new ExerciseViewAdapter(activityContext, workout, sets);
                 exerciseListView.setAdapter(adapter);
             }
         }

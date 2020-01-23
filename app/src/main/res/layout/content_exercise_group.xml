@@ -30,7 +30,7 @@
                 app:layout_constraintTop_toBottomOf="@id/exercise_title" />
 
         <LinearLayout
-                android:id="@+id/sets"
+                android:id="@+id/sets_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
