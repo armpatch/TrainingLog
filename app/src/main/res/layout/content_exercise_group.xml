@@ -5,6 +5,7 @@
         android:layout_height="wrap_content"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
+        android:layout_margin="8dp"
         app:cardElevation="4dp"
         >
 

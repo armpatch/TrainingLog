@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 
 import com.armpatch.android.workouttracker.R;
-import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.Workout;
 
@@ -18,13 +17,13 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-public class ExerciseViewAdapter implements ListAdapter {
+public class ExerciseGroupCardAdapter implements ListAdapter {
 
     private Context activityContext;
     String[] orderedExercises;
     Hashtable<String, ArrayList<ExerciseSet>> setMap;
 
-    public ExerciseViewAdapter(Context activityContext, Workout workout, List<ExerciseSet> sets) {
+    public ExerciseGroupCardAdapter(Context activityContext, Workout workout, List<ExerciseSet> sets) {
         this.activityContext = activityContext;
 
         if (!workout.isEmpty()) {
@@ -106,7 +105,6 @@ public class ExerciseViewAdapter implements ListAdapter {
 
     class ExerciseGroupHolder {
         final private View itemView;
-        Exercise exercise;
         List<ExerciseSet> sets;
         LinearLayout setsLayout;
 
@@ -119,7 +117,7 @@ public class ExerciseViewAdapter implements ListAdapter {
             this.sets = sets;
 
             for (ExerciseSet set : sets) {
-                View setView = LayoutInflater.from(activityContext).inflate(R.layout.content_tracker_set, null);
+                View setView = LayoutInflater.from(activityContext).inflate(R.layout.content_historical_set, null, false);
 
                 setsLayout.addView(setView);
             }

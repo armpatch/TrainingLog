@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,7 +55,6 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         WorkoutHolder workoutHolder = new WorkoutHolder(activityContext, currentDate);
         workoutHolder.update();
 
-        // add item to container
         container.addView(workoutHolder.itemView);
         return workoutHolder;
     }
@@ -140,7 +140,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             protected void onPostExecute(Void aVoid) {
                 commentTextView.setText(workout.getComments());
 
-                ExerciseViewAdapter adapter = new ExerciseViewAdapter(activityContext, workout, sets);
+                ExerciseGroupCardAdapter adapter = new ExerciseGroupCardAdapter(activityContext, workout, sets);
                 exerciseListView.setAdapter(adapter);
             }
         }

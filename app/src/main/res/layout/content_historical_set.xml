@@ -17,7 +17,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="7 reps" />
+            android:text="7 reps" />
 
     <TextView
             android:id="@+id/weight"
@@ -29,6 +29,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/reps"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="150 lbs" />
+            android:text="150 lbs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
