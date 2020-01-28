@@ -3,4 +3,8 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+
+    <string name="weight_lbs">%.0f lbs</string>
+    <string name="reps">%.0f reps</string>
+
 </resources>

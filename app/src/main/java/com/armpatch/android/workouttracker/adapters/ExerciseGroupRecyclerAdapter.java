@@ -74,10 +74,10 @@ public class ExerciseGroupRecyclerAdapter extends RecyclerView.Adapter<ExerciseG
                         R.layout.content_historical_set, setsLayout, false);
 
                 TextView weight = setView.findViewById(R.id.weight);
-                weight.setText(String.valueOf(set.getMeasurement1()));
+                weight.setText(activityContext.getString(R.string.weight_lbs, set.getMeasurement1()));
 
                 TextView reps = setView.findViewById(R.id.reps);
-                reps.setText(String.valueOf(set.getMeasurement2()));
+                reps.setText(activityContext.getString(R.string.reps, set.getMeasurement2()));
 
                 setsLayout.addView(setView);
             }
