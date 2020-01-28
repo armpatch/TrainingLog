@@ -141,9 +141,14 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             protected void onPostExecute(Void aVoid) {
                 commentTextView.setText(workout.getComments());
 
-                ExerciseGroupRecyclerAdapter adapter = new ExerciseGroupRecyclerAdapter(
-                        activityContext, workout, sets);
-                exerciseRecycler.setAdapter(adapter);
+                if (!workout.isEmpty()) {
+                    ExerciseGroupRecyclerAdapter adapter = new ExerciseGroupRecyclerAdapter(
+                            activityContext, workout, sets);
+                    exerciseRecycler.setAdapter(adapter);
+                } else {
+                    // set placeholder for empty workout
+                }
+
             }
         }
 

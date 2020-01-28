@@ -44,16 +44,21 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
     }
 
     private void populateInitialData() {
+        String date = Tools.stringFromDate(LocalDate.now());
+
+
         final Category shoulders = new Category("shoulders");
         final Category arms = new Category("arms");
 
         final Exercise pull_up = new Exercise("pull up", MeasurementType.WEIGHT_AND_REPS, arms);
-
-        String date = Tools.stringFromDate(LocalDate.now());
         final ExerciseSet set1 = new ExerciseSet(date, pull_up.getName(), 150, 10, 0);
 
+        final Exercise press = new Exercise("press", MeasurementType.WEIGHT_AND_REPS, shoulders);
+        final ExerciseSet set2 = new ExerciseSet(date, press.getName(), 80, 10, 0);
+        final ExerciseSet set3 = new ExerciseSet(date, press.getName(), 80, 5, 2);
+
         final Workout workout = new Workout(date);
-        workout.setExerciseOrder(pull_up.getName());
+        workout.setExerciseOrder(pull_up.getName() + "," + press.getName());
 
         WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
@@ -62,10 +67,12 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
                 categoryDao().insert(arms);
 
                 exerciseDao().insert(pull_up);
+                exerciseDao().insert(press);
                 exerciseSetDao().insert(set1);
+                exerciseSetDao().insert(set2);
+                exerciseSetDao().insert(set3);
 
                 workoutDao().insert(workout);
-
             }
         });
     }

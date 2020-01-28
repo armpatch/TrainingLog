@@ -54,19 +54,21 @@ public class ExerciseGroupRecyclerAdapter extends RecyclerView.Adapter<ExerciseG
     class ExerciseGroupHolder extends RecyclerView.ViewHolder {
         List<ExerciseSet> sets;
         LinearLayout setsLayout;
+        TextView groupTitle;
 
         ExerciseGroupHolder(View itemView) {
             super(itemView);
             setsLayout = itemView.findViewById(R.id.sets_layout);
+            groupTitle = itemView.findViewById(R.id.exercise_title);
         }
 
         void bind(int position) {
-            addExerciseSetViews(setMap.get(orderedExercises[position]));
+            sets = setMap.get(orderedExercises[position]);
+            groupTitle.setText(sets.get(0).getExerciseName());
+            addExerciseSetViews(sets);
         }
 
         void addExerciseSetViews(List<ExerciseSet> sets){
-            this.sets = sets;
-
             for (ExerciseSet set : sets) {
                 View setView = LayoutInflater.from(activityContext).inflate(
                         R.layout.content_historical_set, setsLayout, false);
