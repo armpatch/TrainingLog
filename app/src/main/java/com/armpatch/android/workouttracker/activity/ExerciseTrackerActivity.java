@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.Tools;
+import com.armpatch.android.workouttracker.adapters.TrackerPagerAdapter;
 import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
@@ -52,6 +53,7 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         toolbarTitle.setText(exerciseName);
 
         viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(new TrackerPagerAdapter(this));
 
         new GetSetsTask().execute();
     }
