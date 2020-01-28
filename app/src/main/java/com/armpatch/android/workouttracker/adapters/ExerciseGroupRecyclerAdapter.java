@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
+import com.armpatch.android.workouttracker.WorkoutSetSorter;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.Workout;
 
@@ -36,7 +37,7 @@ public class ExerciseGroupRecyclerAdapter extends RecyclerView.Adapter<ExerciseG
     @NonNull
     @Override
     public ExerciseGroupRecyclerAdapter.ExerciseGroupHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_exercise_group, parent, false);
+        View itemView = LayoutInflater.from(activityContext).inflate(R.layout.list_item_exercise_group, parent, false);
 
         return new ExerciseGroupHolder(itemView);
     }
@@ -71,7 +72,7 @@ public class ExerciseGroupRecyclerAdapter extends RecyclerView.Adapter<ExerciseG
         void addExerciseSetViews(List<ExerciseSet> sets){
             for (ExerciseSet set : sets) {
                 View setView = LayoutInflater.from(activityContext).inflate(
-                        R.layout.content_historical_set, setsLayout, false);
+                        R.layout.list_item_set_historical, setsLayout, false);
 
                 TextView weight = setView.findViewById(R.id.weight);
                 weight.setText(activityContext.getString(R.string.weight_lbs, set.getMeasurement1()));

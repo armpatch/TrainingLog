@@ -9,14 +9,14 @@
                  android:theme="@style/AppTheme"
                  tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".activity.WorkoutPagerActivity" >
+        <activity android:name=".activity.WorkoutViewerActivity" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.NewExerciseActivity" />
+        <activity android:name=".activity.ExerciseSelectionActivity" />
         <activity android:name=".activity.ExerciseTrackerActivity" />
 
     </application>

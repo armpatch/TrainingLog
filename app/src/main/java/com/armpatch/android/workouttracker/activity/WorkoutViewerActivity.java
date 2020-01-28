@@ -18,7 +18,7 @@ import com.armpatch.android.workouttracker.adapters.WorkoutPagerAdapter;
 
 import org.threeten.bp.LocalDate;
 
-public class WorkoutPagerActivity extends AppCompatActivity {
+public class WorkoutViewerActivity extends AppCompatActivity {
 
     TextView dateBarText;
     ViewPager viewPager;
@@ -32,7 +32,7 @@ public class WorkoutPagerActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             currentDate = adapter.getSelectedItemDate(position);
-            dateBarText.setText(Tools.getRelativeDateText(WorkoutPagerActivity.this, currentDate));
+            dateBarText.setText(Tools.getRelativeDateText(WorkoutViewerActivity.this, currentDate));
         }
 
         @Override
@@ -83,7 +83,7 @@ public class WorkoutPagerActivity extends AppCompatActivity {
         int itemId = item.getItemId();
 
         if (itemId == R.id.add_exercise) {
-            Intent addExerciseIntent = NewExerciseActivity.getIntent(this, currentDate);
+            Intent addExerciseIntent = ExerciseSelectionActivity.getIntent(this, currentDate);
             startActivity(addExerciseIntent);
         }
 

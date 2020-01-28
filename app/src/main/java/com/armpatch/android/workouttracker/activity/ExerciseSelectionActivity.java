@@ -25,7 +25,7 @@ import java.util.List;
 
 import static com.armpatch.android.workouttracker.Tools.KEY_EXERCISE_DATE;
 
-public class NewExerciseActivity extends AppCompatActivity
+public class ExerciseSelectionActivity extends AppCompatActivity
         implements CategorySelectionAdapter.Callback, ExerciseSelectionAdapter.Callback {
 
     RecyclerView recyclerView;
@@ -37,7 +37,7 @@ public class NewExerciseActivity extends AppCompatActivity
     LocalDate currentDate;
 
     public static Intent getIntent(Context activityContext, LocalDate date) {
-        Intent intent = new Intent(activityContext, NewExerciseActivity.class);
+        Intent intent = new Intent(activityContext, ExerciseSelectionActivity.class);
         intent.putExtra(KEY_EXERCISE_DATE, Tools.stringFromDate(date));
         return intent;
     }
@@ -59,7 +59,7 @@ public class NewExerciseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         getDataFromIntent();
 
-        setContentView(R.layout.activity_add_exercise);
+        setContentView(R.layout.activity_exercise_selection);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -82,7 +82,7 @@ public class NewExerciseActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... voids) {
-            WorkoutRepository repo = new WorkoutRepository(NewExerciseActivity.this);
+            WorkoutRepository repo = new WorkoutRepository(ExerciseSelectionActivity.this);
             categories = repo.getCategories();
 
             return null;
@@ -91,7 +91,7 @@ public class NewExerciseActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void aVoid) {
             if (categorySelectionAdapter == null) {
-                categorySelectionAdapter = new CategorySelectionAdapter(NewExerciseActivity.this, categories);
+                categorySelectionAdapter = new CategorySelectionAdapter(ExerciseSelectionActivity.this, categories);
                 recyclerView.setAdapter(categorySelectionAdapter);
             } else {
                 categorySelectionAdapter.setCategories(categories);
@@ -111,7 +111,7 @@ public class NewExerciseActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... voids) {
-            WorkoutRepository repo = new WorkoutRepository(NewExerciseActivity.this);
+            WorkoutRepository repo = new WorkoutRepository(ExerciseSelectionActivity.this);
             exercises = repo.getExercises(category);
 
             return null;
@@ -119,7 +119,7 @@ public class NewExerciseActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            exerciseSelectionAdapter = new ExerciseSelectionAdapter(NewExerciseActivity.this, exercises);
+            exerciseSelectionAdapter = new ExerciseSelectionAdapter(ExerciseSelectionActivity.this, exercises);
             recyclerView.setAdapter(exerciseSelectionAdapter);
         }
     }

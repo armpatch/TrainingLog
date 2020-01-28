@@ -1,6 +1,5 @@
-package com.armpatch.android.workouttracker.adapters;
+package com.armpatch.android.workouttracker;
 
-import com.armpatch.android.workouttracker.SetComparator;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 
 import java.util.ArrayList;
