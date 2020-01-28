@@ -37,7 +37,7 @@ public class NewExerciseActivity extends AppCompatActivity
     LocalDate currentDate;
 
     public static Intent getIntent(Context activityContext, LocalDate date) {
-        Intent intent = new Intent(activityContext, ExerciseTrackerActivity.class);
+        Intent intent = new Intent(activityContext, NewExerciseActivity.class);
         intent.putExtra(KEY_EXERCISE_DATE, Tools.stringFromDate(date));
         return intent;
     }
@@ -49,8 +49,8 @@ public class NewExerciseActivity extends AppCompatActivity
 
     @Override
     public void onExerciseHolderSelected(Exercise exercise) {
-        Intent intent = ExerciseTrackerActivity.getIntent(this, currentDate, exercise);
-        startActivity(intent);
+        Intent exerciseTracker = ExerciseTrackerActivity.getIntent(this, currentDate, exercise);
+        startActivity(exerciseTracker);
         finish();
     }
 
