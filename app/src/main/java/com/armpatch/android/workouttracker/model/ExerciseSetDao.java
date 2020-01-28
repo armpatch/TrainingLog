@@ -19,4 +19,8 @@ public interface ExerciseSetDao {
 
     @Query("SELECT COUNT(DISTINCT exerciseName) FROM exercise_set_table WHERE date = :date")
     int getDistinctExerciseCount(String date);
+
+    @Query("DELETE FROM exercise_set_table")
+    void clearTable();
+
 }

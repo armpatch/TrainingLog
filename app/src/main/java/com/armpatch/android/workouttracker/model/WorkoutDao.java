@@ -16,4 +16,7 @@ public interface WorkoutDao {
 
     @Query("SELECT * FROM workout_table WHERE date = :date")
     Workout getWorkout(String date);
+
+    @Query("DELETE FROM workout_table")
+    void clearTable();
 }

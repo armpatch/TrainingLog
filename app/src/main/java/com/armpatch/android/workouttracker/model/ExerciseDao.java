@@ -21,4 +21,7 @@ public interface ExerciseDao {
 
     @Query("SELECT * FROM exercise_table")
     List<Exercise> getExercises();
+
+    @Query("DELETE FROM exercise_table")
+    void clearTable();
 }

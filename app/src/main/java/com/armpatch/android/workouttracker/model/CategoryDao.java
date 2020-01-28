@@ -18,4 +18,7 @@ public interface CategoryDao {
 
     @Query("SELECT * FROM category_table")
     List<Category> getCategories();
+
+    @Query("DELETE FROM category_table")
+    void clearTable();
 }

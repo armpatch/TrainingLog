@@ -63,6 +63,8 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
+                INSTANCE.clearAllTables();
+
                 categoryDao().insert(shoulders);
                 categoryDao().insert(arms);
 

@@ -89,4 +89,13 @@ public class WorkoutRepository {
                     }
                 });
     }
+
+    // delete methods
+
+    public void clearAllTables() {
+        workoutDao.clearTable();
+        exerciseDao.clearTable();
+        exerciseSetDao.clearTable();
+        categoryDao.clearTable();
+    }
 }
