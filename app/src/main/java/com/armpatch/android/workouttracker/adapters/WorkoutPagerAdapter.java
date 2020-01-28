@@ -6,11 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.armpatch.android.workouttracker.EditCommentsDialog;
@@ -78,7 +78,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
 
         private View itemView;
         private TextView commentTextView;
-        private ListView exerciseListView;
+        private RecyclerView exerciseRecycler;
 
         WorkoutHolder(final Context activityContext, LocalDate date) {
             this.activityContext = activityContext;
@@ -89,7 +89,8 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             commentTextView = itemView.findViewById(R.id.workout_comments);
             commentTextView.setOnClickListener(this);
 
-            exerciseListView = itemView.findViewById(R.id.exercise_group_list);
+            exerciseRecycler = itemView.findViewById(R.id.exercise_recycler);
+            exerciseRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
         }
 
         @Override
@@ -140,8 +141,9 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             protected void onPostExecute(Void aVoid) {
                 commentTextView.setText(workout.getComments());
 
-                ExerciseGroupCardAdapter adapter = new ExerciseGroupCardAdapter(activityContext, workout, sets);
-                exerciseListView.setAdapter(adapter);
+                ExerciseGroupRecyclerAdapter adapter = new ExerciseGroupRecyclerAdapter(
+                        activityContext, workout, sets);
+                exerciseRecycler.setAdapter(adapter);
             }
         }
 
