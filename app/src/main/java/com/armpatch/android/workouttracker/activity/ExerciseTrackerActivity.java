@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.Tools;
@@ -27,6 +28,7 @@ import static com.armpatch.android.workouttracker.Tools.KEY_EXERCISE_NAME;
 public class ExerciseTrackerActivity extends AppCompatActivity {
 
     TextView toolbarTitle;
+    ViewPager viewPager;
 
     String exerciseName;
     LocalDate currentDate;
@@ -48,6 +50,8 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
 
         toolbarTitle = findViewById(R.id.exercise_title);
         toolbarTitle.setText(exerciseName);
+
+        viewPager = findViewById(R.id.view_pager);
 
         new GetSetsTask().execute();
     }
