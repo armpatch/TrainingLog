@@ -22,11 +22,17 @@ import java.util.List;
 public class ExerciseGroupRecyclerAdapter extends RecyclerView.Adapter<ExerciseGroupRecyclerAdapter.ExerciseGroupHolder> {
 
     private Context activityContext;
+    private Callback activityCallback;
     String[] orderedExercises;
     Hashtable<String, ArrayList<ExerciseSet>> setMap;
 
+    public interface Callback {
+        void onExerciseGroupSelected(String exerciseName);
+    }
+
     public ExerciseGroupRecyclerAdapter(Context activityContext, Workout workout, List<ExerciseSet> sets) {
         this.activityContext = activityContext;
+        activityCallback = (Callback) activityContext;
 
         if (!workout.isEmpty()) {
             orderedExercises = workout.getExerciseOrderArray();
@@ -52,7 +58,7 @@ public class ExerciseGroupRecyclerAdapter extends RecyclerView.Adapter<ExerciseG
         return (orderedExercises == null)? 0 : orderedExercises.length;
     }
 
-    class ExerciseGroupHolder extends RecyclerView.ViewHolder {
+    class ExerciseGroupHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         List<ExerciseSet> sets;
         LinearLayout setsLayout;
         TextView groupTitle;
@@ -61,6 +67,13 @@ public class ExerciseGroupRecyclerAdapter extends RecyclerView.Adapter<ExerciseG
             super(itemView);
             setsLayout = itemView.findViewById(R.id.sets_layout);
             groupTitle = itemView.findViewById(R.id.exercise_title);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            String name = sets.get(0).getExerciseName();
+            activityCallback.onExerciseGroupSelected(name);
         }
 
         void bind(int position) {

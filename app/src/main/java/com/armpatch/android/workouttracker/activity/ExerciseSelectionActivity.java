@@ -34,8 +34,6 @@ public class ExerciseSelectionActivity extends AppCompatActivity
     List<Category> categories;
     List<Exercise> exercises;
 
-    LocalDate currentDate;
-
     public static Intent getIntent(Context activityContext, LocalDate date) {
         Intent intent = new Intent(activityContext, ExerciseSelectionActivity.class);
         intent.putExtra(KEY_EXERCISE_DATE, Tools.stringFromDate(date));
@@ -49,7 +47,8 @@ public class ExerciseSelectionActivity extends AppCompatActivity
 
     @Override
     public void onExerciseHolderSelected(Exercise exercise) {
-        Intent exerciseTracker = ExerciseTrackerActivity.getIntent(this, currentDate, exercise);
+        String date = getIntent().getStringExtra(KEY_EXERCISE_DATE);
+        Intent exerciseTracker = ExerciseTrackerActivity.getIntent(this, date, exercise.getName());
         startActivity(exerciseTracker);
         finish();
     }
@@ -57,7 +56,6 @@ public class ExerciseSelectionActivity extends AppCompatActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getDataFromIntent();
 
         setContentView(R.layout.activity_exercise_selection);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -70,12 +68,6 @@ public class ExerciseSelectionActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         new SetCategoryAdapterTask().execute();
-    }
-
-    private void getDataFromIntent() {
-        Intent intent = getIntent();
-
-        currentDate = Tools.dateFromString(intent.getStringExtra(KEY_EXERCISE_DATE));
     }
 
     class SetCategoryAdapterTask extends AsyncTask<Void, Void, Void> {

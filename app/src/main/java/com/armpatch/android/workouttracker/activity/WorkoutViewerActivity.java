@@ -14,11 +14,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.Tools;
+import com.armpatch.android.workouttracker.adapters.ExerciseGroupRecyclerAdapter;
 import com.armpatch.android.workouttracker.adapters.WorkoutPagerAdapter;
 
 import org.threeten.bp.LocalDate;
 
-public class WorkoutViewerActivity extends AppCompatActivity {
+public class WorkoutViewerActivity extends AppCompatActivity implements ExerciseGroupRecyclerAdapter.Callback {
 
     TextView dateBarText;
     ViewPager viewPager;
@@ -92,5 +93,15 @@ public class WorkoutViewerActivity extends AppCompatActivity {
 
     private void gotoToday() {
         viewPager.setCurrentItem(WorkoutPagerAdapter.POSITION_TODAY, false);
+    }
+
+    @Override
+    public void onExerciseGroupSelected(String exerciseName) {
+        Intent exerciseTracker = ExerciseTrackerActivity.getIntent(
+                this,
+                Tools.stringFromDate(currentDate),
+                exerciseName);
+
+        startActivity(exerciseTracker);
     }
 }

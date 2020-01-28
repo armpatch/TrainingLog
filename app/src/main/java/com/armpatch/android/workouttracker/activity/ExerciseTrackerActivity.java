@@ -58,10 +58,10 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         new GetSetsTask().execute();
     }
 
-    public static Intent getIntent(Context activityContext, LocalDate date, Exercise exercise) {
+    public static Intent getIntent(Context activityContext, String date, String exerciseName) {
         Intent intent = new Intent(activityContext, ExerciseTrackerActivity.class);
-        intent.putExtra(KEY_EXERCISE_NAME, exercise.getName());
-        intent.putExtra(KEY_EXERCISE_DATE, Tools.stringFromDate(date));
+        intent.putExtra(KEY_EXERCISE_NAME, exerciseName);
+        intent.putExtra(KEY_EXERCISE_DATE, date);
         return intent;
     }
 

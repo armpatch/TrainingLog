@@ -110,11 +110,6 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             }
         }
 
-        Context getContext() {
-            return activityContext;
-        }
-
-
         /**
          * Update workout holder from database asynchronously
          */
