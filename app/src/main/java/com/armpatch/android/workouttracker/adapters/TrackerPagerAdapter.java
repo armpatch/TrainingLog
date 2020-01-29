@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
@@ -72,6 +73,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
         void setAdapter(List<ExerciseSet> sets) {
             trackerSetAdapter = new TrackerSetAdapter(activityContext, sets);
             setRecycler = itemView.findViewById(R.id.recycler_view);
+            setRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
             setRecycler.setAdapter(trackerSetAdapter);
         }
     }
