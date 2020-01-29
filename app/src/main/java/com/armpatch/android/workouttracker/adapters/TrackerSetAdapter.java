@@ -17,7 +17,7 @@ import java.util.List;
 public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.SetHolder> {
 
     private Context activityContext;
-    private List<ExerciseSet> sets;
+    List<ExerciseSet> sets;
 
     TrackerSetAdapter(Context activityContext, List<ExerciseSet> sets) {
         this.sets = sets;

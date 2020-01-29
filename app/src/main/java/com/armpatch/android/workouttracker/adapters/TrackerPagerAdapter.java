@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,6 +61,8 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
         TrackerSetAdapter trackerSetAdapter;
         RecyclerView setRecycler;
+        NumberPicker weightPicker;
+        NumberPicker repsPicker;
 
         TrackerPageHolder(View itemView) {
             if (itemView == null) {
@@ -67,14 +70,40 @@ public class TrackerPagerAdapter extends PagerAdapter {
             }
             this.itemView = itemView;
 
+            findViews();
+            setNumberPickerRanges();
+
             new GetSetsTask().execute();
         }
 
-        void setAdapter(List<ExerciseSet> sets) {
+        private void findViews() {
+            weightPicker = itemView.findViewById(R.id.weight_number_picker);
+            repsPicker = itemView.findViewById(R.id.reps_number_picker);
+        }
+
+        private void setNumberPickerRanges() {
+            weightPicker.setMinValue(0);
+            weightPicker.setMaxValue(1000);
+            repsPicker.setMinValue(0);
+            repsPicker.setMaxValue(20);
+        }
+
+        void setNumberPickerStartingValue() {
+            ExerciseSet lastSet = trackerSetAdapter.sets.get(trackerSetAdapter.sets.size() - 1);
+            int weight = (int) lastSet.getMeasurement1();
+            int reps = (int) lastSet.getMeasurement2();
+
+            weightPicker.setValue(weight);
+            repsPicker.setValue(reps);
+        }
+
+        void onSetsRetrieved(List<ExerciseSet> sets) {
             trackerSetAdapter = new TrackerSetAdapter(activityContext, sets);
             setRecycler = itemView.findViewById(R.id.recycler_view);
             setRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
             setRecycler.setAdapter(trackerSetAdapter);
+
+            setNumberPickerStartingValue();
         }
     }
 
@@ -92,7 +121,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            trackerPageHolder.setAdapter(sets);
+            trackerPageHolder.onSetsRetrieved(sets);
         }
     }
 }
