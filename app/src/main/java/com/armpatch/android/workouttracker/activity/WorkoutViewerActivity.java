@@ -74,6 +74,13 @@ public class WorkoutViewerActivity extends AppCompatActivity implements Exercise
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.updateCurrentWorkoutHolder();
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;

@@ -31,6 +31,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
 
     private Context activityContext;
     private LayoutInflater inflater;
+    private WorkoutHolder currentItem;
 
     public WorkoutPagerAdapter(Context context) {
         inflater = LayoutInflater.from(context);
@@ -66,6 +67,17 @@ public class WorkoutPagerAdapter extends PagerAdapter {
 
     public LocalDate getSelectedItemDate(int currentPosition) {
         return (LocalDate.now().plusDays(currentPosition - POSITION_TODAY));
+    }
+
+    public void updateCurrentWorkoutHolder() {
+        if (currentItem != null)
+            currentItem.update();
+    }
+
+    @Override
+    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.setPrimaryItem(container, position, object);
+        currentItem = (WorkoutHolder) object;
     }
 
     class WorkoutHolder implements View.OnClickListener, EditCommentsDialog.Callbacks {
