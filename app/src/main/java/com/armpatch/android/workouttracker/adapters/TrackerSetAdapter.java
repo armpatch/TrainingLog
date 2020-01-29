@@ -18,10 +18,22 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
     private Context activityContext;
     List<ExerciseSet> sets;
+    ExerciseSet template;
 
     TrackerSetAdapter(Context activityContext, List<ExerciseSet> sets) {
         this.sets = sets;
         this.activityContext = activityContext;
+        createTemplateSet();
+    }
+
+    void createTemplateSet() {
+        ExerciseSet firstSet = sets.get(0);
+        template = new ExerciseSet(
+                firstSet.getDate(),
+                firstSet.getExerciseName(),
+                firstSet.getMeasurement1(),
+                firstSet.getMeasurement2(),
+                0);
     }
 
     @NonNull
@@ -41,6 +53,12 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
     @Override
     public int getItemCount() {
         return sets.size();
+    }
+
+    void addSet(float measurement1, float measurement2) {
+        ExerciseSet set = new ExerciseSet(template.getDate(), template.getExerciseName(), measurement1, measurement2, getItemCount());
+        sets.add(set);
+        TrackerSetAdapter.this.notifyDataSetChanged();
     }
 
     class SetHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

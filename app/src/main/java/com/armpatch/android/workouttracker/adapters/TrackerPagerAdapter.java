@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
         RecyclerView setRecycler;
         NumberPicker weightPicker;
         NumberPicker repsPicker;
+        Button addSetButton;
 
         TrackerPageHolder(View itemView) {
             if (itemView == null) {
@@ -79,6 +81,20 @@ public class TrackerPagerAdapter extends PagerAdapter {
         private void findViews() {
             weightPicker = itemView.findViewById(R.id.weight_number_picker);
             repsPicker = itemView.findViewById(R.id.reps_number_picker);
+            addSetButton = itemView.findViewById(R.id.add_set_button);
+            addSetButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addSetToAdapter();
+                }
+            });
+        }
+
+        void addSetToAdapter() {
+            float weight = weightPicker.getValue();
+            float reps = repsPicker.getValue();
+
+            trackerSetAdapter.addSet(weight, reps);
         }
 
         private void setNumberPickerRanges() {
