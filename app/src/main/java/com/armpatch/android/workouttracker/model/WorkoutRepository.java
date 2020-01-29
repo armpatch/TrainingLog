@@ -44,8 +44,7 @@ public class WorkoutRepository {
         return categoryDao.getCategories();
     }
 
-    public List<ExerciseSet> getExerciseSets(LocalDate localDate, String exerciseName) {
-        String date = Tools.stringFromDate(localDate);
+    public List<ExerciseSet> getExerciseSets(String date, String exerciseName) {
         return exerciseSetDao.getExerciseSets(date, exerciseName);
     }
 
