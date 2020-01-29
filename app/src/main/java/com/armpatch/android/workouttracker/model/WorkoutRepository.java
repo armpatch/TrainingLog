@@ -2,10 +2,6 @@ package com.armpatch.android.workouttracker.model;
 
 import android.content.Context;
 
-import com.armpatch.android.workouttracker.Tools;
-
-import org.threeten.bp.LocalDate;
-
 import java.util.List;
 
 public class WorkoutRepository {
@@ -87,6 +83,10 @@ public class WorkoutRepository {
                         workoutDao.update(workout);
                     }
                 });
+    }
+
+    public void update(List<ExerciseSet> sets) {
+        exerciseSetDao.update(sets);
     }
 
     // delete methods

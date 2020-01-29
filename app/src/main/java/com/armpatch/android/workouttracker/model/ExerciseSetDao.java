@@ -2,6 +2,7 @@ package com.armpatch.android.workouttracker.model;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -10,6 +11,9 @@ import java.util.List;
 public interface ExerciseSetDao {
     @Insert()
     void insert(ExerciseSet exerciseSet);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void update(List<ExerciseSet> sets);
 
     @Query("SELECT * from exercise_set_table WHERE date = :date")
     List<ExerciseSet> getExerciseSets (String date);

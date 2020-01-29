@@ -1,6 +1,7 @@
 package com.armpatch.android.workouttracker.adapters;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
+import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import java.util.List;
 
@@ -58,7 +60,27 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
     void addSet(float measurement1, float measurement2) {
         ExerciseSet set = new ExerciseSet(template.getDate(), template.getExerciseName(), measurement1, measurement2, getItemCount());
         sets.add(set);
-        TrackerSetAdapter.this.notifyDataSetChanged();
+        TrackerSetAdapter.this.refresh();
+    }
+
+    void refresh() {
+        notifyDataSetChanged();
+        new WriteSetsToDatabaseTask(sets).execute();
+    }
+
+    class WriteSetsToDatabaseTask extends AsyncTask<Void, Void, Void> {
+
+        List<ExerciseSet> sets;
+
+        WriteSetsToDatabaseTask(List<ExerciseSet> sets){
+            this.sets = sets;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            new WorkoutRepository(activityContext).update(sets);
+            return null;
+        }
     }
 
     class SetHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
