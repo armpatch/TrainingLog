@@ -43,7 +43,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         return sets.size();
     }
 
-    class SetHolder extends RecyclerView.ViewHolder {
+    class SetHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView setNumberText;
         TextView weightText;
@@ -51,6 +51,8 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
         SetHolder(@NonNull View itemView) {
             super(itemView);
+
+            itemView.setOnClickListener(this);
 
             setNumberText = itemView.findViewById(R.id.set_number);
             weightText = itemView.findViewById(R.id.weight);
@@ -62,6 +64,11 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
             weightText.setText(activityContext.getString(R.string.weight_lbs, set.getMeasurement1()));
             repsText.setText(activityContext.getString(R.string.reps, set.getMeasurement2()));
+        }
+
+        @Override
+        public void onClick(View v) {
+
         }
     }
 }
