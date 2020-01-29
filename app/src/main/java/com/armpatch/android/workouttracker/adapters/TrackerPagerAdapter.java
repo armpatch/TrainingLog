@@ -70,7 +70,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
         }
 
         void setAdapter(List<ExerciseSet> sets) {
-            trackerSetAdapter = new TrackerSetAdapter(sets);
+            trackerSetAdapter = new TrackerSetAdapter(activityContext, sets);
             setRecycler = itemView.findViewById(R.id.recycler_view);
             setRecycler.setAdapter(trackerSetAdapter);
         }
