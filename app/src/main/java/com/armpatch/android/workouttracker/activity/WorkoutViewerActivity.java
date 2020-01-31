@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,12 +39,6 @@ public class WorkoutViewerActivity extends AppCompatActivity implements Exercise
         @Override
         public void onPageScrollStateChanged(int state) { }
     };
-    private View.OnClickListener gotoToday = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            gotoToday();
-        }
-    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +60,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements Exercise
 
     private void setupDateBar() {
         dateBarText = findViewById(R.id.date_bar_text);
-        dateBarText.setOnClickListener(gotoToday);
+        dateBarText.setOnClickListener(v -> gotoToday());
 
         ImageView leftArrow = findViewById(R.id.prev_day_arrow);
         leftArrow.setOnClickListener(v -> jumpToNextDay());
@@ -93,7 +86,6 @@ public class WorkoutViewerActivity extends AppCompatActivity implements Exercise
     protected void onResume() {
         super.onResume();
         workoutAdapter.updateCurrentWorkoutHolder();
-
     }
 
     @Override
