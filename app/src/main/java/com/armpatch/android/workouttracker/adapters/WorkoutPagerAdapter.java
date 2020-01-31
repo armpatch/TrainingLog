@@ -1,28 +1,18 @@
 package com.armpatch.android.workouttracker.adapters;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.armpatch.android.workouttracker.EditCommentsDialog;
 import com.armpatch.android.workouttracker.R;
-import com.armpatch.android.workouttracker.Tools;
-import com.armpatch.android.workouttracker.model.ExerciseSet;
-import com.armpatch.android.workouttracker.model.Workout;
-import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
-
-import java.util.List;
 
 public class WorkoutPagerAdapter extends PagerAdapter {
 
@@ -80,96 +70,25 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         currentItem = (WorkoutHolder) object;
     }
 
-    class WorkoutHolder implements View.OnClickListener, EditCommentsDialog.Callbacks {
-        private Context activityContext;
-        private WorkoutRepository repository;
-
-        private LocalDate date;
-        private Workout workout;
-        List<ExerciseSet> sets;
-
+    class WorkoutHolder {
         private View itemView;
-        private TextView commentTextView;
-        private RecyclerView exerciseRecycler;
+        private RecyclerView exerciseGroupRecycler;
+        private ExerciseGroupRecyclerAdapter groupAdapter;
 
         WorkoutHolder(final Context activityContext, LocalDate date) {
-            this.activityContext = activityContext;
-            repository = new WorkoutRepository(activityContext);
-            this.date = date;
-
             itemView = inflater.inflate(R.layout.content_workout_holder, null);
-            commentTextView = itemView.findViewById(R.id.workout_comments);
-            commentTextView.setOnClickListener(this);
-
-            exerciseRecycler = itemView.findViewById(R.id.exercise_recycler);
-            exerciseRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
+            setupRecyclerView(activityContext, date);
         }
 
-        @Override
-        public void onCommentSaved(String comments) {
-            workout.setComments(comments);
-            new SaveToDatabaseTask().execute();
+        private void setupRecyclerView(Context activityContext, LocalDate date) {
+            exerciseGroupRecycler = itemView.findViewById(R.id.exercise_recycler);
+            exerciseGroupRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
+            groupAdapter = new ExerciseGroupRecyclerAdapter(activityContext, date);
+            exerciseGroupRecycler.setAdapter(groupAdapter);
         }
 
-        @Override
-        public void onClick(View v) {
-            Log.d("TAG", String.valueOf(v.getId()));
-
-            if (v == commentTextView) {
-                EditCommentsDialog dialog = new EditCommentsDialog(activityContext, WorkoutHolder.this);
-                dialog.setComment(commentTextView.getText().toString());
-                dialog.show();
-            }
-        }
-
-        /**
-         * Update workout holder from database asynchronously
-         */
         void update() {
-            new UpdateWorkoutHolderTask().execute();
-        }
-
-        class UpdateWorkoutHolderTask extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                String date = Tools.stringFromDate(WorkoutHolder.this.date);
-
-                workout = repository.getWorkout(date);
-                if (workout == null) {
-                    workout = new Workout(date);
-                }
-                sets = repository.getExerciseSets(date);
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                commentTextView.setText(workout.getComments());
-
-                if (!workout.isEmpty()) {
-                    ExerciseGroupRecyclerAdapter adapter = new ExerciseGroupRecyclerAdapter(
-                            activityContext, workout, sets);
-                    exerciseRecycler.setAdapter(adapter);
-                } else {
-                    // set placeholder for empty workout
-                }
-
-            }
-        }
-
-        class SaveToDatabaseTask extends AsyncTask<Void, Void, Void> {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                repository.update(workout);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                WorkoutHolder.this.update();
-            }
+            groupAdapter.refresh();
         }
     }
 }
