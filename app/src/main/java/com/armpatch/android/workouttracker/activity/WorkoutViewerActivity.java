@@ -22,8 +22,8 @@ import org.threeten.bp.LocalDate;
 public class WorkoutViewerActivity extends AppCompatActivity implements ExerciseGroupRecyclerAdapter.Callback {
 
     TextView dateBarText;
-    ViewPager viewPager;
-    WorkoutPagerAdapter adapter;
+    ViewPager workoutPager;
+    WorkoutPagerAdapter workoutAdapter;
     LocalDate currentDate;
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -32,7 +32,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements Exercise
 
         @Override
         public void onPageSelected(int position) {
-            currentDate = adapter.getSelectedItemDate(position);
+            currentDate = workoutAdapter.getSelectedItemDate(position);
             dateBarText.setText(Tools.getRelativeDateText(WorkoutViewerActivity.this, currentDate));
         }
 
@@ -51,20 +51,29 @@ public class WorkoutViewerActivity extends AppCompatActivity implements Exercise
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_workout_pager);
+        setupToolbar();
+        setupDateBar();
+        setupWorkoutPager();
+    }
 
+    private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+    }
 
+    private void setupDateBar() {
         dateBarText = findViewById(R.id.date_bar_text);
         dateBarText.setOnClickListener(gotoToday);
+    }
 
-        viewPager = findViewById(R.id.view_pager);
-        adapter = new WorkoutPagerAdapter(this);
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(pageChangeListener);
+    private void setupWorkoutPager() {
+        workoutPager = findViewById(R.id.view_pager);
+        workoutAdapter = new WorkoutPagerAdapter(this);
+        workoutPager.setAdapter(workoutAdapter);
+        workoutPager.addOnPageChangeListener(pageChangeListener);
     }
 
     @Override
@@ -76,7 +85,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements Exercise
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.updateCurrentWorkoutHolder();
+        workoutAdapter.updateCurrentWorkoutHolder();
 
     }
 
@@ -99,7 +108,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements Exercise
     }
 
     private void gotoToday() {
-        viewPager.setCurrentItem(WorkoutPagerAdapter.POSITION_TODAY, false);
+        workoutPager.setCurrentItem(WorkoutPagerAdapter.POSITION_TODAY, false);
     }
 
     @Override
