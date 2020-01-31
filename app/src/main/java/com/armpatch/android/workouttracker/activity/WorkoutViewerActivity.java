@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -67,6 +68,12 @@ public class WorkoutViewerActivity extends AppCompatActivity implements Exercise
     private void setupDateBar() {
         dateBarText = findViewById(R.id.date_bar_text);
         dateBarText.setOnClickListener(gotoToday);
+
+        ImageView leftArrow = findViewById(R.id.prev_day_arrow);
+        leftArrow.setOnClickListener(v -> jumpToNextDay());
+
+        ImageView rightArrow = findViewById(R.id.next_day_arrow);
+        rightArrow.setOnClickListener(v -> jumpToPreviousDay());
     }
 
     private void setupWorkoutPager() {
@@ -109,6 +116,14 @@ public class WorkoutViewerActivity extends AppCompatActivity implements Exercise
 
     private void gotoToday() {
         workoutPager.setCurrentItem(WorkoutPagerAdapter.POSITION_TODAY, false);
+    }
+
+    private void jumpToPreviousDay() {
+        workoutPager.setCurrentItem(workoutPager.getCurrentItem() + 1);
+    }
+
+    private void jumpToNextDay() {
+        workoutPager.setCurrentItem(workoutPager.getCurrentItem() - 1);
     }
 
     @Override
