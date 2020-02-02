@@ -46,6 +46,9 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
     private void populateInitialData() {
         String date = Tools.stringFromDate(LocalDate.now());
 
+        if (this.workoutDao().getWorkoutQuantity() > 0) {
+            return;
+        }
 
         final Category shoulders = new Category("shoulders");
         final Category arms = new Category("arms");

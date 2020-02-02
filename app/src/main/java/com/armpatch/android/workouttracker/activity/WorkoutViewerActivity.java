@@ -14,12 +14,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.Tools;
-import com.armpatch.android.workouttracker.adapters.ExerciseGroupRecyclerAdapter;
+import com.armpatch.android.workouttracker.adapters.WorkoutContentAdapter;
 import com.armpatch.android.workouttracker.adapters.WorkoutPagerAdapter;
 
 import org.threeten.bp.LocalDate;
 
-public class WorkoutViewerActivity extends AppCompatActivity implements ExerciseGroupRecyclerAdapter.Callback {
+public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutContentAdapter.Callback {
 
     TextView dateBarText;
     ViewPager workoutPager;

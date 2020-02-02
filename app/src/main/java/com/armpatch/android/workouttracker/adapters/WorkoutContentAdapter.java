@@ -27,7 +27,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 @SuppressLint("StaticFieldLeak")
-public class ExerciseGroupRecyclerAdapter
+public class WorkoutContentAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements EditCommentsDialog.Callbacks{
 
@@ -45,7 +45,7 @@ public class ExerciseGroupRecyclerAdapter
         void onExerciseGroupSelected(String exerciseName);
     }
 
-    public ExerciseGroupRecyclerAdapter(Context activityContext, LocalDate date) {
+    public WorkoutContentAdapter(Context activityContext, LocalDate date) {
         this.activityContext = activityContext;
         activityCallback = (Callback) activityContext;
 
@@ -139,6 +139,7 @@ public class ExerciseGroupRecyclerAdapter
             if (workout != null && !workout.isEmpty()) {
                 orderedExerciseNames = workout.getExerciseOrderArray();
                 setMap = WorkoutSetSorter.getSortedTable(orderedExerciseNames, sets);
+                notifyDataSetChanged();
             }
         }
     }
@@ -159,17 +160,17 @@ public class ExerciseGroupRecyclerAdapter
         public CommentsHolder(@NonNull View itemView) {
             super(itemView);
             commentsView = itemView.findViewById(R.id.workout_comments);
-            itemView.setOnClickListener(v -> showCommentsDialog());
+            itemView.setOnClickListener(v -> showEditorDialog());
         }
 
         void setCommentText() {
             commentsView.setText(workout.getComments());
         }
 
-        void showCommentsDialog() {
+        void showEditorDialog() {
             EditCommentsDialog dialog = new EditCommentsDialog(
                     activityContext,
-                    ExerciseGroupRecyclerAdapter.this);
+                    WorkoutContentAdapter.this);
             dialog.setText(commentsView.getText().toString());
             dialog.show();
         }
@@ -196,10 +197,12 @@ public class ExerciseGroupRecyclerAdapter
         void bind(int position) {
             currentExerciseSets = setMap.get(orderedExerciseNames[position]);
             exerciseTitle.setText(currentExerciseSets.get(0).getExerciseName());
-            addExerciseSetViews(currentExerciseSets);
+            createExerciseSetViews(currentExerciseSets);
         }
 
-        void addExerciseSetViews(List<ExerciseSet> sets){
+        void createExerciseSetViews(List<ExerciseSet> sets){
+            setListLayout.removeAllViews();
+
             for (ExerciseSet set : sets) {
                 View setView = LayoutInflater.from(activityContext).inflate(
                         R.layout.list_item_set_historical, setListLayout, false);

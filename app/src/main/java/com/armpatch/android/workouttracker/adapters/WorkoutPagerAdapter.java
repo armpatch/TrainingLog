@@ -21,7 +21,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
 
     private Context activityContext;
     private LayoutInflater inflater;
-    private WorkoutHolder currentItem;
+    private WorkoutHolder currentWorkoutHolder;
 
     public WorkoutPagerAdapter(Context context) {
         inflater = LayoutInflater.from(context);
@@ -60,20 +60,20 @@ public class WorkoutPagerAdapter extends PagerAdapter {
     }
 
     public void updateCurrentWorkoutHolder() {
-        if (currentItem != null)
-            currentItem.update();
+        if (currentWorkoutHolder != null)
+            currentWorkoutHolder.update();
     }
 
     @Override
     public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         super.setPrimaryItem(container, position, object);
-        currentItem = (WorkoutHolder) object;
+        currentWorkoutHolder = (WorkoutHolder) object;
     }
 
     class WorkoutHolder {
         private View itemView;
-        private RecyclerView exerciseGroupRecycler;
-        private ExerciseGroupRecyclerAdapter groupAdapter;
+        private RecyclerView exerciseContentRecycler;
+        private WorkoutContentAdapter workoutContentAdapter;
 
         WorkoutHolder(final Context activityContext, LocalDate date) {
             itemView = inflater.inflate(R.layout.content_workout_holder, null);
@@ -81,14 +81,14 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         }
 
         private void setupRecyclerView(Context activityContext, LocalDate date) {
-            exerciseGroupRecycler = itemView.findViewById(R.id.exercise_recycler);
-            exerciseGroupRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
-            groupAdapter = new ExerciseGroupRecyclerAdapter(activityContext, date);
-            exerciseGroupRecycler.setAdapter(groupAdapter);
+            exerciseContentRecycler = itemView.findViewById(R.id.exercise_recycler);
+            exerciseContentRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
+            workoutContentAdapter = new WorkoutContentAdapter(activityContext, date);
+            exerciseContentRecycler.setAdapter(workoutContentAdapter);
         }
 
         void update() {
-            groupAdapter.refresh();
+            workoutContentAdapter.refresh();
         }
     }
 }

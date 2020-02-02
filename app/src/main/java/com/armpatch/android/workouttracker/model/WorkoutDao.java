@@ -19,4 +19,7 @@ public interface WorkoutDao {
 
     @Query("DELETE FROM workout_table")
     void clearTable();
+
+    @Query("SELECT COUNT(DISTINCT date) FROM workout_table")
+    int getWorkoutQuantity();
 }
