@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/hor_line_1"
-            android:hint="Comment Text..."
+            android:hint="@string/empty_comment_placeholder"
             />
 
     <Button

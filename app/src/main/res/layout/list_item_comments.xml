@@ -17,4 +17,11 @@
             android:layout_height="match_parent"
             android:layout_margin="8dp" />
 
+    <TextView
+            android:id="@+id/placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:text="@string/empty_comment_placeholder"/>
+
 </androidx.cardview.widget.CardView>

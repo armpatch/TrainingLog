@@ -6,5 +6,6 @@
 
     <string name="weight_lbs">%.0f lbs</string>
     <string name="reps">%.0f reps</string>
+    <string name="empty_comment_placeholder">Write a comment...</string>
 
 </resources>

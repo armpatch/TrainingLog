@@ -36,7 +36,7 @@ public class WorkoutContentAdapter
 
     private Context activityContext;
     private Callback activityCallback;
-    private Workout workout;
+    public Workout workout;
     private String currentDate;
     private String[] orderedExerciseNames;
     private Hashtable<String, ArrayList<ExerciseSet>> setMap;
@@ -67,7 +67,7 @@ public class WorkoutContentAdapter
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0 && workoutHasComments()) {
+        if (position == 0) {
             return VIEW_TYPE_COMMENTS;
         } else {
             return VIEW_TYPE_EXERCISE;
@@ -91,7 +91,7 @@ public class WorkoutContentAdapter
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == VIEW_TYPE_COMMENTS) {
-            ((CommentsHolder) holder ).setCommentText();
+            ((CommentsHolder) holder ).bind();
         } else {
             ((ExerciseGroupHolder) holder ).bind(position);
         }
@@ -99,11 +99,7 @@ public class WorkoutContentAdapter
 
     @Override
     public int getItemCount() {
-        int itemCount = 0;
-
-        if (workoutHasComments()) {
-            itemCount++;
-        }
+        int itemCount = 1; // show comments item even if there are no comments
 
         if (orderedExerciseNames != null) {
             itemCount += orderedExerciseNames.length;
@@ -151,28 +147,40 @@ public class WorkoutContentAdapter
             repository.update(workout);
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            refresh();
+        }
     }
 
     class CommentsHolder extends RecyclerView.ViewHolder{
 
         TextView commentsView;
+        TextView placeholder;
 
         public CommentsHolder(@NonNull View itemView) {
             super(itemView);
             commentsView = itemView.findViewById(R.id.workout_comments);
+            commentsView.setVisibility(View.GONE);
+            placeholder = itemView.findViewById(R.id.placeholder);
+            placeholder.setVisibility(View.GONE);
             itemView.setOnClickListener(v -> showEditorDialog());
         }
 
-        void setCommentText() {
-            commentsView.setText(workout.getComments());
+        void bind() {
+            if (workoutHasComments()) {
+                commentsView.setText(workout.getComments());
+                commentsView.setVisibility(View.VISIBLE);
+                placeholder.setVisibility(View.GONE);
+            } else {
+                placeholder.setVisibility(View.VISIBLE);
+                commentsView.setVisibility(View.GONE);
+            }
         }
 
         void showEditorDialog() {
-            EditCommentsDialog dialog = new EditCommentsDialog(
-                    activityContext,
-                    WorkoutContentAdapter.this);
-            dialog.setText(commentsView.getText().toString());
-            dialog.show();
+            EditCommentsDialog.create(activityContext, WorkoutContentAdapter.this, commentsView.getText().toString());
         }
     }
 
@@ -195,6 +203,7 @@ public class WorkoutContentAdapter
         }
 
         void bind(int position) {
+            position--;
             currentExerciseSets = setMap.get(orderedExerciseNames[position]);
             exerciseTitle.setText(currentExerciseSets.get(0).getExerciseName());
             createExerciseSetViews(currentExerciseSets);

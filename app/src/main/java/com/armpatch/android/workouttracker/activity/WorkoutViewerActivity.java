@@ -23,7 +23,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
 
     TextView dateBarText;
     ViewPager workoutPager;
-    WorkoutPagerAdapter workoutAdapter;
+    WorkoutPagerAdapter workoutPagerAdapter;
     LocalDate currentDate;
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -32,7 +32,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
 
         @Override
         public void onPageSelected(int position) {
-            currentDate = workoutAdapter.getSelectedItemDate(position);
+            currentDate = workoutPagerAdapter.getSelectedItemDate(position);
             dateBarText.setText(Tools.getRelativeDateText(WorkoutViewerActivity.this, currentDate));
         }
 
@@ -71,8 +71,8 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
 
     private void setupWorkoutPager() {
         workoutPager = findViewById(R.id.view_pager);
-        workoutAdapter = new WorkoutPagerAdapter(this);
-        workoutPager.setAdapter(workoutAdapter);
+        workoutPagerAdapter = new WorkoutPagerAdapter(this);
+        workoutPager.setAdapter(workoutPagerAdapter);
         workoutPager.addOnPageChangeListener(pageChangeListener);
     }
 
@@ -85,7 +85,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
     @Override
     protected void onResume() {
         super.onResume();
-        workoutAdapter.updateCurrentWorkoutHolder();
+        workoutPagerAdapter.updateCurrentWorkoutHolder();
     }
 
     @Override
