@@ -7,6 +7,7 @@ import java.util.List;
 public class WorkoutRepository {
 
     private WorkoutDao workoutDao;
+    private WorkoutCommentDao workoutCommentDao;
     private ExerciseDao exerciseDao;
     private ExerciseSetDao exerciseSetDao;
     private CategoryDao categoryDao;
@@ -19,6 +20,7 @@ public class WorkoutRepository {
     public WorkoutRepository(Context application) {
         WorkoutRoomDatabase db = WorkoutRoomDatabase.getDatabase(application);
         workoutDao = db.workoutDao();
+        workoutCommentDao = db.workoutCommentDao();
         exerciseDao = db.exerciseDao();
         exerciseSetDao = db.exerciseSetDao();
         categoryDao = db.categoryDao();
@@ -27,9 +29,11 @@ public class WorkoutRepository {
     // Access methods
 
     public Workout getWorkout(String date) {
-        Workout workout = workoutDao.getWorkout(date);
+        return workoutDao.getWorkout(date);
+    }
 
-        return workout;
+    public WorkoutComment getComment(String date) {
+        return workoutCommentDao.getComment(date);
     }
 
     public List<Exercise> getExercises(Category category) {
@@ -52,38 +56,20 @@ public class WorkoutRepository {
 
     public void insert(final Workout workout) {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        workoutDao.insert(workout);
-                    }
-                });
+                () -> workoutDao.insert(workout));
+    }
+
+    public void insert(final WorkoutComment workoutComment) {
+        WorkoutRoomDatabase.databaseWriteExecutor.execute(
+                () -> workoutCommentDao.insert(workoutComment));
     }
 
     public void insert(final Exercise exercise) {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        exerciseDao.insert(exercise);
-                    }
-                });
+                () -> exerciseDao.insert(exercise));
     }
 
     // Update methods
-
-    public void update(final Workout workout) {
-        if (workout.isEmpty())
-            return;
-
-        WorkoutRoomDatabase.databaseWriteExecutor.execute(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        workoutDao.update(workout);
-                    }
-                });
-    }
 
     public void update(List<ExerciseSet> sets) {
         exerciseSetDao.update(sets);

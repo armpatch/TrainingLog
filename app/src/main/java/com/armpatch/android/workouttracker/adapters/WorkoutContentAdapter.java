@@ -18,6 +18,7 @@ import com.armpatch.android.workouttracker.Tools;
 import com.armpatch.android.workouttracker.WorkoutSetSorter;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.Workout;
+import com.armpatch.android.workouttracker.model.WorkoutComment;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
@@ -36,7 +37,8 @@ public class WorkoutContentAdapter
 
     private Context activityContext;
     private Callback activityCallback;
-    public Workout workout;
+    private Workout workout;
+    public WorkoutComment workoutComment;
     private String currentDate;
     private String[] orderedExerciseNames;
     private Hashtable<String, ArrayList<ExerciseSet>> setMap;
@@ -58,11 +60,11 @@ public class WorkoutContentAdapter
     }
 
     private boolean workoutHasComments() {
-        if (workout == null) {
+        if (workoutComment == null) {
             return false;
         }
 
-        return workout.getComments().length() > 0;
+        return workoutComment.getComments().length() > 0;
     }
 
     @Override
@@ -110,7 +112,11 @@ public class WorkoutContentAdapter
 
     @Override
     public void onCommentChanged(String comment) {
-        workout.setComments(comment);
+        if (workoutComment == null) {
+            workoutComment = new WorkoutComment(currentDate);
+        }
+
+        workoutComment.setComments(comment);
         new SaveCommentsTask().execute();
     }
 
@@ -125,6 +131,7 @@ public class WorkoutContentAdapter
         @Override
         protected Void doInBackground(Void... voids) {
             WorkoutRepository repository = new WorkoutRepository(activityContext);
+            workoutComment = repository.getComment(date);
             workout = repository.getWorkout(date);
             sets = repository.getExerciseSets(date);
             return null;
@@ -144,13 +151,14 @@ public class WorkoutContentAdapter
         @Override
         protected Void doInBackground(Void... voids) {
             WorkoutRepository repository = new WorkoutRepository(activityContext);
-            repository.update(workout);
+            repository.insert(workoutComment);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             refresh();
+            notifyDataSetChanged();
         }
     }
 
@@ -170,7 +178,7 @@ public class WorkoutContentAdapter
 
         void bind() {
             if (workoutHasComments()) {
-                commentsView.setText(workout.getComments());
+                commentsView.setText(workoutComment.getComments());
                 commentsView.setVisibility(View.VISIBLE);
                 placeholder.setVisibility(View.GONE);
             } else {

@@ -11,18 +11,15 @@ public class Workout {
     @NonNull
     private String date;
 
-    private String comments;
-
     private String exerciseOrder;
 
     public Workout(String date) {
         this.date = date;
-        comments = "";
         exerciseOrder = "";
     }
 
     public boolean isEmpty() {
-        return comments.length() == 0 && exerciseOrder.length() == 0;
+        return exerciseOrder.length() == 0;
     }
 
     @NonNull
@@ -31,13 +28,6 @@ public class Workout {
     }
 
     @NonNull
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
 
     public String getExerciseOrder() {
         return exerciseOrder;

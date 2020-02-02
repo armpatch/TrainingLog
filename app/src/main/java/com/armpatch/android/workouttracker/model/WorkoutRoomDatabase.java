@@ -15,11 +15,12 @@ import org.threeten.bp.LocalDate;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Workout.class, Exercise.class, Category.class, ExerciseSet.class}, version = 1, exportSchema = false)
+@Database(entities = {Workout.class, WorkoutComment.class, Exercise.class, Category.class, ExerciseSet.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class WorkoutRoomDatabase extends RoomDatabase {
 
     public abstract WorkoutDao workoutDao();
+    public abstract WorkoutCommentDao workoutCommentDao();
     public abstract ExerciseDao exerciseDao();
     public abstract ExerciseSetDao exerciseSetDao();
     public abstract CategoryDao categoryDao();
