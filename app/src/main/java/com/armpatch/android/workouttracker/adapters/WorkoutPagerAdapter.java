@@ -44,7 +44,6 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         LocalDate currentDate = LocalDate.now().plusDays(position - POSITION_TODAY);
 
         WorkoutHolder workoutHolder = new WorkoutHolder(activityContext, currentDate);
-        workoutHolder.update();
 
         container.addView(workoutHolder.itemView);
         return workoutHolder;
