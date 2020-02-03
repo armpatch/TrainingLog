@@ -1,17 +1,17 @@
 package com.armpatch.android.workouttracker;
 
-import com.armpatch.android.workouttracker.model.Workout;
+import com.armpatch.android.workouttracker.model.ExerciseOrder;
 
 import org.junit.Test;
 import org.threeten.bp.LocalDate;
 import static org.junit.Assert.assertEquals;
 
-public class WorkoutTest {
+public class ExerciseOrderTest {
 
 
     @Test
     public void evaluatesGetExerciseOrderArray() {
-        Workout workout = new Workout(LocalDate.now().toString());
+        ExerciseOrder workout = new ExerciseOrder(LocalDate.now().toString());
 
         String exerciseOrder = "one";
         workout.setExerciseOrder(exerciseOrder);

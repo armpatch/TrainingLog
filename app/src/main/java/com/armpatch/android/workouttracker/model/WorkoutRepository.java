@@ -6,7 +6,7 @@ import java.util.List;
 
 public class WorkoutRepository {
 
-    private WorkoutDao workoutDao;
+    private ExerciseOrderDao exerciseOrderDao;
     private WorkoutCommentDao workoutCommentDao;
     private ExerciseDao exerciseDao;
     private ExerciseSetDao exerciseSetDao;
@@ -19,7 +19,7 @@ public class WorkoutRepository {
 
     public WorkoutRepository(Context application) {
         WorkoutRoomDatabase db = WorkoutRoomDatabase.getDatabase(application);
-        workoutDao = db.workoutDao();
+        exerciseOrderDao = db.workoutDao();
         workoutCommentDao = db.workoutCommentDao();
         exerciseDao = db.exerciseDao();
         exerciseSetDao = db.exerciseSetDao();
@@ -28,8 +28,8 @@ public class WorkoutRepository {
 
     // Access methods
 
-    public Workout getWorkout(String date) {
-        return workoutDao.getWorkout(date);
+    public ExerciseOrder getExerciseOrder(String date) {
+        return exerciseOrderDao.getExerciseOrder(date);
     }
 
     public WorkoutComment getComment(String date) {
@@ -54,9 +54,9 @@ public class WorkoutRepository {
 
     // Insert methods
 
-    public void insert(final Workout workout) {
+    public void insert(final ExerciseOrder exerciseOrder) {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
-                () -> workoutDao.insert(workout));
+                () -> exerciseOrderDao.insert(exerciseOrder));
     }
 
     public void insert(final WorkoutComment workoutComment) {
@@ -78,7 +78,7 @@ public class WorkoutRepository {
     // delete methods
 
     public void clearAllTables() {
-        workoutDao.clearTable();
+        exerciseOrderDao.clearTable();
         exerciseDao.clearTable();
         exerciseSetDao.clearTable();
         categoryDao.clearTable();

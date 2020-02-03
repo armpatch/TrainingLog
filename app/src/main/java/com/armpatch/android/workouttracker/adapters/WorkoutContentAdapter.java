@@ -17,7 +17,7 @@ import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.Tools;
 import com.armpatch.android.workouttracker.WorkoutSetSorter;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
-import com.armpatch.android.workouttracker.model.Workout;
+import com.armpatch.android.workouttracker.model.ExerciseOrder;
 import com.armpatch.android.workouttracker.model.WorkoutComment;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
@@ -37,7 +37,7 @@ public class WorkoutContentAdapter
 
     private Context activityContext;
     private Callback activityCallback;
-    private Workout workout;
+    private ExerciseOrder exerciseOrder;
     public WorkoutComment workoutComment;
     private String currentDate;
     private String[] orderedExerciseNames;
@@ -132,15 +132,15 @@ public class WorkoutContentAdapter
         protected Void doInBackground(Void... voids) {
             WorkoutRepository repository = new WorkoutRepository(activityContext);
             workoutComment = repository.getComment(date);
-            workout = repository.getWorkout(date);
+            exerciseOrder = repository.getExerciseOrder(date);
             sets = repository.getExerciseSets(date);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            if (workout != null && !workout.isEmpty()) {
-                orderedExerciseNames = workout.getExerciseOrderArray();
+            if (exerciseOrder != null && !exerciseOrder.isEmpty()) {
+                orderedExerciseNames = exerciseOrder.getExerciseOrderArray();
                 setMap = WorkoutSetSorter.getSortedTable(orderedExerciseNames, sets);
                 notifyDataSetChanged();
             }

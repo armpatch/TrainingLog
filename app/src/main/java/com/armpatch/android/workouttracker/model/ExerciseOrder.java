@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "workout_table")
-public class Workout {
+@Entity(tableName = "exercise_order_table")
+public class ExerciseOrder {
 
     @PrimaryKey
     @NonNull
@@ -13,7 +13,7 @@ public class Workout {
 
     private String exerciseOrder;
 
-    public Workout(String date) {
+    public ExerciseOrder(String date) {
         this.date = date;
         exerciseOrder = "";
     }
