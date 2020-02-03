@@ -7,11 +7,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.armpatch.android.workouttracker.MeasurementType;
-import com.armpatch.android.workouttracker.Tools;
-
-import org.threeten.bp.LocalDate;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,51 +31,12 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             WorkoutRoomDatabase.class, "workout_database")
+                            .createFromAsset("workout_database")
                             .build();
-                    INSTANCE.populateInitialData();
                 }
             }
         }
         return INSTANCE;
-    }
-
-    private void populateInitialData() {
-        String date = Tools.stringFromDate(LocalDate.now());
-
-        if (this.workoutDao().getWorkoutQuantity() > 0) {
-            return;
-        }
-
-        final Category shoulders = new Category("shoulders");
-        final Category arms = new Category("arms");
-
-        final Exercise pull_up = new Exercise("pull up", MeasurementType.WEIGHT_AND_REPS, arms);
-        final ExerciseSet set1 = new ExerciseSet(date, pull_up.getName(), 150, 10, 0);
-
-        final Exercise press = new Exercise("press", MeasurementType.WEIGHT_AND_REPS, shoulders);
-        final ExerciseSet set2 = new ExerciseSet(date, press.getName(), 80, 10, 0);
-        final ExerciseSet set3 = new ExerciseSet(date, press.getName(), 80, 5, 2);
-
-        final Workout workout = new Workout(date);
-        workout.setExerciseOrder(pull_up.getName() + "," + press.getName());
-
-        WorkoutRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                INSTANCE.clearAllTables();
-
-                categoryDao().insert(shoulders);
-                categoryDao().insert(arms);
-
-                exerciseDao().insert(pull_up);
-                exerciseDao().insert(press);
-                exerciseSetDao().insert(set1);
-                exerciseSetDao().insert(set2);
-                exerciseSetDao().insert(set3);
-
-                workoutDao().insert(workout);
-            }
-        });
     }
 
 }
