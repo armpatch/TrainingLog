@@ -48,6 +48,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
         setupToolbar();
         setupDateBar();
         setupWorkoutPager();
+        gotoToday();
     }
 
     private void setupToolbar() {
@@ -74,12 +75,6 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
         workoutPagerAdapter = new WorkoutPagerAdapter(this);
         workoutPager.setAdapter(workoutPagerAdapter);
         workoutPager.addOnPageChangeListener(pageChangeListener);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        gotoToday();
     }
 
     @Override
