@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
+import com.armpatch.android.workouttracker.model.WorkoutEditorHelper;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
     }
 
     void addSet(float measurement1, float measurement2) {
-        ExerciseSet set = new ExerciseSet(exerciseName, exerciseDate, measurement1, measurement2, getItemCount() + 1);
+        ExerciseSet set = new ExerciseSet(exerciseDate, exerciseName, measurement1, measurement2, getItemCount() + 1);
         new InsertSetTask(set).execute();
     }
 
@@ -68,7 +69,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         protected Void doInBackground(Void... voids) {
             WorkoutRepository repository = new WorkoutRepository(activityContext);
             sets.clear();
-            sets.addAll(repository.getExerciseSets(exerciseName, exerciseDate));
+            sets.addAll(repository.getExerciseSets(exerciseDate, exerciseName));
 
             return null;
         }
@@ -89,7 +90,9 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
         @Override
         protected Void doInBackground(Void... voids) {
-            new WorkoutRepository(activityContext).insert(set);
+            WorkoutEditorHelper helper = new WorkoutEditorHelper(activityContext);
+            helper.addSet(set);
+
             return null;
         }
 

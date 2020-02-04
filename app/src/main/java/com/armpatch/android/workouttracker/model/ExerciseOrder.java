@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Arrays;
+
 @Entity(tableName = "exercise_order_table")
 public class ExerciseOrder {
 
@@ -46,5 +48,12 @@ public class ExerciseOrder {
             exerciseOrder = exerciseOrder.concat(",");
         }
         exerciseOrder = exerciseOrder.concat(exerciseName);
+    }
+
+    public boolean containsExercise(String exerciseName) {
+        if (isEmpty()) return false;
+        String[] names = getExerciseOrderArray();
+
+        return  (Arrays.asList(names).contains(exerciseName));
     }
 }
