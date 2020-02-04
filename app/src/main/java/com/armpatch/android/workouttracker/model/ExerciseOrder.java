@@ -40,4 +40,11 @@ public class ExerciseOrder {
     public void setExerciseOrder(String exerciseOrder) {
         this.exerciseOrder = exerciseOrder;
     }
+
+    public void appendExercise(String exerciseName) {
+        if (exerciseOrder.length() > 0) {
+            exerciseOrder = exerciseOrder.concat(",");
+        }
+        exerciseOrder = exerciseOrder.concat(exerciseName);
+    }
 }

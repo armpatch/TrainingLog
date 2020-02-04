@@ -20,28 +20,19 @@ import java.util.List;
 public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.SetHolder> {
 
     private Context activityContext;
-    List<ExerciseSet> sets;
-    String name;
-    String date;
+    private List<ExerciseSet> sets;
+    private String exerciseName;
+    private String exerciseDate;
 
-    private TrackerSetAdapter(Context activityContext) {
+    TrackerSetAdapter(Context activityContext, String exerciseName, String exerciseDate) {
         this.activityContext = activityContext;
+        sets = new ArrayList<>();
+        this.exerciseName = exerciseName;
+        this.exerciseDate = exerciseDate;
     }
 
-    public static TrackerSetAdapter existingExercise(Context activityContext, @NonNull List<ExerciseSet> sets) {
-        TrackerSetAdapter adapter = new TrackerSetAdapter(activityContext);
-        adapter.sets = sets;
-        adapter.name = sets.get(0).getExerciseName();
-        adapter.date = sets.get(0).getDate();
-        return adapter;
-    }
-
-    public static TrackerSetAdapter newExercise (Context activityContext, String exerciseName, String date) {
-        TrackerSetAdapter adapter = new TrackerSetAdapter(activityContext);
-        adapter.sets = new ArrayList<>();
-        adapter.name = exerciseName;
-        adapter.date = date;
-        return adapter;
+    void getSets() {
+        new GetSetsTask().execute();
     }
 
     @NonNull
@@ -60,32 +51,51 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
     @Override
     public int getItemCount() {
+        if (sets == null) {
+            return 0;
+        }
         return sets.size();
     }
 
     void addSet(float measurement1, float measurement2) {
-        ExerciseSet set = new ExerciseSet(name, date, measurement1, measurement2, getItemCount());
-        sets.add(set);
-        TrackerSetAdapter.this.refresh();
+        ExerciseSet set = new ExerciseSet(exerciseName, exerciseDate, measurement1, measurement2, getItemCount() + 1);
+        new InsertSetTask(set).execute();
     }
 
-    void refresh() {
-        notifyDataSetChanged();
-        new WriteSetsToDatabaseTask(sets).execute();
+    private class GetSetsTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            WorkoutRepository repository = new WorkoutRepository(activityContext);
+            sets.clear();
+            sets.addAll(repository.getExerciseSets(exerciseName, exerciseDate));
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            notifyDataSetChanged();
+        }
     }
 
-    private class WriteSetsToDatabaseTask extends AsyncTask<Void, Void, Void> {
+    private class InsertSetTask extends AsyncTask<Void, Void, Void> {
 
-        List<ExerciseSet> sets;
+        ExerciseSet set;
 
-        WriteSetsToDatabaseTask(List<ExerciseSet> sets){
-            this.sets = sets;
+        InsertSetTask(ExerciseSet set) {
+            this.set = set;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            new WorkoutRepository(activityContext).update(sets);
+            new WorkoutRepository(activityContext).insert(set);
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            getSets();
         }
     }
 

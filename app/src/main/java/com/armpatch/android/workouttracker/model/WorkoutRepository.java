@@ -54,6 +54,11 @@ public class WorkoutRepository {
 
     // Insert methods
 
+    public void insert(final ExerciseSet set) {
+        WorkoutRoomDatabase.databaseWriteExecutor.execute(
+                () -> exerciseSetDao.insert(set));
+    }
+
     public void insert(final ExerciseOrder exerciseOrder) {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
                 () -> exerciseOrderDao.insert(exerciseOrder));

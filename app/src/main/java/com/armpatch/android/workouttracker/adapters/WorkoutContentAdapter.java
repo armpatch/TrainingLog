@@ -37,11 +37,11 @@ public class WorkoutContentAdapter
 
     private Context activityContext;
     private Callback activityCallback;
-    private ExerciseOrder exerciseOrder;
-    public WorkoutComment workoutComment;
     private String currentDate;
+    public WorkoutComment workoutComment;
+    private ExerciseOrder exerciseOrder;
     private String[] orderedExerciseNames;
-    private Hashtable<String, ArrayList<ExerciseSet>> setMap;
+    private Hashtable<String, ArrayList<ExerciseSet>> setTable;
 
     public interface Callback {
         void onExerciseGroupSelected(String exerciseName);
@@ -141,7 +141,7 @@ public class WorkoutContentAdapter
         protected void onPostExecute(Void aVoid) {
             if (exerciseOrder != null && !exerciseOrder.isEmpty()) {
                 orderedExerciseNames = exerciseOrder.getExerciseOrderArray();
-                setMap = WorkoutSetSorter.getSortedTable(orderedExerciseNames, sets);
+                setTable = WorkoutSetSorter.getSortedTable(orderedExerciseNames, sets);
                 notifyDataSetChanged();
             }
         }
@@ -212,7 +212,7 @@ public class WorkoutContentAdapter
 
         void bind(int position) {
             position--;
-            currentExerciseSets = setMap.get(orderedExerciseNames[position]);
+            currentExerciseSets = setTable.get(orderedExerciseNames[position]);
             exerciseTitle.setText(currentExerciseSets.get(0).getExerciseName());
             createExerciseSetViews(currentExerciseSets);
         }
