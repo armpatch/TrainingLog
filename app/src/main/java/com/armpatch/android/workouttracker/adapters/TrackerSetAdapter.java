@@ -14,28 +14,34 @@ import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.SetHolder> {
 
     private Context activityContext;
     List<ExerciseSet> sets;
-    ExerciseSet template;
+    String name;
+    String date;
 
-    TrackerSetAdapter(Context activityContext, List<ExerciseSet> sets) {
-        this.sets = sets;
+    private TrackerSetAdapter(Context activityContext) {
         this.activityContext = activityContext;
-        createTemplateSet();
     }
 
-    void createTemplateSet() {
-        ExerciseSet firstSet = sets.get(0);
-        template = new ExerciseSet(
-                firstSet.getDate(),
-                firstSet.getExerciseName(),
-                firstSet.getMeasurement1(),
-                firstSet.getMeasurement2(),
-                0);
+    public static TrackerSetAdapter existingExercise(Context activityContext, @NonNull List<ExerciseSet> sets) {
+        TrackerSetAdapter adapter = new TrackerSetAdapter(activityContext);
+        adapter.sets = sets;
+        adapter.name = sets.get(0).getExerciseName();
+        adapter.date = sets.get(0).getDate();
+        return adapter;
+    }
+
+    public static TrackerSetAdapter newExercise (Context activityContext, String exerciseName, String date) {
+        TrackerSetAdapter adapter = new TrackerSetAdapter(activityContext);
+        adapter.sets = new ArrayList<>();
+        adapter.name = exerciseName;
+        adapter.date = date;
+        return adapter;
     }
 
     @NonNull
@@ -58,7 +64,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
     }
 
     void addSet(float measurement1, float measurement2) {
-        ExerciseSet set = new ExerciseSet(template.getDate(), template.getExerciseName(), measurement1, measurement2, getItemCount());
+        ExerciseSet set = new ExerciseSet(name, date, measurement1, measurement2, getItemCount());
         sets.add(set);
         TrackerSetAdapter.this.refresh();
     }
@@ -68,7 +74,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         new WriteSetsToDatabaseTask(sets).execute();
     }
 
-    class WriteSetsToDatabaseTask extends AsyncTask<Void, Void, Void> {
+    private class WriteSetsToDatabaseTask extends AsyncTask<Void, Void, Void> {
 
         List<ExerciseSet> sets;
 

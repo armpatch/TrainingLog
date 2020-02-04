@@ -22,7 +22,7 @@ import java.util.List;
 public class TrackerPagerAdapter extends PagerAdapter {
 
     private Context activityContext;
-    private TrackerPageHolder trackerPageHolder;
+    private SetEditorPageHolder setEditorPageHolder;
 
     private String currentDate;
     private String exerciseName;
@@ -50,14 +50,17 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
         if (position == 0) {
             itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_tracker_layout, container, false);
-            trackerPageHolder = new TrackerPageHolder(itemView);
+            setEditorPageHolder = new SetEditorPageHolder(itemView);
         }
 
         container.addView(itemView);
-        return trackerPageHolder;
+        return setEditorPageHolder;
     }
 
-    class TrackerPageHolder {
+    /**
+     * This holder contains the tab for adding and modifying sets for the currently selected exercise
+     */
+    class SetEditorPageHolder {
         View itemView;
 
         TrackerSetAdapter trackerSetAdapter;
@@ -66,7 +69,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
         NumberPicker repsPicker;
         Button addSetButton;
 
-        TrackerPageHolder(View itemView) {
+        SetEditorPageHolder(View itemView) {
             if (itemView == null) {
                 throw new IllegalArgumentException("itemView may not be null");
             }
@@ -113,13 +116,17 @@ public class TrackerPagerAdapter extends PagerAdapter {
             repsPicker.setValue(reps);
         }
 
-        void onSetsRetrieved(List<ExerciseSet> sets) {
-            trackerSetAdapter = new TrackerSetAdapter(activityContext, sets);
+        void setupAdapter(List<ExerciseSet> sets) {
+            if (sets.size() == 0) {
+                trackerSetAdapter = TrackerSetAdapter.newExercise(activityContext, exerciseName, currentDate);
+            } else {
+                trackerSetAdapter = TrackerSetAdapter.existingExercise(activityContext, sets);
+                setNumberPickerStartingValue();
+            }
+
             setRecycler = itemView.findViewById(R.id.recycler_view);
             setRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
             setRecycler.setAdapter(trackerSetAdapter);
-
-            setNumberPickerStartingValue();
         }
     }
 
@@ -137,7 +144,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            trackerPageHolder.onSetsRetrieved(sets);
+            setEditorPageHolder.setupAdapter(sets);
         }
     }
 }
