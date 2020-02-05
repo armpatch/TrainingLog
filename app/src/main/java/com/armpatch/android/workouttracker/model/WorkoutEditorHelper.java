@@ -2,6 +2,8 @@ package com.armpatch.android.workouttracker.model;
 
 import android.content.Context;
 
+import java.util.List;
+
 public class WorkoutEditorHelper {
 
     private WorkoutRepository repo;
@@ -25,9 +27,24 @@ public class WorkoutEditorHelper {
 
         repo.insert(set);
     }
-    void deleteSet(ExerciseSet set) {}
+    public void deleteSet(ExerciseSet set) {
+        repo.delete(set);
+
+        List<ExerciseSet> remainingSets = repo.getExerciseSets(set.getDate(), set.getDate());
+
+        if (remainingSets == null) {
+            removeExerciseFromOrder(set.getExerciseName());
+        }
+    }
+
+    void deleteExerciseGroup(ExerciseSet set) {
+
+    }
+
     void updateSet(ExerciseSet set) {}
-    void deleteExercise(String name) {}
+
+    private void removeExerciseFromOrder(String exerciseName) {}
+
     void swapExercisePosition(int position1, int position2) {}
 
 }

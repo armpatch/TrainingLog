@@ -1,6 +1,7 @@
 package com.armpatch.android.workouttracker.model;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -23,6 +24,9 @@ public interface ExerciseSetDao {
 
     @Query("SELECT COUNT(DISTINCT exerciseName) FROM exercise_set_table WHERE date = :date")
     int getDistinctExerciseCount(String date);
+
+    @Delete
+    void delete(ExerciseSet set);
 
     @Query("DELETE FROM exercise_set_table")
     void clearTable();

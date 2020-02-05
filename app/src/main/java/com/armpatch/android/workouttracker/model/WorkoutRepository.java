@@ -82,6 +82,10 @@ public class WorkoutRepository {
 
     // delete methods
 
+    void delete(ExerciseSet set) {
+        exerciseSetDao.delete(set);
+    }
+
     public void clearAllTables() {
         exerciseOrderDao.clearTable();
         exerciseDao.clearTable();

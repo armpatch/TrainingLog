@@ -95,7 +95,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
             setRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
             trackerSetAdapter = new TrackerSetAdapter(activityContext, exerciseName, currentDate);
             setRecycler.setAdapter(trackerSetAdapter);
-            trackerSetAdapter.getSets();
+            trackerSetAdapter.retrieveSetsFromDatabase();
         }
 
         void addExerciseSet() {
