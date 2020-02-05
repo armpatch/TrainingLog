@@ -2,6 +2,8 @@ package com.armpatch.android.workouttracker.model;
 
 import android.content.Context;
 
+import com.armpatch.android.workouttracker.SetComparator;
+
 import java.util.List;
 
 public class WorkoutEditorHelper {
@@ -30,10 +32,21 @@ public class WorkoutEditorHelper {
     public void deleteSet(ExerciseSet set) {
         repo.delete(set);
 
-        List<ExerciseSet> remainingSets = repo.getExerciseSets(set.getDate(), set.getDate());
+        List<ExerciseSet> remainingSets = repo.getExerciseSets(set.getDate(), set.getExerciseName());
 
         if (remainingSets == null) {
             removeExerciseFromOrder(set.getExerciseName());
+        } else {
+            // update order of sets
+            remainingSets.sort(new SetComparator());
+
+            int index = 1;
+            for (ExerciseSet current : remainingSets) {
+                current.setOrder(index);
+                index++;
+            }
+
+            repo.update(remainingSets);
         }
     }
 

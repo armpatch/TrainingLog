@@ -74,6 +74,12 @@ public class WorkoutRepository {
                 () -> exerciseDao.insert(exercise));
     }
 
+    // Update methods
+
+    public void update(List<ExerciseSet> sets) {
+        exerciseSetDao.update(sets);
+    }
+
     // delete methods
 
     void delete(ExerciseSet set) {
