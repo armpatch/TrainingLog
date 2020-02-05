@@ -16,7 +16,7 @@ public class WorkoutSetSorter {
         }
 
         for (String exercise : orderedExercises) {
-            sortSetsByOrder(setMap.get(exercise));
+            setMap.get(exercise).sort(new SetComparator());
         }
 
         return setMap;
@@ -30,10 +30,6 @@ public class WorkoutSetSorter {
         }
 
         setMap.get(name).add(set);
-    }
-
-    private static void sortSetsByOrder(ArrayList<ExerciseSet> exerciseSets) {
-        exerciseSets.sort(new SetComparator());
     }
 
 }

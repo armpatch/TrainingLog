@@ -48,10 +48,12 @@ public class ExerciseOrder {
         StringBuilder sb = new StringBuilder();
 
         for (String name : names) {
-            sb.append(name).append(",");
+            if (name.length() > 0) {
+                sb.append(name).append(",");
+            }
         }
-
-        sb.deleteCharAt(sb.length() - 1);
+        if (sb.length() > 0)
+            sb.deleteCharAt(sb.length() - 1);
         exerciseOrder = sb.toString();
     }
 
@@ -74,6 +76,17 @@ public class ExerciseOrder {
         String temp = names[position1];
         names[position1] = names[position2];
         names[position2] = temp;
+        setExerciseOrder(names);
+    }
+
+    void removeExercise(String exerciseName) {
+        String[] names = getExerciseOrderArray();
+        for (int i = 0; i < names.length; i++) {
+            if (names[i].equals(exerciseName)) {
+                names[i] = "";
+            }
+        }
+
         setExerciseOrder(names);
     }
 }
