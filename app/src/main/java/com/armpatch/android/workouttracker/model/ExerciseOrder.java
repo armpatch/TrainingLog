@@ -34,7 +34,7 @@ public class ExerciseOrder {
         return exerciseOrder;
     }
 
-    public String[] getExerciseOrderArray() {
+    public String[] toArray() {
         return exerciseOrder.split(",");
     }
 
@@ -66,13 +66,13 @@ public class ExerciseOrder {
 
     public boolean containsExercise(String exerciseName) {
         if (isEmpty()) return false;
-        String[] names = getExerciseOrderArray();
+        String[] names = toArray();
 
         return  (Arrays.asList(names).contains(exerciseName));
     }
 
     public void swapExercises(int position1, int position2) {
-        String[] names = getExerciseOrderArray();
+        String[] names = toArray();
         String temp = names[position1];
         names[position1] = names[position2];
         names[position2] = temp;
@@ -80,7 +80,7 @@ public class ExerciseOrder {
     }
 
     void removeExercise(String exerciseName) {
-        String[] names = getExerciseOrderArray();
+        String[] names = toArray();
         for (int i = 0; i < names.length; i++) {
             if (names[i].equals(exerciseName)) {
                 names[i] = "";
@@ -88,5 +88,16 @@ public class ExerciseOrder {
         }
 
         setExerciseOrder(names);
+    }
+
+    /**
+     * @return the number of exercises
+     */
+    public int size() {
+        if (exerciseOrder.length() == 0) {
+            return 0;
+        }
+
+        return toArray().length;
     }
 }

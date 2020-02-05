@@ -42,7 +42,6 @@ public class WorkoutContentAdapter
     private String currentDate;
     public WorkoutComment workoutComment;
     private ExerciseOrder exerciseOrder;
-    private String[] orderedExerciseNames;
     private Hashtable<String, ArrayList<ExerciseSet>> setTable;
 
     public interface Callback {
@@ -97,8 +96,8 @@ public class WorkoutContentAdapter
     public int getItemCount() {
         int itemCount = 1; // keep this 1 as long as the comment box is present
 
-        if (orderedExerciseNames != null) {
-            itemCount += orderedExerciseNames.length;
+        if (exerciseOrder != null) {
+            itemCount += exerciseOrder.size();
         }
 
         return itemCount;
@@ -161,16 +160,17 @@ public class WorkoutContentAdapter
             workoutComment = repository.getComment(date);
             exerciseOrder = repository.getExerciseOrder(date);
             sets = repository.getExerciseSets(date);
+
+
+            setTable = WorkoutSetSorter.getSortedTable(exerciseOrder, sets);
+
+
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            if (exerciseOrder != null && !exerciseOrder.isEmpty()) {
-                orderedExerciseNames = exerciseOrder.getExerciseOrderArray();
-                setTable = WorkoutSetSorter.getSortedTable(orderedExerciseNames, sets);
-                notifyDataSetChanged();
-            }
+            notifyDataSetChanged();
         }
     }
 
@@ -244,8 +244,8 @@ public class WorkoutContentAdapter
         }
 
         void bind(int contentPosition) {
-            int exerciseNameIndex = contentPosition - 1;
-            exerciseName = orderedExerciseNames[exerciseNameIndex];
+            int orderInWorkout = contentPosition - 1;
+            exerciseName = exerciseOrder.toArray()[orderInWorkout];
             exerciseGroupSets = setTable.get(exerciseName);
             exerciseTitle.setText(exerciseGroupSets.get(0).getExerciseName());
             createExerciseSetViews(exerciseGroupSets);
