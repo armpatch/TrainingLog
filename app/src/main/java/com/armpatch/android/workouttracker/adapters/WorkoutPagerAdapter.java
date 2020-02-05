@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -84,10 +85,36 @@ public class WorkoutPagerAdapter extends PagerAdapter {
             exerciseContentRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
             workoutContentAdapter = new WorkoutContentAdapter(activityContext, date);
             exerciseContentRecycler.setAdapter(workoutContentAdapter);
+            ItemTouchHelper touchHelper = new ItemTouchHelper(simpleCallback);
+            touchHelper.attachToRecyclerView(exerciseContentRecycler);
         }
 
         void update() {
             workoutContentAdapter.refresh();
         }
     }
+
+    private ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            ((WorkoutContentAdapter) recyclerView.getAdapter()).swapExerciseGroups(viewHolder, target);
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+
+        @Override
+        public boolean canDropOver(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder current, @NonNull RecyclerView.ViewHolder target) {
+            return !(target instanceof WorkoutContentAdapter.CommentsHolder);
+        }
+
+        @Override
+        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+            if (viewHolder instanceof WorkoutContentAdapter.CommentsHolder) return 0;
+            return super.getMovementFlags(recyclerView, viewHolder);
+        }
+    };
 }

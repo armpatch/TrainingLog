@@ -30,7 +30,6 @@ public class ExerciseOrder {
     }
 
     @NonNull
-
     public String getExerciseOrder() {
         return exerciseOrder;
     }
@@ -41,6 +40,19 @@ public class ExerciseOrder {
 
     public void setExerciseOrder(String exerciseOrder) {
         this.exerciseOrder = exerciseOrder;
+    }
+
+    public void setExerciseOrder (String[] names) {
+        if (names.length == 0) return;
+
+        StringBuilder sb = new StringBuilder();
+
+        for (String name : names) {
+            sb.append(name).append(",");
+        }
+
+        sb.deleteCharAt(sb.length() - 1);
+        exerciseOrder = sb.toString();
     }
 
     public void appendExercise(String exerciseName) {
@@ -55,5 +67,13 @@ public class ExerciseOrder {
         String[] names = getExerciseOrderArray();
 
         return  (Arrays.asList(names).contains(exerciseName));
+    }
+
+    public void swapExercises(int position1, int position2) {
+        String[] names = getExerciseOrderArray();
+        String temp = names[position1];
+        names[position1] = names[position2];
+        names[position2] = temp;
+        setExerciseOrder(names);
     }
 }

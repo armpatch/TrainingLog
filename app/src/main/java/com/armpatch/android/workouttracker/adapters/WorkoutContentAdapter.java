@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,9 +17,10 @@ import com.armpatch.android.workouttracker.EditCommentsDialog;
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.Tools;
 import com.armpatch.android.workouttracker.WorkoutSetSorter;
-import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.ExerciseOrder;
+import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.WorkoutComment;
+import com.armpatch.android.workouttracker.model.WorkoutEditorHelper;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
 import org.threeten.bp.LocalDate;
@@ -59,14 +61,6 @@ public class WorkoutContentAdapter
         new WorkoutQueryTask(currentDate).execute();
     }
 
-    private boolean workoutHasComments() {
-        if (workoutComment == null) {
-            return false;
-        }
-
-        return workoutComment.getComments().length() > 0;
-    }
-
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
@@ -101,7 +95,7 @@ public class WorkoutContentAdapter
 
     @Override
     public int getItemCount() {
-        int itemCount = 1; // show comments item even if there are no comments
+        int itemCount = 1; // keep this 1 as long as the comment box is present
 
         if (orderedExerciseNames != null) {
             itemCount += orderedExerciseNames.length;
@@ -118,6 +112,39 @@ public class WorkoutContentAdapter
 
         workoutComment.setComments(comment);
         new SaveCommentsTask().execute();
+    }
+
+    public void swapExerciseGroups(RecyclerView.ViewHolder holder1, RecyclerView.ViewHolder holder2) {
+        int position1 = holder1.getAdapterPosition();
+        int position2 = holder2.getAdapterPosition();
+
+        notifyItemMoved(position1, position2);
+
+        int COMMENT_HOLDER_OFFSET = 1;
+
+        new ExerciseOrderSwapTask(position1 - COMMENT_HOLDER_OFFSET, position2 - COMMENT_HOLDER_OFFSET).execute();
+    }
+
+    private class ExerciseOrderSwapTask extends AsyncTask<Void, Void, Void> {
+
+        int position1, position2;
+
+        ExerciseOrderSwapTask(int position1, int position2) {
+            this.position1 = position1;
+            this.position2 = position2;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            WorkoutEditorHelper helper = new WorkoutEditorHelper(activityContext);
+            helper.swapExerciseOrder(currentDate, position1, position2);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Toast.makeText(activityContext, "Exercises swapped", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private class WorkoutQueryTask extends AsyncTask<Void, Void, Void> {
@@ -177,7 +204,7 @@ public class WorkoutContentAdapter
         }
 
         void bind() {
-            if (workoutHasComments()) {
+            if (workoutComment != null && workoutComment.hasComments()) {
                 commentsView.setText(workoutComment.getComments());
                 commentsView.setVisibility(View.VISIBLE);
                 placeholder.setVisibility(View.GONE);
@@ -192,8 +219,9 @@ public class WorkoutContentAdapter
         }
     }
 
-    class ExerciseGroupHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        List<ExerciseSet> currentExerciseSets;
+    public class ExerciseGroupHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        private String exerciseName;
+        List<ExerciseSet> exerciseGroupSets;
         LinearLayout setListLayout;
         TextView exerciseTitle;
 
@@ -206,15 +234,25 @@ public class WorkoutContentAdapter
 
         @Override
         public void onClick(View v) {
-            String name = currentExerciseSets.get(0).getExerciseName();
+            String name = exerciseGroupSets.get(0).getExerciseName();
             activityCallback.onExerciseGroupSelected(name);
         }
 
-        void bind(int position) {
-            position--;
-            currentExerciseSets = setTable.get(orderedExerciseNames[position]);
-            exerciseTitle.setText(currentExerciseSets.get(0).getExerciseName());
-            createExerciseSetViews(currentExerciseSets);
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
+        }
+
+        void bind(int contentPosition) {
+            int exerciseNameIndex = contentPosition - 1;
+            exerciseName = orderedExerciseNames[exerciseNameIndex];
+            exerciseGroupSets = setTable.get(exerciseName);
+            exerciseTitle.setText(exerciseGroupSets.get(0).getExerciseName());
+            createExerciseSetViews(exerciseGroupSets);
+        }
+
+        public String exerciseName() {
+            return exerciseName;
         }
 
         void createExerciseSetViews(List<ExerciseSet> sets){

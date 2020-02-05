@@ -58,6 +58,11 @@ public class WorkoutEditorHelper {
 
     private void removeExerciseFromOrder(String exerciseName) {}
 
-    void swapExercisePosition(int position1, int position2) {}
+    public void swapExerciseOrder(String date, int position1, int position2) {
+        ExerciseOrder exerciseOrder = repo.getExerciseOrder(date);
+        exerciseOrder.swapExercises(position1, position2);
+
+        repo.insert(exerciseOrder);
+    }
 
 }
