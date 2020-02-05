@@ -54,12 +54,12 @@ public class WorkoutRepository {
 
     // Insert methods
 
-    public void insert(final ExerciseSet set) {
+    void insert(final ExerciseSet set) {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
                 () -> exerciseSetDao.insert(set));
     }
 
-    public void insert(final ExerciseOrder exerciseOrder) {
+    void insert(final ExerciseOrder exerciseOrder) {
         WorkoutRoomDatabase.databaseWriteExecutor.execute(
                 () -> exerciseOrderDao.insert(exerciseOrder));
     }
@@ -81,6 +81,10 @@ public class WorkoutRepository {
     }
 
     // delete methods
+
+    void delete(ExerciseSet set) {
+        exerciseSetDao.delete(set);
+    }
 
     public void clearAllTables() {
         exerciseOrderDao.clearTable();
