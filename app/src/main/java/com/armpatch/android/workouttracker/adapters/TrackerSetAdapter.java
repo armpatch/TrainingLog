@@ -177,7 +177,6 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         TextView setNumberText;
         TextView weightText;
         TextView repsText;
-        ImageView deleteSetView;
 
         SetHolder(@NonNull View itemView) {
             super(itemView);
@@ -185,10 +184,8 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             setNumberText = itemView.findViewById(R.id.set_number);
             weightText = itemView.findViewById(R.id.weight);
             repsText = itemView.findViewById(R.id.reps);
-            deleteSetView = itemView.findViewById(R.id.delete_button);
 
             itemView.setOnClickListener(this);
-            deleteSetView.setOnClickListener(this);
         }
 
         void bind(ExerciseSet set) {
@@ -201,11 +198,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.delete_button) {
-                deleteSet(set);
-            } else {
-                selectionCallback.onSetHolderClicked(set);
-            }
+            selectionCallback.onSetHolderClicked(set);
         }
     }
 }

@@ -74,24 +74,25 @@ public class TrackerPagerAdapter extends PagerAdapter {
             }
             this.itemView = itemView;
 
-            findViews();
+            setupButtons();
             setupNumberPickers();
             setupAdapter();
         }
 
-        private void findViews() {
-            weightPicker = itemView.findViewById(R.id.weight_number_picker);
-            repsPicker = itemView.findViewById(R.id.reps_number_picker);
-
+        private void setupButtons() {
             addOrUpdateButton = itemView.findViewById(R.id.add_set_button);
             addOrUpdateButton.setOnClickListener(v -> addOrUpdateSet());
 
             deleteButton = itemView.findViewById(R.id.delete_button);
             deleteButton.setVisibility(View.GONE);
+            deleteButton.setOnClickListener(v -> deleteSet());
 
         }
 
         private void setupNumberPickers() {
+            weightPicker = itemView.findViewById(R.id.weight_number_picker);
+            repsPicker = itemView.findViewById(R.id.reps_number_picker);
+
             weightPicker.setMinValue(0);
             weightPicker.setMaxValue(1000);
             repsPicker.setMinValue(0);
@@ -107,7 +108,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
             trackerSetAdapter.setSelectionCallback(this);
         }
 
-        void addOrUpdateSet() {
+        private void addOrUpdateSet() {
             if (currentlySelectedSet == null) {
                 addExerciseSet();
             } else {
@@ -115,18 +116,23 @@ public class TrackerPagerAdapter extends PagerAdapter {
             }
         }
 
-        void addExerciseSet() {
+        private void addExerciseSet() {
             int weight = weightPicker.getValue();
             int reps = repsPicker.getValue();
 
             trackerSetAdapter.addSet(weight, reps);
         }
 
-        void updateExerciseSet() {
+        private void updateExerciseSet() {
             int weight = weightPicker.getValue();
             int reps = repsPicker.getValue();
 
             trackerSetAdapter.updateSet(currentlySelectedSet, weight, reps);
+            deselectSet();
+        }
+
+        private void deleteSet() {
+            trackerSetAdapter.deleteSet(currentlySelectedSet);
             deselectSet();
         }
 
@@ -139,7 +145,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
             }
         }
 
-        void deselectSet() {
+        private void deselectSet() {
             deleteButton.setVisibility(View.GONE);
             currentlySelectedSet = null;
             //trackerSetAdapter.removeSelectionIndication();
