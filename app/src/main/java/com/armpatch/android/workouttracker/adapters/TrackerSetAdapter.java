@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
+import com.armpatch.android.workouttracker.SetComparator;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.WorkoutEditorHelper;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
@@ -22,9 +23,19 @@ import java.util.List;
 public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.SetHolder> {
 
     private Context activityContext;
+    private RecyclerView recyclerView;
     private List<ExerciseSet> sets;
     private String exerciseName;
     private String exerciseDate;
+    private SelectionCallback selectionCallback;
+
+    interface SelectionCallback {
+        void onSetHolderClicked(ExerciseSet set);
+    }
+
+    void setSelectionCallback(SelectionCallback selectionCallback) {
+        this.selectionCallback = selectionCallback;
+    }
 
     TrackerSetAdapter(Context activityContext, String exerciseName, String exerciseDate) {
         this.activityContext = activityContext;
@@ -35,6 +46,11 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
     void retrieveSetsFromDatabase() {
         new RetrieveSetsTask().execute();
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 
     @NonNull
@@ -59,13 +75,28 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         return sets.size();
     }
 
-    void addSet(float measurement1, float measurement2) {
+    void addSet(int measurement1, int measurement2) {
         ExerciseSet set = new ExerciseSet(exerciseDate, exerciseName, measurement1, measurement2, getItemCount() + 1);
         new InsertSetTask(set).execute();
     }
 
     void deleteSet(ExerciseSet set) {
         new DeleteSetTask(set).execute();
+    }
+
+    void updateSet(ExerciseSet set, int weight, int reps) {
+        new UpdateSetTask(set, weight, reps).execute();
+    }
+
+    void highlightSet(ExerciseSet set) {
+        removeAllHighlights();
+        ((SetHolder) recyclerView.findViewHolderForAdapterPosition(set.getOrder() - 1)).showAsSelected();
+    }
+
+    void removeAllHighlights() {
+        for (int i = 0; i < getItemCount(); i++) {
+            ((SetHolder) recyclerView.findViewHolderForAdapterPosition(i)).showAsUnselected();
+        }
     }
 
     private class RetrieveSetsTask extends AsyncTask<Void, Void, Void> {
@@ -75,6 +106,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             WorkoutRepository repository = new WorkoutRepository(activityContext);
             sets.clear();
             sets.addAll(repository.getExerciseSets(exerciseDate, exerciseName));
+            sets.sort(new SetComparator());
 
             return null;
         }
@@ -127,14 +159,42 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         }
     }
 
+    private class UpdateSetTask extends AsyncTask<Void, Void, Void> {
+
+        private ExerciseSet set;
+        private int weight;
+        private int reps;
+
+        UpdateSetTask(ExerciseSet set, int weight, int reps) {
+            this.set = set;
+            this.weight = weight;
+            this.reps = reps;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            set.setMeasurement1(weight);
+            set.setMeasurement2(reps);
+
+            new WorkoutEditorHelper(activityContext).updateSet(set);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            retrieveSetsFromDatabase();
+        }
+    }
+
     class SetHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ExerciseSet holderSet;
+        private ExerciseSet set;
 
         TextView setNumberText;
         TextView weightText;
         TextView repsText;
-        ImageView deleteSetView;
+        ImageView selectionTint;
 
         SetHolder(@NonNull View itemView) {
             super(itemView);
@@ -142,14 +202,14 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             setNumberText = itemView.findViewById(R.id.set_number);
             weightText = itemView.findViewById(R.id.weight);
             repsText = itemView.findViewById(R.id.reps);
-            deleteSetView = itemView.findViewById(R.id.delete_button);
+            selectionTint = itemView.findViewById(R.id.selection_tint);
+            selectionTint.setVisibility(View.INVISIBLE);
 
             itemView.setOnClickListener(this);
-            deleteSetView.setOnClickListener(this);
         }
 
         void bind(ExerciseSet set) {
-            this.holderSet = set;
+            this.set = set;
             setNumberText.setText(String.valueOf(set.getOrder()));
 
             weightText.setText(activityContext.getString(R.string.weight_lbs, set.getMeasurement1()));
@@ -158,9 +218,15 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.delete_button) {
-                deleteSet(holderSet);
-            }
+            selectionCallback.onSetHolderClicked(set);
+        }
+
+        public void showAsSelected() {
+            selectionTint.setVisibility(View.VISIBLE);
+        }
+
+        public void showAsUnselected() {
+            selectionTint.setVisibility(View.INVISIBLE);
         }
     }
 }

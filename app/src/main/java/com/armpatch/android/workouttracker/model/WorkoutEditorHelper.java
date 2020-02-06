@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.armpatch.android.workouttracker.SetComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutEditorHelper {
@@ -34,8 +35,8 @@ public class WorkoutEditorHelper {
 
         List<ExerciseSet> remainingSets = repo.getExerciseSets(set.getDate(), set.getExerciseName());
 
-        if (remainingSets == null) {
-            removeExerciseFromOrder(set.getExerciseName());
+        if (remainingSets.size() == 0) {
+            deleteExerciseGroup(set);
         } else {
             // update order of sets
             remainingSets.sort(new SetComparator());
@@ -51,13 +52,23 @@ public class WorkoutEditorHelper {
     }
 
     void deleteExerciseGroup(ExerciseSet set) {
+        ExerciseOrder exerciseOrder = repo.getExerciseOrder(set.getDate());
 
+        exerciseOrder.removeExercise(set.getExerciseName());
+        repo.insert(exerciseOrder);
     }
 
-    void updateSet(ExerciseSet set) {}
+    public void updateSet(ExerciseSet set) {
+        ArrayList<ExerciseSet> sets = new ArrayList<>();
+        sets.add(set);
+        repo.update(sets);
+    }
 
-    private void removeExerciseFromOrder(String exerciseName) {}
+    public void swapExerciseOrder(String date, int position1, int position2) {
+        ExerciseOrder exerciseOrder = repo.getExerciseOrder(date);
+        exerciseOrder.swapExercises(position1, position2);
 
-    void swapExercisePosition(int position1, int position2) {}
+        repo.insert(exerciseOrder);
+    }
 
 }

@@ -8,40 +8,38 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tracker_editor_layout"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tracker_editor_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            >
+            app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
                 android:id="@+id/hor_line_1"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:src="@drawable/horizontal_line_separator_grey" />
+                android:src="@drawable/horizontal_line_separator_grey"
+                app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
                 android:id="@+id/set_info"
                 style="@style/TextDark"
-                app:layout_constraintTop_toBottomOf="@id/hor_line_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="4 sets of 3-5 reps"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/hor_line_1" />
 
         <ImageView
                 android:id="@+id/hor_line_2"
-                app:layout_constraintTop_toBottomOf="@id/set_info"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:src="@drawable/horizontal_line_separator_grey" />
+                android:src="@drawable/horizontal_line_separator_grey"
+                app:layout_constraintTop_toBottomOf="@id/set_info" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/picker_layout"
@@ -97,22 +95,30 @@
 
         <Button
                 android:id="@+id/add_set_button"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="4dp"
+
                 android:backgroundTint="@color/colorPrimary"
                 android:text="Add Set"
                 android:textAppearance="@style/TextLightShadow"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/delete_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/picker_layout" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+                android:id="@+id/delete_button"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:backgroundTint="@color/colorAccent"
+                android:text="Delete"
+                android:textAppearance="@style/TextLightShadow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/add_set_button" />
 
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

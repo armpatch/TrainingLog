@@ -17,5 +17,8 @@
 
     <color name="horizontal_separator_grey">#474747</color>
 
+    <color name="item_selected_foreground">#802B57FF</color>
+
+
 
 </resources>

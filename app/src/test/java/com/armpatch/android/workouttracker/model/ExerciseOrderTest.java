@@ -5,25 +5,35 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
+import static org.junit.Assert.*;
+
 public class ExerciseOrderTest {
 
 
-    private String date;
     private ExerciseOrder exerciseOrder;
-
 
     @Before
     public void setup() {
-        date = LocalDate.now().toString();
+        String date = LocalDate.now().toString();
         exerciseOrder = new ExerciseOrder(date);
     }
 
+
     @Test
-    public void containsExercise() {
-        exerciseOrder.setExerciseOrder("one,two,three");
+    public void removeExercise() {
+        String[] startingNames = {"one", "two", "three"};
+        exerciseOrder.setExerciseOrder(startingNames);
 
-        String exercise = "one";
+        exerciseOrder.removeExercise("two");
+        String expected = "one,three";
 
-        assert exerciseOrder.containsExercise(exercise);
+        assertEquals(expected, exerciseOrder.toString());
+    }
+
+    @Test
+    public void size() {
+        exerciseOrder.setExerciseOrder("1,1");
+
+        assertEquals(2, exerciseOrder.size());
     }
 }

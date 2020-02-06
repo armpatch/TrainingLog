@@ -52,11 +52,11 @@ public class ExerciseSet {
         this.comment = comment;
     }
 
-    void setMeasurement1(float measurement1) {
+    public void setMeasurement1(float measurement1) {
         this.measurement1 = measurement1;
     }
 
-    void setMeasurement2(float measurement2) {
+    public void setMeasurement2(float measurement2) {
         this.measurement2 = measurement2;
     }
 

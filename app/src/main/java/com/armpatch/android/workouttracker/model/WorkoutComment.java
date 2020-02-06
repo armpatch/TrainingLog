@@ -19,8 +19,8 @@ public class WorkoutComment {
         comments = "";
     }
 
-    public boolean isEmpty() {
-        return comments.length() == 0;
+    public boolean hasComments() {
+        return comments.length() != 0;
     }
 
     @NonNull

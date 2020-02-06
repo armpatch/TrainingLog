@@ -1,5 +1,6 @@
 package com.armpatch.android.workouttracker;
 
+import com.armpatch.android.workouttracker.model.ExerciseOrder;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 
 import java.util.ArrayList;
@@ -8,21 +9,25 @@ import java.util.List;
 
 public class WorkoutSetSorter {
 
-    public static Hashtable<String, ArrayList<ExerciseSet>> getSortedTable (String[] orderedExercises, List<ExerciseSet> sets) {
+    public static Hashtable<String, ArrayList<ExerciseSet>> getSortedTable (ExerciseOrder exerciseOrder, List<ExerciseSet> sets) {
         Hashtable<String, ArrayList<ExerciseSet>> setMap = new Hashtable<>();
 
-        for (ExerciseSet set : sets) {
-            sortSetByExercise(setMap, set);
+        if (sets.size() == 0) {
+            return setMap;
         }
 
-        for (String exercise : orderedExercises) {
-            sortSetsByOrder(setMap.get(exercise));
+        for (ExerciseSet set : sets) {
+            putSetIntoMap(setMap, set);
+        }
+
+        for (String exercise : exerciseOrder.toArray()) {
+            setMap.get(exercise).sort(new SetComparator());
         }
 
         return setMap;
     }
 
-    private static void sortSetByExercise(Hashtable<String, ArrayList<ExerciseSet>> setMap, ExerciseSet set) {
+    private static void putSetIntoMap(Hashtable<String, ArrayList<ExerciseSet>> setMap, ExerciseSet set) {
         String name = set.getExerciseName();
 
         if (!setMap.containsKey(name)) {
@@ -30,10 +35,6 @@ public class WorkoutSetSorter {
         }
 
         setMap.get(name).add(set);
-    }
-
-    private static void sortSetsByOrder(ArrayList<ExerciseSet> exerciseSets) {
-        exerciseSets.sort(new SetComparator());
     }
 
 }
