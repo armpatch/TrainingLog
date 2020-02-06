@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.armpatch.android.workouttracker.SetComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutEditorHelper {
@@ -57,7 +58,11 @@ public class WorkoutEditorHelper {
         repo.insert(exerciseOrder);
     }
 
-    void updateSet(ExerciseSet set) {}
+    public void updateSet(ExerciseSet set) {
+        ArrayList<ExerciseSet> sets = new ArrayList<>();
+        sets.add(set);
+        repo.update(sets);
+    }
 
     private void removeExerciseFromOrder(String exerciseName) {
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.armpatch.android.workouttracker.R;
+import com.armpatch.android.workouttracker.model.ExerciseSet;
 
 public class TrackerPagerAdapter extends PagerAdapter {
 
@@ -44,7 +45,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
         View itemView = new View(activityContext);
 
         if (position == 0) {
-            itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_tracker_layout, container, false);
+            itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_set_editor_page, container, false);
             setEditorPage = new SetEditorPage(itemView);
         }
 
@@ -55,14 +56,17 @@ public class TrackerPagerAdapter extends PagerAdapter {
     /**
      * This holder contains the tab for adding and modifying sets for the currently selected exercise
      */
-    class SetEditorPage {
+    class SetEditorPage implements TrackerSetAdapter.SelectionCallback{
         View itemView;
 
         TrackerSetAdapter trackerSetAdapter;
         RecyclerView setRecycler;
         NumberPicker weightPicker;
         NumberPicker repsPicker;
-        Button addSetButton;
+        Button addOrUpdateButton;
+        Button deleteButton;
+
+        ExerciseSet currentlySelectedSet;
 
         SetEditorPage(View itemView) {
             if (itemView == null) {
@@ -72,15 +76,19 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
             findViews();
             setupNumberPickers();
-
             setupAdapter();
         }
 
         private void findViews() {
             weightPicker = itemView.findViewById(R.id.weight_number_picker);
             repsPicker = itemView.findViewById(R.id.reps_number_picker);
-            addSetButton = itemView.findViewById(R.id.add_set_button);
-            addSetButton.setOnClickListener(v -> addExerciseSet());
+
+            addOrUpdateButton = itemView.findViewById(R.id.add_set_button);
+            addOrUpdateButton.setOnClickListener(v -> addOrUpdateSet());
+
+            deleteButton = itemView.findViewById(R.id.delete_button);
+            deleteButton.setVisibility(View.GONE);
+
         }
 
         private void setupNumberPickers() {
@@ -96,13 +104,53 @@ public class TrackerPagerAdapter extends PagerAdapter {
             trackerSetAdapter = new TrackerSetAdapter(activityContext, exerciseName, currentDate);
             setRecycler.setAdapter(trackerSetAdapter);
             trackerSetAdapter.retrieveSetsFromDatabase();
+            trackerSetAdapter.setSelectionCallback(this);
+        }
+
+        void addOrUpdateSet() {
+            if (currentlySelectedSet == null) {
+                addExerciseSet();
+            } else {
+                updateExerciseSet();
+            }
         }
 
         void addExerciseSet() {
-            float weight = weightPicker.getValue();
-            float reps = repsPicker.getValue();
+            int weight = weightPicker.getValue();
+            int reps = repsPicker.getValue();
 
             trackerSetAdapter.addSet(weight, reps);
+        }
+
+        void updateExerciseSet() {
+            int weight = weightPicker.getValue();
+            int reps = repsPicker.getValue();
+
+            trackerSetAdapter.updateSet(currentlySelectedSet, weight, reps);
+            deselectSet();
+        }
+
+        @Override
+        public void onSetHolderClicked(ExerciseSet clickedSet) {
+            if (currentlySelectedSet == clickedSet) {
+                deselectSet();
+            } else {
+                selectSet(clickedSet);
+            }
+        }
+
+        void deselectSet() {
+            deleteButton.setVisibility(View.GONE);
+            currentlySelectedSet = null;
+            //trackerSetAdapter.removeSelectionIndication();
+        }
+
+        private void selectSet(ExerciseSet set) {
+            currentlySelectedSet = set;
+            deleteButton.setVisibility(View.VISIBLE);
+            weightPicker.setValue((int) set.getMeasurement1());
+            repsPicker.setValue((int) set.getMeasurement2());
+            //trackerSetAdapter.showAsSelected(currentlySelectedSet);
         }
     }
 }

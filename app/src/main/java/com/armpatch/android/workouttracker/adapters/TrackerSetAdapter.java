@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
+import com.armpatch.android.workouttracker.SetComparator;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.WorkoutEditorHelper;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
@@ -25,6 +26,15 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
     private List<ExerciseSet> sets;
     private String exerciseName;
     private String exerciseDate;
+    private SelectionCallback selectionCallback;
+
+    interface SelectionCallback {
+        void onSetHolderClicked(ExerciseSet set);
+    }
+
+    void setSelectionCallback(SelectionCallback selectionCallback) {
+        this.selectionCallback = selectionCallback;
+    }
 
     TrackerSetAdapter(Context activityContext, String exerciseName, String exerciseDate) {
         this.activityContext = activityContext;
@@ -59,13 +69,17 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         return sets.size();
     }
 
-    void addSet(float measurement1, float measurement2) {
+    void addSet(int measurement1, int measurement2) {
         ExerciseSet set = new ExerciseSet(exerciseDate, exerciseName, measurement1, measurement2, getItemCount() + 1);
         new InsertSetTask(set).execute();
     }
 
     void deleteSet(ExerciseSet set) {
         new DeleteSetTask(set).execute();
+    }
+
+    void updateSet(ExerciseSet set, int weight, int reps) {
+        new UpdateSetTask(set, weight, reps).execute();
     }
 
     private class RetrieveSetsTask extends AsyncTask<Void, Void, Void> {
@@ -75,6 +89,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             WorkoutRepository repository = new WorkoutRepository(activityContext);
             sets.clear();
             sets.addAll(repository.getExerciseSets(exerciseDate, exerciseName));
+            sets.sort(new SetComparator());
 
             return null;
         }
@@ -127,9 +142,37 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         }
     }
 
+    private class UpdateSetTask extends AsyncTask<Void, Void, Void> {
+
+        private ExerciseSet set;
+        private int weight;
+        private int reps;
+
+        UpdateSetTask(ExerciseSet set, int weight, int reps) {
+            this.set = set;
+            this.weight = weight;
+            this.reps = reps;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            set.setMeasurement1(weight);
+            set.setMeasurement2(reps);
+
+            new WorkoutEditorHelper(activityContext).updateSet(set);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            retrieveSetsFromDatabase();
+        }
+    }
+
     class SetHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ExerciseSet holderSet;
+        private ExerciseSet set;
 
         TextView setNumberText;
         TextView weightText;
@@ -149,7 +192,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         }
 
         void bind(ExerciseSet set) {
-            this.holderSet = set;
+            this.set = set;
             setNumberText.setText(String.valueOf(set.getOrder()));
 
             weightText.setText(activityContext.getString(R.string.weight_lbs, set.getMeasurement1()));
@@ -159,7 +202,9 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.delete_button) {
-                deleteSet(holderSet);
+                deleteSet(set);
+            } else {
+                selectionCallback.onSetHolderClicked(set);
             }
         }
     }
