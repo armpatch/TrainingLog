@@ -64,10 +64,6 @@ public class WorkoutEditorHelper {
         repo.update(sets);
     }
 
-    private void removeExerciseFromOrder(String exerciseName) {
-
-    }
-
     public void swapExerciseOrder(String date, int position1, int position2) {
         ExerciseOrder exerciseOrder = repo.getExerciseOrder(date);
         exerciseOrder.swapExercises(position1, position2);

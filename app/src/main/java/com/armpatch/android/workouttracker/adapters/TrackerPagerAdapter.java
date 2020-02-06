@@ -63,7 +63,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
         RecyclerView setRecycler;
         NumberPicker weightPicker;
         NumberPicker repsPicker;
-        Button addOrUpdateButton;
+        Button addUpdateButton;
         Button deleteButton;
 
         ExerciseSet currentlySelectedSet;
@@ -80,8 +80,8 @@ public class TrackerPagerAdapter extends PagerAdapter {
         }
 
         private void setupButtons() {
-            addOrUpdateButton = itemView.findViewById(R.id.add_set_button);
-            addOrUpdateButton.setOnClickListener(v -> addOrUpdateSet());
+            addUpdateButton = itemView.findViewById(R.id.add_set_button);
+            addUpdateButton.setOnClickListener(v -> addOrUpdateSet());
 
             deleteButton = itemView.findViewById(R.id.delete_button);
             deleteButton.setVisibility(View.GONE);
@@ -147,6 +147,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
         private void deselectSet() {
             deleteButton.setVisibility(View.GONE);
+            addUpdateButton.setText(activityContext.getString(R.string.add_set_button_text));
             currentlySelectedSet = null;
             //trackerSetAdapter.removeSelectionIndication();
         }
@@ -154,6 +155,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
         private void selectSet(ExerciseSet set) {
             currentlySelectedSet = set;
             deleteButton.setVisibility(View.VISIBLE);
+            addUpdateButton.setText(activityContext.getString(R.string.update_button_text));
             weightPicker.setValue((int) set.getMeasurement1());
             repsPicker.setValue((int) set.getMeasurement2());
             //trackerSetAdapter.showAsSelected(currentlySelectedSet);
