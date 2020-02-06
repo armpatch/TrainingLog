@@ -66,7 +66,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
         Button addUpdateButton;
         Button deleteButton;
 
-        ExerciseSet currentlySelectedSet;
+        ExerciseSet selectedSet;
 
         SetEditorPage(View itemView) {
             if (itemView == null) {
@@ -109,7 +109,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
         }
 
         private void addOrUpdateSet() {
-            if (currentlySelectedSet == null) {
+            if (selectedSet == null) {
                 addExerciseSet();
             } else {
                 updateExerciseSet();
@@ -127,18 +127,18 @@ public class TrackerPagerAdapter extends PagerAdapter {
             int weight = weightPicker.getValue();
             int reps = repsPicker.getValue();
 
-            trackerSetAdapter.updateSet(currentlySelectedSet, weight, reps);
+            trackerSetAdapter.updateSet(selectedSet, weight, reps);
             deselectSet();
         }
 
         private void deleteSet() {
-            trackerSetAdapter.deleteSet(currentlySelectedSet);
+            trackerSetAdapter.deleteSet(selectedSet);
             deselectSet();
         }
 
         @Override
         public void onSetHolderClicked(ExerciseSet clickedSet) {
-            if (currentlySelectedSet == clickedSet) {
+            if (selectedSet == clickedSet) {
                 deselectSet();
             } else {
                 selectSet(clickedSet);
@@ -148,17 +148,19 @@ public class TrackerPagerAdapter extends PagerAdapter {
         private void deselectSet() {
             deleteButton.setVisibility(View.GONE);
             addUpdateButton.setText(activityContext.getString(R.string.add_set_button_text));
-            currentlySelectedSet = null;
-            //trackerSetAdapter.removeSelectionIndication();
+
+            trackerSetAdapter.removeAllHighlights();
+            selectedSet = null;
         }
 
         private void selectSet(ExerciseSet set) {
-            currentlySelectedSet = set;
+            selectedSet = set;
             deleteButton.setVisibility(View.VISIBLE);
             addUpdateButton.setText(activityContext.getString(R.string.update_button_text));
             weightPicker.setValue((int) set.getMeasurement1());
             repsPicker.setValue((int) set.getMeasurement2());
-            //trackerSetAdapter.showAsSelected(currentlySelectedSet);
+            trackerSetAdapter.highlightSet(set);
+
         }
     }
 }

@@ -23,6 +23,7 @@ import java.util.List;
 public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.SetHolder> {
 
     private Context activityContext;
+    private RecyclerView recyclerView;
     private List<ExerciseSet> sets;
     private String exerciseName;
     private String exerciseDate;
@@ -45,6 +46,11 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
     void retrieveSetsFromDatabase() {
         new RetrieveSetsTask().execute();
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 
     @NonNull
@@ -80,6 +86,17 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
     void updateSet(ExerciseSet set, int weight, int reps) {
         new UpdateSetTask(set, weight, reps).execute();
+    }
+
+    void highlightSet(ExerciseSet set) {
+        removeAllHighlights();
+        ((SetHolder) recyclerView.findViewHolderForAdapterPosition(set.getOrder() - 1)).showAsSelected();
+    }
+
+    void removeAllHighlights() {
+        for (int i = 0; i < getItemCount(); i++) {
+            ((SetHolder) recyclerView.findViewHolderForAdapterPosition(i)).showAsUnselected();
+        }
     }
 
     private class RetrieveSetsTask extends AsyncTask<Void, Void, Void> {
@@ -177,6 +194,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         TextView setNumberText;
         TextView weightText;
         TextView repsText;
+        ImageView selectionTint;
 
         SetHolder(@NonNull View itemView) {
             super(itemView);
@@ -184,6 +202,8 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             setNumberText = itemView.findViewById(R.id.set_number);
             weightText = itemView.findViewById(R.id.weight);
             repsText = itemView.findViewById(R.id.reps);
+            selectionTint = itemView.findViewById(R.id.selection_tint);
+            selectionTint.setVisibility(View.INVISIBLE);
 
             itemView.setOnClickListener(this);
         }
@@ -199,6 +219,14 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         @Override
         public void onClick(View v) {
             selectionCallback.onSetHolderClicked(set);
+        }
+
+        public void showAsSelected() {
+            selectionTint.setVisibility(View.VISIBLE);
+        }
+
+        public void showAsUnselected() {
+            selectionTint.setVisibility(View.INVISIBLE);
         }
     }
 }
