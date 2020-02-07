@@ -90,12 +90,17 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
     void highlightSet(ExerciseSet set) {
         removeAllHighlights();
-        ((SetHolder) recyclerView.findViewHolderForAdapterPosition(set.getOrder() - 1)).showAsSelected();
+        SetHolder holder = ((SetHolder) recyclerView.findViewHolderForAdapterPosition(set.getOrder() - 1));
+        if (holder != null)
+            holder.showAsSelected();
     }
 
     void removeAllHighlights() {
+        SetHolder holder;
         for (int i = 0; i < getItemCount(); i++) {
-            ((SetHolder) recyclerView.findViewHolderForAdapterPosition(i)).showAsUnselected();
+            holder = ((SetHolder) recyclerView.findViewHolderForAdapterPosition(i));
+            if (holder == null) return;
+            holder.showAsUnselected();
         }
     }
 
