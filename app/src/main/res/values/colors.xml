@@ -19,6 +19,8 @@
 
     <color name="item_selected_foreground">#802B57FF</color>
 
+    <color name="comment_icon_empty">#80757575</color>
+
 
 
 </resources>

@@ -4,7 +4,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-
         android:background="?android:attr/selectableItemBackground">
 
     <ImageView
@@ -20,14 +19,12 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingTop="13dp"
+            android:paddingTop="14dp"
             android:paddingBottom="10dp"
-            android:src="@drawable/ic_chat_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_comment_empty"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
             android:id="@+id/set_number"

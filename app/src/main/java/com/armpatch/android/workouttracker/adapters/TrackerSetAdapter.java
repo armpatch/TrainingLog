@@ -194,7 +194,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         TextView weightText;
         TextView repsText;
         ImageView selectionTint;
-        ImageView commentIcon;
+        ImageView commentToggle;
 
         SetHolder(@NonNull View itemView) {
             super(itemView);
@@ -204,10 +204,10 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             repsText = itemView.findViewById(R.id.reps);
             selectionTint = itemView.findViewById(R.id.selection_tint);
             selectionTint.setVisibility(View.INVISIBLE);
-            commentIcon = itemView.findViewById(R.id.comment);
+            commentToggle = itemView.findViewById(R.id.comment);
 
             itemView.setOnClickListener(this);
-            commentIcon.setOnClickListener(this);
+            commentToggle.setOnClickListener(this);
         }
 
         void bind(ExerciseSet set) {
@@ -216,6 +216,12 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
             weightText.setText(activityContext.getString(R.string.weight_lbs, set.getMeasurement1()));
             repsText.setText(activityContext.getString(R.string.reps, set.getMeasurement2()));
+
+            if (set.getComment().length() > 0) {
+                commentToggle.setImageResource(R.drawable.ic_comment_filled);
+            } else {
+                commentToggle.setImageResource(R.drawable.ic_comment_empty);
+            }
         }
 
         @Override
