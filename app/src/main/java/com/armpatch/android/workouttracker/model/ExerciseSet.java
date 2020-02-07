@@ -34,6 +34,7 @@ public class ExerciseSet {
         this.date = date;
         this.exerciseName = exerciseName;
         this.order = order;
+        comment = "";
         this.measurement1 = measurement1;
         this.measurement2 = measurement2;
     }
