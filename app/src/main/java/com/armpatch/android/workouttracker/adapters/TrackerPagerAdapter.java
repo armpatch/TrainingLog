@@ -56,7 +56,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
     /**
      * This holder contains the tab for adding and modifying sets for the currently selected exercise
      */
-    class SetEditorPage implements TrackerSetAdapter.SelectionCallback{
+    class SetEditorPage implements TrackerSetAdapter.HolderSelectionCallback {
         View itemView;
 
         TrackerSetAdapter trackerSetAdapter;
@@ -127,7 +127,10 @@ public class TrackerPagerAdapter extends PagerAdapter {
             int weight = weightPicker.getValue();
             int reps = repsPicker.getValue();
 
-            trackerSetAdapter.updateSet(selectedSet, weight, reps);
+            selectedSet.setMeasurement1(weight);
+            selectedSet.setMeasurement2(reps);
+
+            trackerSetAdapter.updateSet(selectedSet);
             deselectSet();
         }
 

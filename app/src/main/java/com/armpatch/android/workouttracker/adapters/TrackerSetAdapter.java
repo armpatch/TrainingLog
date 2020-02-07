@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.armpatch.android.workouttracker.EditCommentsDialog;
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.SetComparator;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
@@ -27,14 +28,14 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
     private List<ExerciseSet> sets;
     private String exerciseName;
     private String exerciseDate;
-    private SelectionCallback selectionCallback;
+    private HolderSelectionCallback holderSelectionCallback;
 
-    interface SelectionCallback {
+    interface HolderSelectionCallback {
         void onSetHolderClicked(ExerciseSet set);
     }
 
-    void setSelectionCallback(SelectionCallback selectionCallback) {
-        this.selectionCallback = selectionCallback;
+    void setSelectionCallback(HolderSelectionCallback holderSelectionCallback) {
+        this.holderSelectionCallback = holderSelectionCallback;
     }
 
     TrackerSetAdapter(Context activityContext, String exerciseName, String exerciseDate) {
@@ -84,8 +85,8 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         new DeleteSetTask(set).execute();
     }
 
-    void updateSet(ExerciseSet set, int weight, int reps) {
-        new UpdateSetTask(set, weight, reps).execute();
+    void updateSet(ExerciseSet set) {
+        new UpdateSetTask(set).execute();
     }
 
     void highlightSet(ExerciseSet set) {
@@ -167,20 +168,13 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
     private class UpdateSetTask extends AsyncTask<Void, Void, Void> {
 
         private ExerciseSet set;
-        private int weight;
-        private int reps;
 
-        UpdateSetTask(ExerciseSet set, int weight, int reps) {
+        UpdateSetTask(ExerciseSet set) {
             this.set = set;
-            this.weight = weight;
-            this.reps = reps;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            set.setMeasurement1(weight);
-            set.setMeasurement2(reps);
-
             new WorkoutEditorHelper(activityContext).updateSet(set);
 
             return null;
@@ -192,7 +186,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         }
     }
 
-    class SetHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class SetHolder extends RecyclerView.ViewHolder implements View.OnClickListener, EditCommentsDialog.Callbacks {
 
         private ExerciseSet set;
 
@@ -200,6 +194,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         TextView weightText;
         TextView repsText;
         ImageView selectionTint;
+        ImageView commentIcon;
 
         SetHolder(@NonNull View itemView) {
             super(itemView);
@@ -209,8 +204,10 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             repsText = itemView.findViewById(R.id.reps);
             selectionTint = itemView.findViewById(R.id.selection_tint);
             selectionTint.setVisibility(View.INVISIBLE);
+            commentIcon = itemView.findViewById(R.id.comment);
 
             itemView.setOnClickListener(this);
+            commentIcon.setOnClickListener(this);
         }
 
         void bind(ExerciseSet set) {
@@ -223,7 +220,21 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
         @Override
         public void onClick(View v) {
-            selectionCallback.onSetHolderClicked(set);
+            if (v.getId() == R.id.comment) {
+                editSetComment();
+            } else {
+                holderSelectionCallback.onSetHolderClicked(set);
+            }
+        }
+
+        private void editSetComment() {
+            EditCommentsDialog.create(activityContext, this, set.getComment());
+        }
+
+        @Override
+        public void onCommentChanged(String comment) {
+            set.setComment(comment);
+            updateSet(set);
         }
 
         public void showAsSelected() {
