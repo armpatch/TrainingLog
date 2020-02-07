@@ -93,11 +93,12 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        if (itemId == R.id.add_exercise) {
+        if (itemId == R.id.menu_item_add_exercise) {
             Intent addExerciseIntent = ExerciseSelectionActivity.getIntent(this, currentDate);
             startActivity(addExerciseIntent);
+        } else if (itemId == R.id.menu_item_calendar){
+            startActivity(CalendarActivity.getIntent(this, Tools.stringFromDate(currentDate) ));
         }
-
         return true;
     }
 
