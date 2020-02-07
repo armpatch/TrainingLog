@@ -14,6 +14,15 @@
             android:theme="@style/ToolbarColoredBackArrow"
             app:menu="@menu/exercise_tracker">
 
+        <ImageView
+                android:id="@+id/back_arrow"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_arrow_previous_activity"
+                android:layout_marginEnd="12dp"
+                />
+
         <TextView
                 android:id="@+id/exercise_title"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
