@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -33,6 +34,9 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+
+        ImageView backArrow = findViewById(R.id.back_arrow);
+        backArrow.setOnClickListener(v -> onBackPressed());
 
         String currentDate = getIntent().getStringExtra(KEY_EXERCISE_DATE);
         String exerciseName = getIntent().getStringExtra(KEY_EXERCISE_NAME);
