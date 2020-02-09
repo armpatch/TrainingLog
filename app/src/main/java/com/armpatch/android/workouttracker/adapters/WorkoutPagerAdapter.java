@@ -55,7 +55,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         container.removeView(((WorkoutHolder) object).itemView);
     }
 
-    public LocalDate getSelectedItemDate(int currentPosition) {
+    public LocalDate getItemDate(int currentPosition) {
         return (LocalDate.now().plusDays(currentPosition - POSITION_TODAY));
     }
 
