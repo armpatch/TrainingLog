@@ -19,12 +19,14 @@ import com.armpatch.android.workouttracker.adapters.WorkoutPagerAdapter;
 
 import org.threeten.bp.LocalDate;
 
-public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutContentAdapter.Callback {
+import static org.threeten.bp.temporal.ChronoUnit.DAYS;
 
+public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutContentAdapter.Callback{
+
+    LocalDate selectedDate;
     TextView dateBarText;
     ViewPager workoutPager;
     WorkoutPagerAdapter workoutPagerAdapter;
-    LocalDate currentDate;
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -32,8 +34,8 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
 
         @Override
         public void onPageSelected(int position) {
-            currentDate = workoutPagerAdapter.getSelectedItemDate(position);
-            dateBarText.setText(Tools.getRelativeDateText(WorkoutViewerActivity.this, currentDate));
+            selectedDate = workoutPagerAdapter.getItemDate(position);
+            dateBarText.setText(Tools.getRelativeDateText(WorkoutViewerActivity.this, selectedDate));
         }
 
         @Override
@@ -48,7 +50,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
         setupToolbar();
         setupDateBar();
         setupWorkoutPager();
-        gotoToday();
+        changeSelectedDay(LocalDate.now());
     }
 
     private void setupToolbar() {
@@ -61,7 +63,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
 
     private void setupDateBar() {
         dateBarText = findViewById(R.id.date_bar_text);
-        dateBarText.setOnClickListener(v -> gotoToday());
+        dateBarText.setOnClickListener(v -> changeSelectedDay(LocalDate.now()));
 
         ImageView leftArrow = findViewById(R.id.prev_day_arrow);
         leftArrow.setOnClickListener(v -> jumpToNextDay());
@@ -93,16 +95,24 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        if (itemId == R.id.add_exercise) {
-            Intent addExerciseIntent = ExerciseSelectionActivity.getIntent(this, currentDate);
+        if (itemId == R.id.menu_item_add_exercise) {
+            Intent addExerciseIntent = ExerciseSelectionActivity.getIntent(this, selectedDate);
             startActivity(addExerciseIntent);
+        } else if (itemId == R.id.menu_item_calendar){
+            android.app.DatePickerDialog dialog = new android.app.DatePickerDialog(this);
+            dialog.setOnDateSetListener((view, year, month, dayOfMonth) -> {
+                LocalDate date = LocalDate.of(year, month + 1, dayOfMonth);
+                changeSelectedDay(date);
+            });
+            dialog.show();
         }
-
         return true;
     }
 
-    private void gotoToday() {
-        workoutPager.setCurrentItem(WorkoutPagerAdapter.POSITION_TODAY, false);
+    private void changeSelectedDay(LocalDate date) {
+        int relativeDays = (int) LocalDate.now().until(date, DAYS );
+        int position = WorkoutPagerAdapter.POSITION_TODAY + relativeDays;
+        workoutPager.setCurrentItem(position);
     }
 
     private void jumpToPreviousDay() {
@@ -117,7 +127,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
     public void onExerciseGroupSelected(String exerciseName) {
         Intent exerciseTracker = ExerciseTrackerActivity.getIntent(
                 this,
-                Tools.stringFromDate(currentDate),
+                Tools.stringFromDate(selectedDate),
                 exerciseName);
 
         startActivity(exerciseTracker);

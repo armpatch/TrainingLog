@@ -10,7 +10,7 @@ import static org.threeten.bp.temporal.ChronoUnit.DAYS;
 public class Tools {
 
     public static String KEY_EXERCISE_NAME = "KEY_EXERCISE_NAME";
-    public static String KEY_EXERCISE_DATE = "KEY_EXERCISE";
+    public static String KEY_EXERCISE_DATE = "KEY_EXERCISE_DATE";
 
     public static String getRelativeDateText(Context activityContext, LocalDate selectedDate) {
         long days = LocalDate.now().until(selectedDate, DAYS );
