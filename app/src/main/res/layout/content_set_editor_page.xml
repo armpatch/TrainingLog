@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <include android:id="@+id/controls"
-            layout="@layout/content_set_creator_header"
+            layout="@layout/content_set_editor"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             />

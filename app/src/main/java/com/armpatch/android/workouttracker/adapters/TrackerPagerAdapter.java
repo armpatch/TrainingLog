@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.armpatch.android.workouttracker.NumberChooser;
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 
@@ -61,8 +61,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
         TrackerSetAdapter trackerSetAdapter;
         RecyclerView setRecycler;
-        NumberPicker weightPicker;
-        NumberPicker repsPicker;
+        NumberChooser weightChooser, repsChooser;
         Button addUpdateButton;
         Button deleteButton;
 
@@ -74,29 +73,28 @@ public class TrackerPagerAdapter extends PagerAdapter {
             }
             this.itemView = itemView;
 
+            View weightChooserLayout = itemView.findViewById(R.id.weight_picker);
+            View repsChooserLayout = itemView.findViewById(R.id.reps_picker);
+
+            weightChooser = new NumberChooser(weightChooserLayout);
+            weightChooser.setTitle("Weight");
+            weightChooser.setIncrement(2.5f);
+            repsChooser = new NumberChooser(repsChooserLayout);
+            repsChooser.setTitle("Reps");
+            repsChooser.setIncrement(1);
+
             setupButtons();
-            setupNumberPickers();
             setupAdapter();
         }
 
         private void setupButtons() {
-            addUpdateButton = itemView.findViewById(R.id.add_set_button);
+            addUpdateButton = itemView.findViewById(R.id.update_button);
             addUpdateButton.setOnClickListener(v -> addOrUpdateSet());
 
             deleteButton = itemView.findViewById(R.id.delete_button);
             deleteButton.setVisibility(View.GONE);
             deleteButton.setOnClickListener(v -> deleteSet());
 
-        }
-
-        private void setupNumberPickers() {
-            weightPicker = itemView.findViewById(R.id.weight_number_picker);
-            repsPicker = itemView.findViewById(R.id.reps_number_picker);
-
-            weightPicker.setMinValue(0);
-            weightPicker.setMaxValue(1000);
-            repsPicker.setMinValue(0);
-            repsPicker.setMaxValue(20);
         }
 
         void setupAdapter() {
@@ -117,15 +115,15 @@ public class TrackerPagerAdapter extends PagerAdapter {
         }
 
         private void addExerciseSet() {
-            int weight = weightPicker.getValue();
-            int reps = repsPicker.getValue();
+            float weight = weightChooser.getValue();
+            float reps = repsChooser.getValue();
 
             trackerSetAdapter.addSet(weight, reps);
         }
 
         private void updateExerciseSet() {
-            int weight = weightPicker.getValue();
-            int reps = repsPicker.getValue();
+            float weight = weightChooser.getValue();
+            float reps = repsChooser.getValue();
 
             selectedSet.setMeasurement1(weight);
             selectedSet.setMeasurement2(reps);
@@ -160,8 +158,8 @@ public class TrackerPagerAdapter extends PagerAdapter {
             selectedSet = set;
             deleteButton.setVisibility(View.VISIBLE);
             addUpdateButton.setText(activityContext.getString(R.string.update_button_text));
-            weightPicker.setValue((int) set.getMeasurement1());
-            repsPicker.setValue((int) set.getMeasurement2());
+            weightChooser.setValue((int) set.getMeasurement1());
+            repsChooser.setValue((int) set.getMeasurement2());
             trackerSetAdapter.highlightSet(set);
 
         }

@@ -21,6 +21,9 @@
 
     <color name="comment_icon_empty">#80757575</color>
 
+    <color name="delete_button">#F06292</color>
+
+
 
 
 </resources>
