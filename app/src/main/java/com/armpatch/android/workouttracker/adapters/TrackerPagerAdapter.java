@@ -73,6 +73,12 @@ public class TrackerPagerAdapter extends PagerAdapter {
             }
             this.itemView = itemView;
 
+            setupNumberChoosers();
+            setupButtons();
+            setupRecycler();
+        }
+
+        private void setupNumberChoosers() {
             View weightChooserLayout = itemView.findViewById(R.id.weight_picker);
             View repsChooserLayout = itemView.findViewById(R.id.reps_picker);
 
@@ -82,36 +88,26 @@ public class TrackerPagerAdapter extends PagerAdapter {
             repsChooser = new NumberChooser(repsChooserLayout);
             repsChooser.setTitle("Reps");
             repsChooser.setIncrement(1);
-
-            setupButtons();
-            setupAdapter();
         }
 
         private void setupButtons() {
             addUpdateButton = itemView.findViewById(R.id.update_button);
-            addUpdateButton.setOnClickListener(v -> addOrUpdateSet());
+            addUpdateButton.setOnClickListener(v -> {
+                if (selectedSet == null) addExerciseSet(); else updateExerciseSet();
+            });
 
             deleteButton = itemView.findViewById(R.id.delete_button);
             deleteButton.setVisibility(View.GONE);
             deleteButton.setOnClickListener(v -> deleteSet());
-
         }
 
-        void setupAdapter() {
+        void setupRecycler() {
             setRecycler = itemView.findViewById(R.id.recycler_view);
             setRecycler.setLayoutManager(new LinearLayoutManager(activityContext));
             trackerSetAdapter = new TrackerSetAdapter(activityContext, exerciseName, currentDate);
             setRecycler.setAdapter(trackerSetAdapter);
             trackerSetAdapter.retrieveSetsFromDatabase();
             trackerSetAdapter.setSelectionCallback(this);
-        }
-
-        private void addOrUpdateSet() {
-            if (selectedSet == null) {
-                addExerciseSet();
-            } else {
-                updateExerciseSet();
-            }
         }
 
         private void addExerciseSet() {
