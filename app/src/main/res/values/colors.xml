@@ -17,7 +17,7 @@
 
     <color name="horizontal_separator_grey">#474747</color>
 
-    <color name="item_selected_foreground">#802B57FF</color>
+    <color name="item_selected_foreground">#C2C2C2</color>
 
     <color name="comment_icon_empty">#80757575</color>
 
