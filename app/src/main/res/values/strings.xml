@@ -9,5 +9,7 @@
     <string name="empty_comment_placeholder">Write a comment...</string>
     <string name="update_button_text">Update</string>
     <string name="add_set_button_text">Add Set</string>
+    <string name="tracker_page_title_1">TRACK</string>
+    <string name="tracker_page_title_2">HISTORY</string>
 
 </resources>

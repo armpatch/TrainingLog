@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -37,6 +38,16 @@ public class TrackerPagerAdapter extends PagerAdapter {
     @Override
     public int getCount() {
         return 2;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        if (position == 0) {
+            return activityContext.getString(R.string.tracker_page_title_1);
+        } else {
+            return activityContext.getString(R.string.tracker_page_title_2);
+        }
     }
 
     @Override

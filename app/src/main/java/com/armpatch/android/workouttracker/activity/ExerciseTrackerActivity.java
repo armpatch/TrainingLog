@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.adapters.TrackerPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 import static com.armpatch.android.workouttracker.Tools.KEY_EXERCISE_DATE;
 import static com.armpatch.android.workouttracker.Tools.KEY_EXERCISE_NAME;
@@ -21,6 +22,7 @@ import static com.armpatch.android.workouttracker.Tools.KEY_EXERCISE_NAME;
 public class ExerciseTrackerActivity extends AppCompatActivity {
 
     TextView toolbarTitle;
+    TabLayout tabLayout;
     ViewPager viewPager;
     TrackerPagerAdapter trackerPagerAdapter;
 
@@ -42,6 +44,9 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
 
         toolbarTitle = findViewById(R.id.date_title);
         toolbarTitle.setText(exerciseName);
+
+        tabLayout = findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
 
         trackerPagerAdapter = new TrackerPagerAdapter(this, currentDate, exerciseName);
 

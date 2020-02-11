@@ -25,35 +25,24 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/toolbar_background"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabTextColor="@color/text_light">
-
-        <com.google.android.material.tabs.TabItem
-                android:id="@+id/tracker_tab"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="TRACK" />
-
-        <com.google.android.material.tabs.TabItem
-                android:id="@+id/history_tab"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="HISTORY" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar" >
+
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/toolbar_background"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabTextColor="@color/text_light">
+
+        </com.google.android.material.tabs.TabLayout>
+
+    </androidx.viewpager.widget.ViewPager>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
