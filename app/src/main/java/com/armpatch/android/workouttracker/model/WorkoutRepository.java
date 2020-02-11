@@ -52,6 +52,10 @@ public class WorkoutRepository {
         return exerciseSetDao.getExerciseSets(date);
     }
 
+    public List<ExerciseSet> getSetHistory(String exerciseName) {
+        return exerciseSetDao.getHistory(exerciseName);
+    }
+
     // Insert methods
 
     void insert(final ExerciseSet set) {

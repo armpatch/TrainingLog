@@ -16,14 +16,14 @@ public interface ExerciseSetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void update(List<ExerciseSet> sets);
 
+    @Query("SELECT * from exercise_set_table WHERE exerciseName = :exerciseName ORDER BY date, `order`")
+    List<ExerciseSet> getHistory (String exerciseName);
+
     @Query("SELECT * from exercise_set_table WHERE date = :date")
     List<ExerciseSet> getExerciseSets (String date);
 
     @Query("SELECT * FROM exercise_set_table WHERE date = :date AND exerciseName = :exerciseName")
     List<ExerciseSet> getExerciseSets (String date, String exerciseName);
-
-    @Query("SELECT COUNT(DISTINCT exerciseName) FROM exercise_set_table WHERE date = :date")
-    int getDistinctExerciseCount(String date);
 
     @Delete
     void delete(ExerciseSet set);

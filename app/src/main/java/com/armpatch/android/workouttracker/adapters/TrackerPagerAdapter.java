@@ -19,6 +19,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
     private Context activityContext;
     private SetEditorPage setEditorPage;
+    private HistoryPage historyPage;
 
     private String currentDate;
     private String exerciseName;
@@ -36,21 +37,31 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return true;
+        if (object instanceof SetEditorPage) {
+            return ((SetEditorPage) object).itemView == view;
+        }
+
+        if (object instanceof HistoryPage) {
+            return ((HistoryPage) object).itemView == view;
+        }
+
+        return false;
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View itemView = new View(activityContext);
-
         if (position == 0) {
-            itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_set_editor_page, container, false);
+            View itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_set_editor_page, container, false);
             setEditorPage = new SetEditorPage(itemView);
+            container.addView(itemView);
+            return setEditorPage;
+        } else {
+            View itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_set_history_page, container, false);
+            historyPage = new HistoryPage(itemView);
+            container.addView(itemView);
+            return historyPage;
         }
-
-        container.addView(itemView);
-        return setEditorPage;
     }
 
     /**
@@ -158,6 +169,26 @@ public class TrackerPagerAdapter extends PagerAdapter {
             repsChooser.setValue((int) set.getMeasurement2());
             trackerSetAdapter.highlightSet(set);
 
+        }
+    }
+
+    class HistoryPage {
+        View itemView;
+
+        RecyclerView recyclerView;
+        SetHistoryAdapter setHistoryAdapter;
+
+        public HistoryPage(View itemView) {
+            if (itemView == null) {
+                throw new IllegalArgumentException("itemView may not be null");
+            }
+            this.itemView = itemView;
+
+            recyclerView = itemView.findViewById(R.id.recycler_view);
+            setHistoryAdapter = new SetHistoryAdapter(activityContext, exerciseName);
+            recyclerView.setLayoutManager(new LinearLayoutManager(activityContext));
+            recyclerView.setAdapter(setHistoryAdapter);
+            setHistoryAdapter.refresh();
         }
     }
 }

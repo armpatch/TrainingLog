@@ -1,0 +1,133 @@
+package com.armpatch.android.workouttracker.adapters;
+
+import android.content.Context;
+import android.os.AsyncTask;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.armpatch.android.workouttracker.R;
+import com.armpatch.android.workouttracker.model.ExerciseSet;
+import com.armpatch.android.workouttracker.model.WorkoutRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SetHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private Context activityContext;
+    private String exerciseName;
+
+    private List<List<ExerciseSet>> sortedSetHistory;
+
+    SetHistoryAdapter(Context activityContext, String exerciseName) {
+        this.activityContext = activityContext;
+        this.exerciseName = exerciseName;
+    }
+
+    void refresh() {
+        new SetHistoryQueryTask().execute();
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(activityContext).inflate(R.layout.list_item_exercise_group_historical, parent, false);
+
+        return new HistoricalExerciseHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        ((HistoricalExerciseHolder) holder).bind(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        if (sortedSetHistory == null) return 0;
+
+        return sortedSetHistory.size();
+    }
+
+    class SetHistoryQueryTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            WorkoutRepository repository = new WorkoutRepository(activityContext);
+            List<ExerciseSet> allSets = repository.getSetHistory(exerciseName);
+
+            sortedSetHistory = sortSetsByDay(allSets);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            notifyDataSetChanged();
+        }
+    }
+
+    private List<List<ExerciseSet>> sortSetsByDay(List<ExerciseSet> allSets) {
+        List<List<ExerciseSet>> dayGroups = new ArrayList<>();
+
+        List<ExerciseSet> dayGroup = new ArrayList<>();
+        String previousSetDate = "";
+
+        for (ExerciseSet set : allSets) {
+            String currentSetDate = set.getDate();
+
+            if (!currentSetDate.equals(previousSetDate)) {
+                dayGroup = new ArrayList<>();
+                dayGroups.add(dayGroup);
+            }
+
+            dayGroup.add(set);
+
+            previousSetDate = set.getDate();
+        }
+
+        return dayGroups;
+    }
+
+    class HistoricalExerciseHolder extends RecyclerView.ViewHolder {
+        TextView dateText;
+
+        List<ExerciseSet> sets;
+        LinearLayout setsLayout;
+
+        HistoricalExerciseHolder(@NonNull View itemView) {
+            super(itemView);
+
+            setsLayout = itemView.findViewById(R.id.sets_layout);
+            dateText = itemView.findViewById(R.id.date_title);
+        }
+
+        void bind(int position) {
+            sets = sortedSetHistory.get(position);
+
+            String date = sets.get(0).getDate();
+            dateText.setText(date);
+
+            LayoutInflater inflater = LayoutInflater.from(activityContext);
+
+            for (ExerciseSet set : sets) {
+                View setView = inflater.inflate(R.layout.list_item_set_historical, setsLayout, false);
+
+                TextView weight = setView.findViewById(R.id.weight);
+                weight.setText(activityContext.getString(R.string.weight_lbs, set.getMeasurement1()));
+
+                TextView repsText = setView.findViewById(R.id.reps);
+                repsText.setText(activityContext.getString(R.string.reps, set.getMeasurement2()));
+
+                setsLayout.addView(setView);
+            }
+
+        }
+    }
+
+}
