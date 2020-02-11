@@ -6,7 +6,7 @@
         android:layout_height="wrap_content">
 
     <TextView
-            android:id="@+id/unit_name"
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="WEIGHT"
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:src="@color/colorPrimary"
-            app:layout_constraintTop_toBottomOf="@id/unit_name" />
+            app:layout_constraintTop_toBottomOf="@id/date" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/button_layout"

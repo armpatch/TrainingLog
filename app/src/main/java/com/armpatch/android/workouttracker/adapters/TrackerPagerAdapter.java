@@ -56,7 +56,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
     /**
      * This holder contains the tab for adding and modifying sets for the currently selected exercise
      */
-    class SetEditorPage implements TrackerSetAdapter.HolderSelectionCallback {
+    class SetEditorPage implements TrackerSetAdapter.SetSelectionCallback {
         View itemView;
 
         TrackerSetAdapter trackerSetAdapter;

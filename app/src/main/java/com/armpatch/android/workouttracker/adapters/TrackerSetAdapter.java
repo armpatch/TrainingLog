@@ -28,14 +28,14 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
     private List<ExerciseSet> sets;
     private String exerciseName;
     private String exerciseDate;
-    private HolderSelectionCallback holderSelectionCallback;
+    private SetSelectionCallback setSelectionCallback;
 
-    interface HolderSelectionCallback {
+    interface SetSelectionCallback {
         void onSetHolderClicked(ExerciseSet set);
     }
 
-    void setSelectionCallback(HolderSelectionCallback holderSelectionCallback) {
-        this.holderSelectionCallback = holderSelectionCallback;
+    void setSelectionCallback(SetSelectionCallback setSelectionCallback) {
+        this.setSelectionCallback = setSelectionCallback;
     }
 
     TrackerSetAdapter(Context activityContext, String exerciseName, String exerciseDate) {
@@ -229,7 +229,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             if (v.getId() == R.id.comment) {
                 editSetComment();
             } else {
-                holderSelectionCallback.onSetHolderClicked(set);
+                setSelectionCallback.onSetHolderClicked(set);
             }
         }
 

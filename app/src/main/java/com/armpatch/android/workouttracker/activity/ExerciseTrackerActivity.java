@@ -40,7 +40,7 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
         String currentDate = getIntent().getStringExtra(KEY_EXERCISE_DATE);
         String exerciseName = getIntent().getStringExtra(KEY_EXERCISE_NAME);
 
-        toolbarTitle = findViewById(R.id.exercise_title);
+        toolbarTitle = findViewById(R.id.date);
         toolbarTitle.setText(exerciseName);
 
         trackerPagerAdapter = new TrackerPagerAdapter(this, currentDate, exerciseName);
