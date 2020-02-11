@@ -2,6 +2,7 @@ package com.armpatch.android.workouttracker.adapters;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ public class SetHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private Context activityContext;
     private String exerciseName;
+    private static final String TAG = "SetHistoryAdapter";
 
     private List<List<ExerciseSet>> sortedSetHistory;
 
@@ -73,7 +75,7 @@ public class SetHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private List<List<ExerciseSet>> sortSetsByDay(List<ExerciseSet> allSets) {
-        List<List<ExerciseSet>> dayGroups = new ArrayList<>();
+        List<List<ExerciseSet>> setGroupsByDay = new ArrayList<>();
 
         List<ExerciseSet> dayGroup = new ArrayList<>();
         String previousSetDate = "";
@@ -83,21 +85,21 @@ public class SetHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             if (!currentSetDate.equals(previousSetDate)) {
                 dayGroup = new ArrayList<>();
-                dayGroups.add(dayGroup);
+                setGroupsByDay.add(dayGroup);
             }
 
             dayGroup.add(set);
 
             previousSetDate = set.getDate();
         }
-
-        return dayGroups;
+        Log.d(TAG, "setCount = " + allSets.size());
+        return setGroupsByDay;
     }
 
     class HistoricalExerciseHolder extends RecyclerView.ViewHolder {
         TextView dateText;
 
-        List<ExerciseSet> sets;
+        List<ExerciseSet> sets = new ArrayList<>();
         LinearLayout setsLayout;
 
         HistoricalExerciseHolder(@NonNull View itemView) {
@@ -108,7 +110,9 @@ public class SetHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         void bind(int position) {
-            sets = sortedSetHistory.get(position);
+            setsLayout.removeAllViews();
+            sets.clear();
+            sets.addAll(sortedSetHistory.get(position));
 
             String date = sets.get(0).getDate();
             dateText.setText(date);
@@ -125,8 +129,8 @@ public class SetHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 repsText.setText(activityContext.getString(R.string.reps, set.getMeasurement2()));
 
                 setsLayout.addView(setView);
+                Log.d(TAG, "view Added");
             }
-
         }
     }
 

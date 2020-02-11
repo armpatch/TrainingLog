@@ -47,6 +47,24 @@ public class ExerciseTrackerActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(trackerPagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == 1) {
+                    trackerPagerAdapter.loadHistoryPage();
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     public static Intent getIntent(Context activityContext, String date, String exerciseName) {

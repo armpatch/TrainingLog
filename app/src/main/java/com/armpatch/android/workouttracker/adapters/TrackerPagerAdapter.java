@@ -30,6 +30,10 @@ public class TrackerPagerAdapter extends PagerAdapter {
         this.exerciseName = exerciseName;
     }
 
+    public void loadHistoryPage() {
+        historyPage.refresh();
+    }
+
     @Override
     public int getCount() {
         return 2;
@@ -188,7 +192,11 @@ public class TrackerPagerAdapter extends PagerAdapter {
             setHistoryAdapter = new SetHistoryAdapter(activityContext, exerciseName);
             recyclerView.setLayoutManager(new LinearLayoutManager(activityContext));
             recyclerView.setAdapter(setHistoryAdapter);
+        }
+
+        void refresh() {
             setHistoryAdapter.refresh();
         }
+
     }
 }
