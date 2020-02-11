@@ -228,7 +228,7 @@ public class WorkoutContentAdapter
         ExerciseGroupHolder(View itemView) {
             super(itemView);
             setListLayout = itemView.findViewById(R.id.sets_layout);
-            exerciseTitle = itemView.findViewById(R.id.date);
+            exerciseTitle = itemView.findViewById(R.id.date_title);
             itemView.setOnClickListener(this);
         }
 

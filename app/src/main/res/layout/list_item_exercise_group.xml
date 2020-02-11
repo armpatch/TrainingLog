@@ -15,7 +15,7 @@
             android:layout_height="match_parent">
 
         <TextView
-                android:id="@+id/date"
+                android:id="@+id/date_title"
                 style="@style/TextDark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                 android:layout_height="2dp"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/horizontal_line_separator_color"
-                app:layout_constraintTop_toBottomOf="@id/date" />
+                app:layout_constraintTop_toBottomOf="@id/date_title" />
 
         <LinearLayout
                 android:id="@+id/sets_layout"

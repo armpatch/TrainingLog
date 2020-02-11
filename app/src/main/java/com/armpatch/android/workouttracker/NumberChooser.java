@@ -40,7 +40,7 @@ public class NumberChooser{
             }
         });
 
-        unitName = layout.findViewById(R.id.date);
+        unitName = layout.findViewById(R.id.date_title);
 
         setValue(5f);
         setIncrement(5f);
