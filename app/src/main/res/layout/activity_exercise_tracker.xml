@@ -11,8 +11,7 @@
             android:background="@color/toolbar_background"
             android:elevation="4dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:theme="@style/ToolbarColoredBackArrow"
-            app:menu="@menu/exercise_tracker">
+            android:theme="@style/ToolbarColoredBackArrow">
 
         <TextView
                 android:id="@+id/date_title"
@@ -36,7 +35,7 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/toolbar_background"
+                android:background="@color/date_pager_background"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabTextColor="@color/text_light">
