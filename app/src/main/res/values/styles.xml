@@ -16,9 +16,9 @@
     </style>
 
     <style name="TextDialogTitle" parent="@style/TextAppearance.AppCompat.Title">
-        <item name="android:textColor">@color/text_dark</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
 
