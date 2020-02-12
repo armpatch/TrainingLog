@@ -4,7 +4,6 @@
         android:layout_height="50dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@drawable/exercise_category_container"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         >
@@ -32,5 +31,11 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="8dp"
             tools:text="Shoulders" />
+
+    <ImageView
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:src="@drawable/horizontal_line_separator_grey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

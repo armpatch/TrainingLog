@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ public class WorkoutContentAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements EditCommentsDialog.Callbacks{
 
+    public static final String TAG = "WorkoutContentAdapter";
+
     private static final int VIEW_TYPE_COMMENTS = 1;
     private static final int VIEW_TYPE_EXERCISE = 2;
     private static final int VIEW_TYPE_NEW_EXERCISE = 3;
@@ -46,6 +49,8 @@ public class WorkoutContentAdapter
     public WorkoutComment workoutComment;
     private ExerciseOrder exerciseOrder;
     private Hashtable<String, ArrayList<ExerciseSet>> setTable;
+
+    private boolean isWorkoutLoaded = false;
 
     public interface Callback {
         void onExerciseGroupSelected(String exerciseName);
@@ -70,7 +75,7 @@ public class WorkoutContentAdapter
         } else if (position == getItemCount() - 1) {
             return VIEW_TYPE_NEW_EXERCISE;
         } else {
-        return VIEW_TYPE_EXERCISE;
+            return VIEW_TYPE_EXERCISE;
         }
     }
 
@@ -93,6 +98,9 @@ public class WorkoutContentAdapter
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder:  view type = " + getItemViewType(position) +
+                "    position = " + position);
+
         if (getItemViewType(position) == VIEW_TYPE_COMMENTS) {
             ((CommentsHolder) holder ).bind();
         }
@@ -104,12 +112,15 @@ public class WorkoutContentAdapter
 
     @Override
     public int getItemCount() {
+        if (isWorkoutLoaded == false) return 0;
+
         int itemCount = 2; // keep this 2 as long as the comment box and "add exercise" holders are present
 
         if (exerciseOrder != null) {
             itemCount += exerciseOrder.size();
         }
 
+        Log.d(TAG, "date = " + currentDate + " item count = " + itemCount);
         return itemCount;
     }
 
@@ -180,6 +191,7 @@ public class WorkoutContentAdapter
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            isWorkoutLoaded = true;
             notifyDataSetChanged();
         }
     }
