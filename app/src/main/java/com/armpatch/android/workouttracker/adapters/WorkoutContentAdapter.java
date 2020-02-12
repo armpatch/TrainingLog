@@ -95,7 +95,9 @@ public class WorkoutContentAdapter
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == VIEW_TYPE_COMMENTS) {
             ((CommentsHolder) holder ).bind();
-        } else if (getItemViewType(position) == VIEW_TYPE_EXERCISE){
+        }
+
+        if (getItemViewType(position) == VIEW_TYPE_EXERCISE){
             ((ExerciseGroupHolder) holder ).bind(position);
         }
     }

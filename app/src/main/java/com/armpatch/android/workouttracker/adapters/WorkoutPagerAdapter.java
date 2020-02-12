@@ -108,12 +108,13 @@ public class WorkoutPagerAdapter extends PagerAdapter {
 
         @Override
         public boolean canDropOver(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder current, @NonNull RecyclerView.ViewHolder target) {
-            return !(target instanceof WorkoutContentAdapter.CommentsHolder);
+            return (target instanceof WorkoutContentAdapter.ExerciseGroupHolder);
         }
 
         @Override
         public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
             if (viewHolder instanceof WorkoutContentAdapter.CommentsHolder) return 0;
+            if (viewHolder instanceof WorkoutContentAdapter.AddExerciseHolder) return 0;
             return super.getMovementFlags(recyclerView, viewHolder);
         }
     };
