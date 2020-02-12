@@ -96,7 +96,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
         int itemId = item.getItemId();
 
         if (itemId == R.id.menu_item_add_exercise) {
-            Intent addExerciseIntent = ExerciseSelectionActivity.getIntent(this, selectedDate);
+            Intent addExerciseIntent = ExerciseSelectionActivity.getIntent(this, Tools.stringFromDate(selectedDate));
             startActivity(addExerciseIntent);
         } else if (itemId == R.id.menu_item_calendar){
             android.app.DatePickerDialog dialog = new android.app.DatePickerDialog(this);

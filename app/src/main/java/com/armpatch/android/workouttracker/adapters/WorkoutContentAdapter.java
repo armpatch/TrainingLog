@@ -2,6 +2,7 @@ package com.armpatch.android.workouttracker.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.armpatch.android.workouttracker.EditCommentsDialog;
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.Tools;
 import com.armpatch.android.workouttracker.WorkoutSetSorter;
+import com.armpatch.android.workouttracker.activity.ExerciseSelectionActivity;
 import com.armpatch.android.workouttracker.model.ExerciseOrder;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.WorkoutComment;
@@ -36,6 +38,7 @@ public class WorkoutContentAdapter
 
     private static final int VIEW_TYPE_COMMENTS = 1;
     private static final int VIEW_TYPE_EXERCISE = 2;
+    private static final int VIEW_TYPE_NEW_EXERCISE = 3;
 
     private Context activityContext;
     private Callback activityCallback;
@@ -64,6 +67,8 @@ public class WorkoutContentAdapter
     public int getItemViewType(int position) {
         if (position == 0) {
             return VIEW_TYPE_COMMENTS;
+        } else if (position == getItemCount() - 1) {
+            return VIEW_TYPE_NEW_EXERCISE;
         } else {
             return VIEW_TYPE_EXERCISE;
         }
@@ -77,6 +82,9 @@ public class WorkoutContentAdapter
         if (viewType == VIEW_TYPE_COMMENTS) {
             itemView = LayoutInflater.from(activityContext).inflate(R.layout.list_item_comments, parent, false);
             return new CommentsHolder(itemView);
+        } else if (viewType == VIEW_TYPE_NEW_EXERCISE) {
+            itemView = LayoutInflater.from(activityContext).inflate(R.layout.list_item_add_exercise_button, parent, false);
+            return new AddExerciseHolder(itemView);
         } else {
             itemView = LayoutInflater.from(activityContext).inflate(R.layout.list_item_exercise_group, parent, false);
             return new ExerciseGroupHolder(itemView);
@@ -87,14 +95,14 @@ public class WorkoutContentAdapter
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == VIEW_TYPE_COMMENTS) {
             ((CommentsHolder) holder ).bind();
-        } else {
+        } else if (getItemViewType(position) == VIEW_TYPE_EXERCISE){
             ((ExerciseGroupHolder) holder ).bind(position);
         }
     }
 
     @Override
     public int getItemCount() {
-        int itemCount = 1; // keep this 1 as long as the comment box is present
+        int itemCount = 2; // keep this 2 as long as the comment box and "add exercise" holders are present
 
         if (exerciseOrder != null) {
             itemCount += exerciseOrder.size();
@@ -292,4 +300,20 @@ public class WorkoutContentAdapter
             }
         }
     }
+
+    public class AddExerciseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public AddExerciseHolder(@NonNull View itemView) {
+            super(itemView);
+
+            View clickableRegion = itemView.findViewById(R.id.clickable_layout);
+            clickableRegion.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent addExerciseIntent = ExerciseSelectionActivity.getIntent(activityContext, currentDate);
+            activityContext.startActivity(addExerciseIntent);
+        }
+    }
+
 }

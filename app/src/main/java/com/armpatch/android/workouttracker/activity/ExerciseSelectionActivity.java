@@ -34,9 +34,9 @@ public class ExerciseSelectionActivity extends AppCompatActivity
     List<Category> categories;
     List<Exercise> exercises;
 
-    public static Intent getIntent(Context activityContext, LocalDate date) {
+    public static Intent getIntent(Context activityContext, String date) {
         Intent intent = new Intent(activityContext, ExerciseSelectionActivity.class);
-        intent.putExtra(KEY_EXERCISE_DATE, Tools.stringFromDate(date));
+        intent.putExtra(KEY_EXERCISE_DATE, date);
         return intent;
     }
 
