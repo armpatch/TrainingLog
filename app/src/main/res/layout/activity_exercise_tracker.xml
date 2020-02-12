@@ -38,7 +38,9 @@
                 android:background="@color/date_pager_background"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:tabIndicatorColor="@color/colorPrimary"
-                app:tabTextColor="@color/text_light">
+                app:tabTextColor="@color/text_light"
+                app:tabIndicatorHeight="4dp"
+                >
 
         </com.google.android.material.tabs.TabLayout>
 

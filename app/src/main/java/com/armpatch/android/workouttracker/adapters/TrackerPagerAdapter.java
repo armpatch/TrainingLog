@@ -123,7 +123,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
             });
 
             deleteButton = itemView.findViewById(R.id.delete_button);
-            deleteButton.setVisibility(View.GONE);
+            deleteButton.setEnabled(false);
             deleteButton.setOnClickListener(v -> deleteSet());
         }
 
@@ -169,7 +169,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
         }
 
         private void deselectSet() {
-            deleteButton.setVisibility(View.GONE);
+            deleteButton.setEnabled(false);
             addUpdateButton.setText(activityContext.getString(R.string.add_set_button_text));
 
             trackerSetAdapter.removeAllHighlights();
@@ -178,7 +178,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
         private void selectSet(ExerciseSet set) {
             selectedSet = set;
-            deleteButton.setVisibility(View.VISIBLE);
+            deleteButton.setEnabled(true);
             addUpdateButton.setText(activityContext.getString(R.string.update_button_text));
             weightChooser.setValue((int) set.getMeasurement1());
             repsChooser.setValue((int) set.getMeasurement2());
