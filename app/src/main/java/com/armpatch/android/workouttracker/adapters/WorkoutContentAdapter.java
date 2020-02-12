@@ -70,7 +70,7 @@ public class WorkoutContentAdapter
         } else if (position == getItemCount() - 1) {
             return VIEW_TYPE_NEW_EXERCISE;
         } else {
-            return VIEW_TYPE_EXERCISE;
+        return VIEW_TYPE_EXERCISE;
         }
     }
 
