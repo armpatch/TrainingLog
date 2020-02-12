@@ -258,7 +258,11 @@ public class WorkoutContentAdapter
         void createExerciseSetViews(List<ExerciseSet> sets){
             setListLayout.removeAllViews();
 
-            for (ExerciseSet set : sets) {
+            int MAX_SETS_VISIBLE = 4;
+
+            for (int i = 0; i < sets.size() && i < MAX_SETS_VISIBLE; i++) {
+                ExerciseSet set = sets.get(i);
+
                 View setView = LayoutInflater.from(activityContext).inflate(
                         R.layout.list_item_set_historical, setListLayout, false);
 
@@ -269,6 +273,22 @@ public class WorkoutContentAdapter
                 reps.setText(activityContext.getString(R.string.reps, set.getMeasurement2()));
 
                 setListLayout.addView(setView);
+            }
+
+            if (sets.size() > MAX_SETS_VISIBLE) {
+                View moreSetsView = LayoutInflater.from(activityContext).inflate(
+                        R.layout.list_item_more_sets, setListLayout, false
+                );
+
+                int setsRemaining = sets.size() - MAX_SETS_VISIBLE;
+
+                TextView textView = moreSetsView.findViewById(R.id.more_sets_text);
+                String text = setsRemaining + " more set";
+                if (setsRemaining > 1) text = text + "s";
+
+                textView.setText(text);
+
+                setListLayout.addView(moreSetsView);
             }
         }
     }
