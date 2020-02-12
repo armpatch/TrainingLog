@@ -54,13 +54,10 @@ public class ExerciseSelectionAdapter extends RecyclerView.Adapter<ExerciseSelec
 
         Exercise exercise;
         TextView nameTextView;
-        ImageView expandCollapseIcon;
 
         ExerciseListItemHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.text_view);
-            expandCollapseIcon = itemView.findViewById(R.id.expand_collapse_icon);
-            expandCollapseIcon.setVisibility(View.GONE);
             itemView.setOnClickListener(this);
         }
 

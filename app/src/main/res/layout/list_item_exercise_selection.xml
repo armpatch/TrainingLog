@@ -8,18 +8,6 @@
         android:clickable="true"
         >
 
-    <ImageView
-            android:id="@+id/expand_collapse_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_add_24dp"
-            android:tint="@android:color/black"
-            android:layout_marginStart="8dp"
-        />
-
     <TextView
             android:id="@+id/text_view"
             style="@style/TextDark"
@@ -27,9 +15,9 @@
             android:layout_height="wrap_content"
             android:textAllCaps="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/expand_collapse_icon"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/gutter_margin"
             tools:text="Shoulders" />
 
     <ImageView
