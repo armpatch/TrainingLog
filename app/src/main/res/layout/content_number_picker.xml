@@ -9,7 +9,8 @@
             android:id="@+id/date_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="WEIGHT"
+            android:text="PLACEHOLDER"
+            style="@style/TextDark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,6 +48,8 @@
                 app:layout_constraintStart_toEndOf="@id/decrement_button"
                 app:layout_constraintTop_toTopOf="parent"
                 android:inputType="number"
+                android:selectAllOnFocus="true"
+                android:imeOptions="actionDone"
                 tools:text="50" />
 
         <ImageButton

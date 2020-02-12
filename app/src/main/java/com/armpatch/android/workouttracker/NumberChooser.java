@@ -2,7 +2,9 @@ package com.armpatch.android.workouttracker;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -38,6 +40,13 @@ public class NumberChooser{
                 String text = s.toString();
                 value = Float.valueOf(text);
             }
+        });
+        numberTextView.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                numberTextView.clearFocus();
+            }
+
+            return false;
         });
 
         unitName = layout.findViewById(R.id.date_title);
