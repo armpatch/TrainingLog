@@ -56,6 +56,11 @@ public class WorkoutRepository {
         return exerciseSetDao.getHistory(exerciseName);
     }
 
+    public int getSetCount(String date, String exerciseName) {
+        return exerciseSetDao.getSetCount(date, exerciseName);
+    }
+
+
     // Insert methods
 
     void insert(final ExerciseSet set) {

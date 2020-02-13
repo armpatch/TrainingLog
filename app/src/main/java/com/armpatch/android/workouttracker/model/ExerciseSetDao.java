@@ -25,6 +25,9 @@ public interface ExerciseSetDao {
     @Query("SELECT * FROM exercise_set_table WHERE date = :date AND exerciseName = :exerciseName")
     List<ExerciseSet> getExerciseSets (String date, String exerciseName);
 
+    @Query("SELECT COUNT(id) from exercise_set_table WHERE date = :date AND exerciseName = :exerciseName")
+    int getSetCount(String date, String exerciseName);
+
     @Delete
     void delete(ExerciseSet set);
 

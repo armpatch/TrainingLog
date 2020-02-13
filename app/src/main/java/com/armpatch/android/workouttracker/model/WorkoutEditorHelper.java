@@ -28,6 +28,8 @@ public class WorkoutEditorHelper {
             repo.insert(exerciseOrder);
         }
 
+        int order = repo.getSetCount(set.getDate(), set.getExerciseName()) + 1;
+        set.setOrder(order);
         repo.insert(set);
     }
     public void deleteSet(ExerciseSet set) {

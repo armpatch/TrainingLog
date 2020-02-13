@@ -77,7 +77,7 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
     }
 
     void addSet(float measurement1, float measurement2) {
-        ExerciseSet set = new ExerciseSet(exerciseDate, exerciseName, measurement1, measurement2, getItemCount() + 1);
+        ExerciseSet set = new ExerciseSet(exerciseDate, exerciseName, measurement1, measurement2, -1);
         new InsertSetTask(set).execute();
     }
 
