@@ -2,6 +2,7 @@ package com.armpatch.android.workouttracker.adapters;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.SetHolder> {
+
+    public static final String TAG = "TrackerSetAdapter";
 
     private Context activityContext;
     private RecyclerView recyclerView;
@@ -77,6 +80,8 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
     }
 
     void addSet(float measurement1, float measurement2) {
+        Log.d(TAG, "-------------------------------addSet()");
+
         ExerciseSet set = new ExerciseSet(exerciseDate, exerciseName, measurement1, measurement2, -1);
         new InsertSetTask(set).execute();
     }
@@ -109,6 +114,9 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.d(TAG, "RetrieveSetsTask - doInBackground start");
+            Log.d(TAG, "set count = " + sets.size());
+
             WorkoutRepository repository = new WorkoutRepository(activityContext);
             sets.clear();
             sets.addAll(repository.getExerciseSets(exerciseDate, exerciseName));
@@ -119,6 +127,9 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            Log.d(TAG, "RetrieveSetsTask - onPostExecute");
+            Log.d(TAG, "set count = " + sets.size());
+
             notifyDataSetChanged();
         }
     }
@@ -133,14 +144,18 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.d(TAG, "Insert Set Task - doInBackground()");
             WorkoutEditorHelper helper = new WorkoutEditorHelper(activityContext);
             helper.addSet(set);
+            Log.d(TAG, "Insert Set Task - doInBackground done");
 
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            Log.d(TAG, "Insert Set Task - onPostExecute()");
+
             retrieveSetsFromDatabase();
         }
     }
