@@ -35,7 +35,9 @@
                 android:layout_height="60dp"
                 android:src="@drawable/ic_subtract"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="fitCenter"
+                />
 
         <EditText
                 android:id="@+id/number_text"
@@ -58,7 +60,9 @@
                 android:layout_height="60dp"
                 android:src="@drawable/ic_add_24dp"
                 app:layout_constraintStart_toEndOf="@id/number_text"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="fitCenter"
+                />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -109,7 +109,7 @@ public class TrackerPagerAdapter extends PagerAdapter {
             View repsChooserLayout = itemView.findViewById(R.id.reps_picker);
 
             weightChooser = new NumberChooser(weightChooserLayout);
-            weightChooser.setTitle("Weight");
+            weightChooser.setTitle("Weight (lbs)");
             weightChooser.setIncrement(2.5f);
             repsChooser = new NumberChooser(repsChooserLayout);
             repsChooser.setTitle("Reps");

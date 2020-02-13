@@ -6,13 +6,14 @@
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="?android:attr/selectableItemBackground">
+        android:foreground="@drawable/tracker_set_background_selector"
+        >
 
     <ImageView
             android:id="@+id/selection_tint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@color/item_selected_foreground"
+            android:src="@color/item_selected_tint"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent" />
 
