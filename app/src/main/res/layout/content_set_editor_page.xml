@@ -19,6 +19,7 @@
             app:layout_constraintTop_toBottomOf="@id/controls"
             tools:listitem="@layout/list_item_set_tracker"
             tools:itemCount="4"
+            android:overScrollMode="never"
             />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

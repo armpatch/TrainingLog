@@ -6,7 +6,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:foreground="@drawable/tracker_set_background_selector"
+        android:foreground="@drawable/item_pressed_color_selector"
         >
 
     <ImageView
