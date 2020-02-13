@@ -8,10 +8,11 @@
     <color name="category_background">#727272</color>
     <color name="category_background_border">#222222</color>
 
-
     <color name="date_pager_background">#141414</color>
     <color name="text_light">#FFFFFF</color>
     <color name="text_dark">#000000</color>
+    <color name="text_units">#636363</color>
+
 
     <color name="menu_item_light">#FFFFFF</color>
 

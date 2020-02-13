@@ -288,11 +288,11 @@ public class WorkoutContentAdapter
                 View setView = LayoutInflater.from(activityContext).inflate(
                         R.layout.list_item_set_historical, setListLayout, false);
 
-                TextView weight = setView.findViewById(R.id.weight);
-                weight.setText(activityContext.getString(R.string.weight_lbs, set.getMeasurement1()));
+                TextView weight = setView.findViewById(R.id.weight_quantity);
+                weight.setText(String.valueOf(set.getMeasurement1()));
 
-                TextView reps = setView.findViewById(R.id.reps);
-                reps.setText(activityContext.getString(R.string.reps, set.getMeasurement2()));
+                TextView reps = setView.findViewById(R.id.reps_quantity);
+                reps.setText(String.valueOf(set.getMeasurement2()));
 
                 setListLayout.addView(setView);
             }

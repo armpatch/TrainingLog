@@ -200,8 +200,8 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             super(itemView);
 
             setNumberText = itemView.findViewById(R.id.set_number);
-            weightText = itemView.findViewById(R.id.weight);
-            repsText = itemView.findViewById(R.id.reps);
+            weightText = itemView.findViewById(R.id.weight_quantity);
+            repsText = itemView.findViewById(R.id.reps_quantity);
             selectionTint = itemView.findViewById(R.id.selection_tint);
             selectionTint.setVisibility(View.INVISIBLE);
             commentToggle = itemView.findViewById(R.id.comment);
@@ -214,8 +214,8 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             this.set = set;
             setNumberText.setText(String.valueOf(set.getOrder()));
 
-            weightText.setText(activityContext.getString(R.string.weight_lbs, set.getMeasurement1()));
-            repsText.setText(activityContext.getString(R.string.reps, set.getMeasurement2()));
+            weightText.setText(String.valueOf(set.getMeasurement1()));
+            repsText.setText(String.valueOf(set.getMeasurement2()));
 
             if (set.getComment().length() > 0) {
                 commentToggle.setImageResource(R.drawable.ic_comment_filled);

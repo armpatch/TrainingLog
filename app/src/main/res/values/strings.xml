@@ -11,5 +11,7 @@
     <string name="add_set_button_text">Add Set</string>
     <string name="tracker_page_title_1">TRACK</string>
     <string name="tracker_page_title_2">HISTORY</string>
+    <string name="reps_text">reps</string>
+    <string name="lbs_text">lbs</string>
 
 </resources>

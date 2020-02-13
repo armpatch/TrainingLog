@@ -30,8 +30,8 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
             synchronized (WorkoutRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            WorkoutRoomDatabase.class, "workout_database")
-                            .createFromAsset("workout_database")
+                            WorkoutRoomDatabase.class, "workout_database_template")
+                            .createFromAsset("workout_database_template")
                             .build();
                 }
             }

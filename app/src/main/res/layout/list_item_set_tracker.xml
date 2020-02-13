@@ -40,30 +40,54 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-            android:id="@+id/reps"
+            android:id="@+id/reps_quantity"
             style="@style/TextDark"
-            android:layout_width="80dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="32dp"
+            android:text="---"
+            android:textAlignment="textEnd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/reps_unit"
+            app:layout_constraintStart_toEndOf="@+id/weight_unit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+            android:id="@+id/reps_unit"
+            style="@style/UnitsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/reps_text"
             android:textAlignment="textEnd"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="7 reps" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-            android:id="@+id/weight"
+            android:id="@+id/weight_quantity"
             style="@style/TextDark"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="50dp"
+            android:layout_marginEnd="8dp"
+            android:text="---"
             android:textAlignment="textEnd"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/reps"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="150 lbs" />
+            app:layout_constraintEnd_toStartOf="@id/weight_unit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+            android:id="@+id/weight_unit"
+            style="@style/UnitsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="150dp"
+            android:text="@string/lbs_text"
+            android:textAlignment="textEnd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
