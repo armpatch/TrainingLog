@@ -22,7 +22,6 @@
                 android:tint="@color/text_light" />
 
         <TextView
-                android:id="@+id/toolbar_title"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

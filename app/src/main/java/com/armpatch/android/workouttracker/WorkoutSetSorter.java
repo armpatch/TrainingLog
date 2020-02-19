@@ -31,7 +31,7 @@ public class WorkoutSetSorter {
         String name = set.getExerciseName();
 
         if (!setMap.containsKey(name)) {
-            setMap.put(name, new ArrayList<ExerciseSet>());
+            setMap.put(name, new ArrayList<>());
         }
 
         setMap.get(name).add(set);

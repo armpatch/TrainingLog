@@ -22,7 +22,6 @@
             app:layout_constraintTop_toBottomOf="@id/date_title" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/button_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +43,7 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:textAlignment="center"
+                android:gravity="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +52,8 @@
                 android:inputType="number"
                 android:selectAllOnFocus="true"
                 android:imeOptions="actionDone"
-                tools:text="50" />
+                tools:text="50"
+                />
 
         <ImageButton
                 android:id="@+id/increment_button"

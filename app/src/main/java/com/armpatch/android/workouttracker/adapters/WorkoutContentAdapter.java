@@ -112,7 +112,7 @@ public class WorkoutContentAdapter
 
     @Override
     public int getItemCount() {
-        if (isWorkoutLoaded == false) return 0;
+        if (!isWorkoutLoaded) return 0;
 
         int itemCount = 2; // keep this 2 as long as the comment box and "add exercise" holders are present
 

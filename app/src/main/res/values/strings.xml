@@ -4,9 +4,7 @@
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
 
-    <string name="weight_lbs">%.0f lbs</string>
-    <string name="reps">%.0f reps</string>
-    <string name="empty_comment_placeholder">Write a comment...</string>
+    <string name="empty_comment_placeholder">Write a comment…</string>
     <string name="update_button_text">Update</string>
     <string name="add_set_button_text">Add Set</string>
     <string name="tracker_page_title_1">TRACK</string>

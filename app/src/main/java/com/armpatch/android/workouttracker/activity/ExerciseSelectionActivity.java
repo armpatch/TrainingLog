@@ -12,14 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
-import com.armpatch.android.workouttracker.Tools;
 import com.armpatch.android.workouttracker.adapters.CategorySelectionAdapter;
 import com.armpatch.android.workouttracker.adapters.ExerciseSelectionAdapter;
 import com.armpatch.android.workouttracker.model.Category;
 import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
-
-import org.threeten.bp.LocalDate;
 
 import java.util.List;
 
