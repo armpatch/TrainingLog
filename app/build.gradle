@@ -11,7 +11,7 @@ android {
             if (propsFile.exists()) {
                 def props = new Properties()
                 props.load(new FileInputStream(propsFile))
-                storeFile = props['storeFile']
+                storeFile = file(props['storeFile'])
                 storePassword = props['storePassword']
                 keyAlias = props['keyAlias']
                 keyPassword = props['keyPassword']
