@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.armpatch.android.workouttracker.R;
+import com.armpatch.android.workouttracker.Tools;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
@@ -115,7 +116,7 @@ public class SetHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             sets.addAll(sortedSetHistory.get(position));
 
             String date = sets.get(0).getDate();
-            dateText.setText(date);
+            dateText.setText(Tools.toHistoricalDate(date));
 
             LayoutInflater inflater = LayoutInflater.from(activityContext);
 

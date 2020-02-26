@@ -34,6 +34,12 @@ public class Tools {
         return date.format(DateTimeFormatter.ofPattern("EEEE, MMMM d")); //Ex: Monday, August 1
     }
 
+    public static String toHistoricalDate(String date) {
+        LocalDate localDate = LocalDate.parse(date);
+
+        return localDate.format(DateTimeFormatter.ofPattern("EEEE, MMMM d, y")); //Ex: Monday, August 1
+    }
+
     public static LocalDate dateFromString(String string) {
         return LocalDate.parse(string, DateTimeFormatter.ISO_LOCAL_DATE);
     }
