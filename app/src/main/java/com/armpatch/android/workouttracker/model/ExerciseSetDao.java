@@ -16,7 +16,7 @@ public interface ExerciseSetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void update(List<ExerciseSet> sets);
 
-    @Query("SELECT * from exercise_set_table WHERE exerciseName = :exerciseName ORDER BY date, `order`")
+    @Query("SELECT * from exercise_set_table WHERE exerciseName = :exerciseName ORDER BY date DESC, `order`")
     List<ExerciseSet> getHistory (String exerciseName);
 
     @Query("SELECT * from exercise_set_table WHERE date = :date")
