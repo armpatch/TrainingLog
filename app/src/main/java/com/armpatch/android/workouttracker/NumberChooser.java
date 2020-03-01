@@ -1,80 +1,54 @@
 package com.armpatch.android.workouttracker;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class NumberChooser{
+import com.armpatch.android.workouttracker.R;
 
-    private ImageButton incrementButton, decrementButton;
-    private EditText numberTextView;
-    private TextView unitName;
-    private float value;
-    private float increment;
+public abstract class NumberChooser<T extends Number> {
 
-    public NumberChooser(View layout) {
-        decrementButton = layout.findViewById(R.id.decrement_button);
-        decrementButton.setOnClickListener(v -> decrement());
-        incrementButton = layout.findViewById(R.id.increment_button);
-        incrementButton.setOnClickListener(v -> increment());
+    private final EditText numberTextView;
+    private final T increment;
+
+    NumberChooser(View layout, String title, T value, T increment) {
+        this.increment = increment;
 
         numberTextView = layout.findViewById(R.id.number_text);
-        numberTextView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String text = s.toString();
-                value = Float.valueOf(text);
-            }
-        });
+        numberTextView.setText(String.valueOf(value));
         numberTextView.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 numberTextView.clearFocus();
             }
-
             return false;
         });
 
-        unitName = layout.findViewById(R.id.date_title);
+        ImageButton decrementButton = layout.findViewById(R.id.decrement_button);
+        decrementButton.setOnClickListener(v -> numberTextView.setText(decrement(numberTextView.getText().toString())));
+        ImageButton incrementButton = layout.findViewById(R.id.increment_button);
+        incrementButton.setOnClickListener(v -> numberTextView.setText(increment(numberTextView.getText().toString())));
 
-        setValue(5f);
-        setIncrement(5f);
+        TextView unitName = layout.findViewById(R.id.date_title);
+        unitName.setText(title);
     }
 
-    public void setTitle(String name) {
-        unitName.setText(name);
+    public T getValue() {
+        return getValue(numberTextView.getText().toString());
     }
 
-    public float getValue() {
-        return value;
-    }
-
-    public void setValue(float value) {
+    public void updateValue(T value) {
         numberTextView.setText(String.valueOf(value));
     }
 
-    public void setIncrement(float increment) {
-        this.increment = increment;
+    T getIncrement() {
+        return increment;
     }
 
-    public void increment() {
-        setValue(value + increment);
-    }
+    abstract T getValue(String value);
 
-    public void decrement() {
-        setValue(value - increment);
-    }
+    abstract String increment(String value);
+
+    abstract String decrement(String value);
 }

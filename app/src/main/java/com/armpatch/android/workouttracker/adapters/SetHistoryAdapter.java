@@ -124,10 +124,10 @@ public class SetHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 View setView = inflater.inflate(R.layout.list_item_set_historical, setsLayout, false);
 
                 TextView weight = setView.findViewById(R.id.weight_quantity);
-                weight.setText(String.valueOf(set.getMeasurement1()));
+                weight.setText(String.valueOf(set.getWeight()));
 
                 TextView repsText = setView.findViewById(R.id.reps_quantity);
-                repsText.setText(String.valueOf(set.getMeasurement2()));
+                repsText.setText(String.valueOf(set.getRepetition()));
 
                 setsLayout.addView(setView);
                 Log.d(TAG, "view Added");
