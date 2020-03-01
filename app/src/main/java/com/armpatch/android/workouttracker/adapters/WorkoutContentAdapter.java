@@ -289,10 +289,10 @@ public class WorkoutContentAdapter
                         R.layout.list_item_set_historical, setListLayout, false);
 
                 TextView weight = setView.findViewById(R.id.weight_quantity);
-                weight.setText(String.valueOf(set.getMeasurement1()));
+                weight.setText(String.valueOf(set.getWeight()));
 
                 TextView reps = setView.findViewById(R.id.reps_quantity);
-                reps.setText(String.valueOf(set.getMeasurement2()));
+                reps.setText(String.valueOf(set.getRepetition()));
 
                 setListLayout.addView(setView);
             }

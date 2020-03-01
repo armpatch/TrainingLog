@@ -21,13 +21,13 @@ public class ExerciseSet {
 
     private int order;
     private String comment;
-    private float measurement1;
-    private float measurement2;
+    private float weight;
+    private int repetition;
 
     public ExerciseSet(String date,
                 String exerciseName,
-                float measurement1,
-                float measurement2,
+                       float weight,
+                       int repetition,
                 int order) {
 
         id = UUID.randomUUID().toString();
@@ -35,8 +35,8 @@ public class ExerciseSet {
         this.exerciseName = exerciseName;
         this.order = order;
         comment = "";
-        this.measurement1 = measurement1;
-        this.measurement2 = measurement2;
+        this.weight = weight;
+        this.repetition = repetition;
     }
 
     // setters
@@ -53,12 +53,12 @@ public class ExerciseSet {
         this.comment = comment;
     }
 
-    public void setMeasurement1(float measurement1) {
-        this.measurement1 = measurement1;
+    public void setWeight(float weight) {
+        this.weight = weight;
     }
 
-    public void setMeasurement2(float measurement2) {
-        this.measurement2 = measurement2;
+    public void setRepetition(int repetition) {
+        this.repetition = repetition;
     }
 
     // getters
@@ -79,12 +79,12 @@ public class ExerciseSet {
         return comment;
     }
 
-    public float getMeasurement1() {
-        return measurement1;
+    public float getWeight() {
+        return weight;
     }
 
-    public float getMeasurement2() {
-        return measurement2;
+    public int getRepetition() {
+        return repetition;
     }
 
 }

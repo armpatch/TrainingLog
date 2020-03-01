@@ -79,10 +79,10 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
         return sets.size();
     }
 
-    void addSet(float measurement1, float measurement2) {
+    void addSet(Float weight, Integer reps) {
         Log.d(TAG, "-------------------------------addSet()");
 
-        ExerciseSet set = new ExerciseSet(exerciseDate, exerciseName, measurement1, measurement2, -1);
+        ExerciseSet set = new ExerciseSet(exerciseDate, exerciseName, weight, reps, -1);
         new InsertSetTask(set).execute();
     }
 
@@ -229,8 +229,8 @@ public class TrackerSetAdapter extends RecyclerView.Adapter<TrackerSetAdapter.Se
             this.set = set;
             setNumberText.setText(String.valueOf(set.getOrder()));
 
-            weightText.setText(String.valueOf(set.getMeasurement1()));
-            repsText.setText(String.valueOf(set.getMeasurement2()));
+            weightText.setText(String.valueOf(set.getWeight()));
+            repsText.setText(String.valueOf(set.getRepetition()));
 
             if (set.getComment().length() > 0) {
                 commentToggle.setImageResource(R.drawable.ic_comment_filled);

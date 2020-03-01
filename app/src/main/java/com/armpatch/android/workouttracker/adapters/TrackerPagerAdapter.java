@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.armpatch.android.workouttracker.NumberChooser;
+import com.armpatch.android.workouttracker.component.FloatNumberChooser;
+import com.armpatch.android.workouttracker.component.IntegerNumberChooser;
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 
@@ -87,7 +88,8 @@ public class TrackerPagerAdapter extends PagerAdapter {
 
         TrackerSetAdapter trackerSetAdapter;
         RecyclerView setRecycler;
-        NumberChooser weightChooser, repsChooser;
+        FloatNumberChooser weightChooser;
+        IntegerNumberChooser repsChooser;
         Button addUpdateButton;
         Button deleteButton;
 
@@ -108,12 +110,8 @@ public class TrackerPagerAdapter extends PagerAdapter {
             View weightChooserLayout = itemView.findViewById(R.id.weight_picker);
             View repsChooserLayout = itemView.findViewById(R.id.reps_picker);
 
-            weightChooser = new NumberChooser(weightChooserLayout);
-            weightChooser.setTitle(activityContext.getString(R.string.weight_chooser_title));
-            weightChooser.setIncrement(2.5f);
-            repsChooser = new NumberChooser(repsChooserLayout);
-            repsChooser.setTitle(activityContext.getString(R.string.repetition_chooser_title));
-            repsChooser.setIncrement(1);
+            weightChooser = new FloatNumberChooser(weightChooserLayout, "Weight (lbs)", 5.0f, 2.5f);
+            repsChooser = new IntegerNumberChooser(repsChooserLayout, "Reps", 5, 1);
         }
 
         private void setupButtons() {
@@ -137,18 +135,18 @@ public class TrackerPagerAdapter extends PagerAdapter {
         }
 
         private void addExerciseSet() {
-            float weight = weightChooser.getValue();
-            float reps = repsChooser.getValue();
+            Float weight = weightChooser.getValue();
+            Integer reps = repsChooser.getValue();
 
             trackerSetAdapter.addSet(weight, reps);
         }
 
         private void updateExerciseSet() {
             float weight = weightChooser.getValue();
-            float reps = repsChooser.getValue();
+            Integer reps = repsChooser.getValue();
 
-            selectedSet.setMeasurement1(weight);
-            selectedSet.setMeasurement2(reps);
+            selectedSet.setWeight(weight);
+            selectedSet.setRepetition(reps);
 
             trackerSetAdapter.updateSet(selectedSet);
             deselectSet();
@@ -180,10 +178,9 @@ public class TrackerPagerAdapter extends PagerAdapter {
             selectedSet = set;
             deleteButton.setEnabled(true);
             addUpdateButton.setText(activityContext.getString(R.string.update_button_text));
-            weightChooser.setValue((int) set.getMeasurement1());
-            repsChooser.setValue((int) set.getMeasurement2());
+            weightChooser.updateValue(set.getWeight());
+            repsChooser.updateValue(set.getRepetition());
             trackerSetAdapter.highlightSet(set);
-
         }
     }
 
