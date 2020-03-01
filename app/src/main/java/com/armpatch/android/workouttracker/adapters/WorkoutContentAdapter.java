@@ -305,10 +305,10 @@ public class WorkoutContentAdapter
                 int setsRemaining = sets.size() - MAX_SETS_VISIBLE;
 
                 TextView textView = moreSetsView.findViewById(R.id.more_sets_text);
-                String text = setsRemaining + " more set";
-                if (setsRemaining > 1) text = text + "s";
-
-                textView.setText(text);
+                if (setsRemaining == 1)
+                    textView.setText(activityContext.getString(R.string.one_more_set_text));
+                else
+                    textView.setText(activityContext.getString(R.string.multiple_more_sets_text, setsRemaining));
 
                 setListLayout.addView(moreSetsView);
             }

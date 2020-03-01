@@ -11,5 +11,9 @@
     <string name="tracker_page_title_2">HISTORY</string>
     <string name="reps_text">reps</string>
     <string name="lbs_text">lbs</string>
+    <string name="weight_chooser_title">Weight (lbs)</string>
+    <string name="repetition_chooser_title">Repetitions</string>
+    <string name="one_more_set_text">1 more set</string>
+    <string name="multiple_more_sets_text">%1$d more sets</string>
 
 </resources>
