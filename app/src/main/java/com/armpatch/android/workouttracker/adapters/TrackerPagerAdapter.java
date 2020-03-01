@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.armpatch.android.workouttracker.FloatNumberChooser;
-import com.armpatch.android.workouttracker.IntegerNumberChooser;
+import com.armpatch.android.workouttracker.component.FloatNumberChooser;
+import com.armpatch.android.workouttracker.component.IntegerNumberChooser;
 import com.armpatch.android.workouttracker.R;
 import com.armpatch.android.workouttracker.model.ExerciseSet;
 

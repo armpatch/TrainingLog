@@ -1,4 +1,4 @@
-package com.armpatch.android.workouttracker;
+package com.armpatch.android.workouttracker.component;
 
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
