@@ -6,7 +6,7 @@
         android:orientation="vertical"
         android:layout_marginStart="@dimen/gutter_margin"
         android:layout_marginEnd="@dimen/gutter_margin"
-        android:layout_marginBottom="@dimen/gutter_margin"
+        android:layout_marginBottom="@dimen/item_vertical_margin"
         app:cardElevation="4dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"

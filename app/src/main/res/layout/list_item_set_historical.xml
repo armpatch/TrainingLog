@@ -15,6 +15,7 @@
             android:layout_marginStart="32dp"
             android:text="---"
             android:textAlignment="textEnd"
+            android:gravity="end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/reps_unit"
             app:layout_constraintStart_toEndOf="@+id/weight_unit"
@@ -39,6 +40,7 @@
             android:layout_marginEnd="8dp"
             android:text="---"
             android:textAlignment="textEnd"
+            android:gravity="end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/weight_unit"
             app:layout_constraintTop_toTopOf="parent" />

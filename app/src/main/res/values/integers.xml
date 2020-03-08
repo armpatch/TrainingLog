@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="gutter_margin">12dp</dimen>
+    <dimen name="item_vertical_margin">18dp</dimen>
+
 </resources>
