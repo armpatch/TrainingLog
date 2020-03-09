@@ -14,10 +14,6 @@ An Android application for tracking the weights you lift in the gym.
 - ThreeTen
 - Room Components
 
-## License
-
-This project is not yet licensed.
-
 ## Acknowledgments
 
 * UI Design heavily inspired James Gay's FitNotes.
