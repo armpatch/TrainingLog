@@ -21,9 +21,6 @@ public abstract class WorkoutRoomDatabase extends RoomDatabase {
     public abstract CategoryDao categoryDao();
 
     private static volatile WorkoutRoomDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor =
-            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     static WorkoutRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {

@@ -60,27 +60,22 @@ public class WorkoutRepository {
         return exerciseSetDao.getSetCount(date, exerciseName);
     }
 
-
     // Insert methods
 
     void insert(final ExerciseSet set) {
-        WorkoutRoomDatabase.databaseWriteExecutor.execute(
-                () -> exerciseSetDao.insert(set));
+        exerciseSetDao.insert(set);
     }
 
     void insert(final ExerciseOrder exerciseOrder) {
-        WorkoutRoomDatabase.databaseWriteExecutor.execute(
-                () -> exerciseOrderDao.insert(exerciseOrder));
+        exerciseOrderDao.insert(exerciseOrder);
     }
 
     public void insert(final WorkoutComment workoutComment) {
-        WorkoutRoomDatabase.databaseWriteExecutor.execute(
-                () -> workoutCommentDao.insert(workoutComment));
+        workoutCommentDao.insert(workoutComment);
     }
 
     public void insert(final Exercise exercise) {
-        WorkoutRoomDatabase.databaseWriteExecutor.execute(
-                () -> exerciseDao.insert(exercise));
+        exerciseDao.insert(exercise);
     }
 
     // Update methods
