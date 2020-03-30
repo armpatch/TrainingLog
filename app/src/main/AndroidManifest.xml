@@ -19,6 +19,7 @@
 
         <activity android:name=".activity.ExerciseSelectionActivity" />
         <activity android:name=".activity.ExerciseTrackerActivity" />
+        <activity android:name=".activity.CreateExerciseActivity" />
 
     </application>
 </manifest>

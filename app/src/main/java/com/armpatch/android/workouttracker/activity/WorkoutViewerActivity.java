@@ -87,7 +87,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_workout_viewer, menu);
         return true;
     }
 

@@ -12,7 +12,7 @@
             android:background="@color/toolbar_background"
             android:elevation="4dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/main"
+            app:menu="@menu/menu_workout_viewer"
             >
 
         <ImageView
