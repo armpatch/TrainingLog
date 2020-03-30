@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class ExerciseSelectionActivity extends AppCompatActivity
     ExerciseSelectionAdapter exerciseSelectionAdapter;
     List<Category> categories;
     List<Exercise> exercises;
+    TextView toolbarTitle;
 
     public static Intent getIntent(Context activityContext, String date) {
         Intent intent = new Intent(activityContext, ExerciseSelectionActivity.class);
@@ -39,6 +41,7 @@ public class ExerciseSelectionActivity extends AppCompatActivity
 
     @Override
     public void onCategoryHolderSelected(Category category) {
+        toolbarTitle.setText(category.getName());
         new SetExercisesAdapterTask(category).execute();
     }
 
@@ -57,6 +60,7 @@ public class ExerciseSelectionActivity extends AppCompatActivity
         setContentView(R.layout.activity_exercise_selection);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbarTitle = findViewById(R.id.toolbar_title);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
@@ -117,6 +121,7 @@ public class ExerciseSelectionActivity extends AppCompatActivity
     public void onBackPressed() {
         if (recyclerView.getAdapter() == exerciseSelectionAdapter) {
             recyclerView.setAdapter(categorySelectionAdapter);
+            toolbarTitle.setText(getResources().getText(R.string.all_exercises_title));
         } else {
             super.onBackPressed();
         }

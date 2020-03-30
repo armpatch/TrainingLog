@@ -1,4 +1,4 @@
-<a href="https://github.com/armpatch/WorkoutTracker"><img src="/app/src/main/ic_launcher-web.png" width=150 title="Training Log"></a>
+ <a href="https://github.com/armpatch/WorkoutTracker"><img src="/app/src/main/ic_launcher-web.png" width=150 title="Training Log"></a>
 
 # Training Log
 An Android application for tracking the weights you lift in the gym.

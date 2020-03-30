@@ -15,5 +15,6 @@
     <string name="repetition_chooser_title">Repetitions</string>
     <string name="one_more_set_text">1 more set</string>
     <string name="multiple_more_sets_text">%1$d more sets</string>
+    <string name="all_exercises_title">All Exercises</string>
 
 </resources>
