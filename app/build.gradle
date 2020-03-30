@@ -67,5 +67,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
 
+    // Spinner
+    implementation 'com.github.arcadefire:nice-spinner:1.4.4'
 
 }

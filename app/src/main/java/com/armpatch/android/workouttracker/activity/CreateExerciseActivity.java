@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,14 +17,22 @@ import com.armpatch.android.workouttracker.model.Category;
 import com.armpatch.android.workouttracker.model.Exercise;
 import com.armpatch.android.workouttracker.model.WorkoutRepository;
 
+import org.angmarch.views.NiceSpinner;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class CreateExerciseActivity extends AppCompatActivity {
 
     TextView editName;
-    Spinner categorySpinner;
+    NiceSpinner categorySpinner;
     Button createButton;
-    String name = "";
-    Category category;
 
+    private List<Category> categories;
+    private List<String> categoryNames = new ArrayList<>();
+    String name = "";
+
+    SaveExerciseTask saveExerciseTask = new SaveExerciseTask();
     Exercise newExercise;
 
     @Override
@@ -49,9 +56,41 @@ public class CreateExerciseActivity extends AppCompatActivity {
          });
 
         categorySpinner = findViewById(R.id.category_spinner);
+        categorySpinner.setEnabled(false);
 
         createButton = findViewById(R.id.create_exercise_button);
-        createButton.setOnClickListener(v -> attemptToSaveExercise());
+        createButton.setOnClickListener(v -> saveExerciseTask.execute());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new GetCategoriesTask().execute();
+    }
+
+    class GetCategoriesTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            WorkoutRepository repository = new WorkoutRepository(CreateExerciseActivity.this);
+            categories =  repository.getCategories();
+            setCategoryNames();
+
+            return null;
+        }
+
+        private void setCategoryNames() {
+            categoryNames.clear();
+            for (Category category: categories) {
+                categoryNames.add(category.getName());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            categorySpinner.attachDataSource(categoryNames);
+            categorySpinner.setEnabled(true);
+        }
     }
 
     class SaveExerciseTask extends AsyncTask<Void,Void,Void> {
@@ -71,7 +110,7 @@ public class CreateExerciseActivity extends AppCompatActivity {
     void attemptToSaveExercise() {
         if (!exerciseCanBeSaved()) return;
 
-        newExercise = new Exercise(name, MeasurementType.WEIGHT_AND_REPS, category);
+        newExercise = new Exercise(name, MeasurementType.WEIGHT_AND_REPS, getSelectedCategory());
 
         WorkoutRepository repository = new WorkoutRepository(this);
         repository.insert(newExercise);
@@ -83,7 +122,7 @@ public class CreateExerciseActivity extends AppCompatActivity {
             return false;
         }
 
-        if (category == null) {
+        if (getSelectedCategory() == null) {
             Toast.makeText(this, "Choose a category.", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -106,5 +145,10 @@ public class CreateExerciseActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public Category getSelectedCategory() {
+        int itemIndex = categorySpinner.getSelectedIndex();
+        return categories.get(itemIndex);
     }
 }
