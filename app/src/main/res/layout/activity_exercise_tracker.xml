@@ -35,10 +35,10 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/date_pager_background"
+                android:background="@color/black_lighter_20"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:tabIndicatorColor="@color/colorPrimary"
-                app:tabTextColor="@color/text_light"
+                app:tabIndicatorColor="@color/light_green"
+                app:tabTextColor="@android:color/white"
                 app:tabIndicatorHeight="4dp"
                 >
 

@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0BCA89</color>
-    <color name="colorPrimaryDark">#056343</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="light_green">#0BCA89</color>
+    <color name="dark_green">#056343</color>
+    <color name="red">#D81B60</color>
 
+    <color name="black_lighter_20">#141414</color>
     <color name="toolbar_background">#282828</color>
+    <color name="grey">#474747</color>
+    <color name="light_grey">#818181</color>
+    <color name="off_white">#C2C2C2</color>
 
-    <color name="date_pager_background">#141414</color>
-    <color name="text_light">#FFFFFF</color>
-    <color name="text_dark">#000000</color>
-    <color name="text_units">#818181</color>
+    <color name="black_90percent_transparent">#1A000000</color>
 
-
-    <color name="menu_item_light">#FFFFFF</color>
-
-    <color name="horizontal_separator_grey">#474747</color>
-
-    <color name="item_selected_tint">#C2C2C2</color>
-    <color name="item_pressed_tint">#1A000000</color>
-
-    <color name="comment_icon_empty">#80757575</color>
-
-    <color name="delete_button">#F06292</color>
-
-
-
-
+    <color name="pink">#F06292</color>
 </resources>

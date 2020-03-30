@@ -44,7 +44,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/delete_button"
                 app:layout_constraintTop_toTopOf="parent"
-                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/light_green"
                 />
 
         <Button
@@ -56,7 +56,7 @@
                 app:layout_constraintStart_toEndOf="@id/update_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:backgroundTint="@color/delete_button"
+                android:backgroundTint="@color/pink"
                 />
 
 
