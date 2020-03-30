@@ -6,7 +6,7 @@
 
     <include
             android:id="@+id/weight_picker"
-            layout="@layout/content_number_picker"
+            layout="@layout/component_number_picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -16,7 +16,7 @@
 
     <include
             android:id="@+id/reps_picker"
-            layout="@layout/content_number_picker"
+            layout="@layout/component_number_picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

@@ -85,10 +85,10 @@ public class WorkoutContentAdapter
         View itemView;
 
         if (viewType == VIEW_TYPE_COMMENTS) {
-            itemView = LayoutInflater.from(activityContext).inflate(R.layout.list_item_comments, parent, false);
+            itemView = LayoutInflater.from(activityContext).inflate(R.layout.list_item_comment_card, parent, false);
             return new CommentsHolder(itemView);
         } else if (viewType == VIEW_TYPE_NEW_EXERCISE) {
-            itemView = LayoutInflater.from(activityContext).inflate(R.layout.list_item_add_exercise_button, parent, false);
+            itemView = LayoutInflater.from(activityContext).inflate(R.layout.list_item_add_exercise, parent, false);
             return new AddExerciseHolder(itemView);
         } else {
             itemView = LayoutInflater.from(activityContext).inflate(R.layout.list_item_exercise_group, parent, false);
@@ -299,7 +299,7 @@ public class WorkoutContentAdapter
 
             if (sets.size() > MAX_SETS_VISIBLE) {
                 View moreSetsView = LayoutInflater.from(activityContext).inflate(
-                        R.layout.list_item_more_sets, setListLayout, false
+                        R.layout.list_item_more_sets_text, setListLayout, false
                 );
 
                 int setsRemaining = sets.size() - MAX_SETS_VISIBLE;

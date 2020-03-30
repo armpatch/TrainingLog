@@ -46,7 +46,7 @@ public class WorkoutViewerActivity extends AppCompatActivity implements WorkoutC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_workout_pager);
+        setContentView(R.layout.activity_workout_viewer);
         setupToolbar();
         setupDateBar();
         setupWorkoutPager();

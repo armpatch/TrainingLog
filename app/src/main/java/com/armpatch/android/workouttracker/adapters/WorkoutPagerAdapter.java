@@ -76,7 +76,7 @@ public class WorkoutPagerAdapter extends PagerAdapter {
         private WorkoutContentAdapter workoutContentAdapter;
 
         WorkoutHolder(final Context activityContext, LocalDate date) {
-            itemView = inflater.inflate(R.layout.content_workout_holder, null);
+            itemView = inflater.inflate(R.layout.content_workout_pager_holder, null);
             setupRecyclerView(activityContext, date);
         }
 

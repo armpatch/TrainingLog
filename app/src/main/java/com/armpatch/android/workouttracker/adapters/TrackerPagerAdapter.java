@@ -68,12 +68,12 @@ public class TrackerPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         if (position == 0) {
-            View itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_set_editor_page, container, false);
+            View itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_page_set_editor, container, false);
             setEditorPage = new SetEditorPage(itemView);
             container.addView(itemView);
             return setEditorPage;
         } else {
-            View itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_set_history_page, container, false);
+            View itemView = LayoutInflater.from(activityContext).inflate(R.layout.content_page_exercise_history, container, false);
             historyPage = new HistoryPage(itemView);
             container.addView(itemView);
             return historyPage;

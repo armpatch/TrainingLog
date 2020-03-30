@@ -21,7 +21,7 @@ public class EditCommentsDialog extends Dialog {
 
     private EditCommentsDialog(@NonNull Context context, final Callbacks callbacks, String initialText) {
         super(context);
-        setContentView(R.layout.dialog_comment_editor);
+        setContentView(R.layout.dialog_comments);
         setupCommentBox(initialText);
         setupButtons(callbacks);
     }
