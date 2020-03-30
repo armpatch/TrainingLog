@@ -47,7 +47,7 @@
             />
 
     <EditText
-            android:id="@+id/edit_name"
+            android:id="@+id/exercise_name_editor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/gutter_margin"
@@ -67,7 +67,7 @@
             android:layout_marginEnd="@dimen/gutter_margin"
             android:text="category"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_name"
+            app:layout_constraintTop_toBottomOf="@id/exercise_name_editor"
 
             />
 
@@ -83,6 +83,7 @@
             />
 
     <Button
+            android:id="@+id/create_exercise_button"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

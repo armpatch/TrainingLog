@@ -28,6 +28,10 @@ public class WorkoutRepository {
 
     // Access methods
 
+    public Exercise getExercise(String name) {
+        return exerciseDao.getExercise(name);
+    }
+
     public ExerciseOrder getExerciseOrder(String date) {
         return exerciseOrderDao.getExerciseOrder(date);
     }

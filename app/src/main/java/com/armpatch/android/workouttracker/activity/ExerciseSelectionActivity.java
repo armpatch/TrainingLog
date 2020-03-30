@@ -139,7 +139,7 @@ public class ExerciseSelectionActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        if (itemId == R.id.create_exercise) {
+        if (itemId == R.id.menu_item_create_exercise) {
             Intent i = new Intent(this, CreateExerciseActivity.class);
             startActivity(i);
         }
