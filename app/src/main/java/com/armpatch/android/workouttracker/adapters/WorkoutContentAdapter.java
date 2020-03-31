@@ -160,11 +160,6 @@ public class WorkoutContentAdapter
             helper.swapExerciseOrder(currentDate, position1, position2);
             return null;
         }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            Toast.makeText(activityContext, "Exercises swapped", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private class WorkoutQueryTask extends AsyncTask<Void, Void, Void> {
