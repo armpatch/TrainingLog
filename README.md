@@ -5,7 +5,7 @@ An Android application for tracking the weights you lift in the gym.
 
 ## Screenshots
 
-<img src="/media/screenshots/Picture1.png" width="250"> <img src="/media/screenshots/Picture6.png" width="250"> <img src="/media/screenshots/Picture5.png" width="250"> <img src="/media/screenshots/Picture4.png" width="250"> <img src="/media/screenshots/Picture3.png" width="250"> <img src="/media/screenshots/Picture2.png" width="250">
+<img src="/media/screenshots/home.png" width="250"> <img src="/media/screenshots/calendar.png" width="250"> <img src="/media/screenshots/comment.png" width="250"> <img src="/media/screenshots/ab_exercises.png" width="250"> <img src="/media/screenshots/create_exercise.png" width="250"> <img src="/media/screenshots/tracker.png" width="250">
 
 ## Dependencies
 
