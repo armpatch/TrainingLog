@@ -1,7 +1,9 @@
- <a href="https://github.com/armpatch/WorkoutTracker"><img src="/app/src/main/ic_launcher-web.png" width=150 title="Training Log"></a>
+ <img src="/app/src/main/ic_launcher-web.png" width=100>
 
 # Training Log
 An Android application for tracking the weights you lift in the gym.
+
+<a href="https://play.google.com/store/apps/details?id=com.armpatch.android.workouttracker&hl=en_US"><img src="/media/badges/en_badge_web_generic.png" height="50" title="Training Log"></a>
 
 ## Screenshots
 
@@ -16,8 +18,8 @@ An Android application for tracking the weights you lift in the gym.
 
 ## Acknowledgments
 
-* UI Design heavily inspired James Gay's FitNotes.
+* UI Design based on FitNotes by James Gay.
 
 ## Contributing
 
-This project was intended to be a solo project, but if you would like to contribute, comment on an existing issue (or create a new one)  and wait for me to greenlight the work (@armpatch). This allows me to keep track of progress and prevents you wasting your time in case the project stops being maintained. Thanks!
+This project was intended to be a solo project, but if you would like to contribute, comment on an existing issue (or create a new one)  and wait for me to greenlight the work (@armpatch). Thanks!
