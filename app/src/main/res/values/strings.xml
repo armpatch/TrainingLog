@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Workout Tracker</string>
+    <string name="app_name">Fitness Log</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
