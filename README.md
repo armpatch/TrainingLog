@@ -11,7 +11,6 @@ An Android application for tracking the weights you lift in the gym.
 
 ## Dependencies
 
-- Constraint Layout
 - Android Material Design Themes
 - ThreeTen
 - Room Components
