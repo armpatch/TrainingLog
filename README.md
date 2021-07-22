@@ -18,7 +18,3 @@ An Android application for tracking the weights you lift in the gym.
 ## Acknowledgments
 
 * UI Design based on FitNotes by James Gay.
-
-## Contributing
-
-This project was intended to be a solo project, but if you would like to contribute, comment on an existing issue (or create a new one)  and wait for me to greenlight the work (@armpatch). Thanks!
